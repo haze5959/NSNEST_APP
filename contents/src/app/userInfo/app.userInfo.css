@@ -1,0 +1,24 @@
+.userInfoCard {
+    /* height: ; */
+}
+
+.userInfoCard-header {
+    margin-bottom: 0px;
+}
+
+.userInfoCard-userinfo {
+    display: block;
+    margin-bottom: 7px;
+}
+
+.userInfoCard-btn-bundle {
+    margin-top: 10px;
+}
+
+.profileImage {
+    background-size: cover;
+}
+
+.siteInfo {
+    margin-top: 10px;
+}

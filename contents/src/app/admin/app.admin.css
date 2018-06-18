@@ -1,0 +1,33 @@
+.app-admin {
+    height: calc(100% - 70px);
+    width: 95%;
+    margin-left: 10px;
+    /* padding-bottom: 500px; */
+    overflow: scroll;
+}
+
+.admin-loading-screen {
+    height: calc(100% - 70px);
+    width: 95%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 99;
+}
+
+.emoticon-btn {
+    margin: 50px;
+}
+
+@media screen and (max-width: 1000px) {
+    .app-admin {
+        margin-left: 0px;
+        height: calc(100% - 56px);
+        width: 100%;
+    }
+    
+    .admin-loading-screen {
+        margin-left: 0px;
+        height: calc(100% - 56px);
+        width: 100%;
+    }
+}

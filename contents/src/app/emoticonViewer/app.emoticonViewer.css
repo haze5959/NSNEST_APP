@@ -1,0 +1,32 @@
+.app-card-emoticon {
+    /* width: 80%; */
+    /* height: 85%; */
+}
+
+.app-tab-group {
+    /* border: 1px solid #e8e8e8; */
+}
+
+.emoticon-img {
+    max-width: 120px;
+    max-height: 120px;
+}
+
+.elbum-card {
+    margin: 10px;
+}
+
+.elbum-card:hover {
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+@media screen and (max-width: 1000px) {
+    .app-card-emoticon {
+        /* width: 100%; */
+    }
+
+    .emoticon-img {
+        max-width: 100px;
+        max-height: 100px;
+    }
+}

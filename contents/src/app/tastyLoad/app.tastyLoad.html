@@ -1,0 +1,49 @@
+<div class="app-tastyload">
+    <agm-map class="agm-map" [latitude]="lat" [longitude]="lng" [zoom]="12" [disableDefaultUI]="false" [zoomControl]="true">
+        <agm-marker 
+            *ngFor="let marker of postMarkers; let i = index"
+            (markerClick)="clickedMarker(marker.label, i)"
+            [latitude]="marker.marker.lat"
+            [longitude]="marker.marker.lng"
+            [label]="marker.marker.label">
+            
+            <agm-info-window>
+            <strong>{{marker.title}}</strong>
+            <p>{{marker.body}}</p>
+            <button (click)="showDetailView(marker.postsID)">상세보기</button>
+            </agm-info-window>
+            
+        </agm-marker>
+    </agm-map>
+
+    <div class="tastyload-header">
+        <mat-form-field style="width: 60%;">
+            <input #filterBtn matInput placeholder="Filter">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="applyFilter(filterBtn.value)">검색</button>
+    </div>
+
+    <!-- 컬럼 -->
+    <div class="tastyload-colum">
+        <h4 class="tastyload-table-id" (click)="pressOrderBy('id')">{{orderBy == 'id' ? (orderBySeq == 'desc' ? '↓':'↑') : '↕' }}번호</h4>
+        <h4 class="tastyload-table-author">글쓴이</h4>
+        <h4 class="tastyload-table-title">제목</h4>
+        <h4 class="tastyload-table-good" (click)="pressOrderBy('good')">{{orderBy == 'good' ? (orderBySeq == 'desc' ? '↓':'↑') : '↕' }}좋아요</h4>
+        <h4 class="tastyload-table-bad" (click)="pressOrderBy('bad')">{{orderBy == 'bad' ? (orderBySeq == 'desc' ? '↓':'↑') : '↕' }}싫어요</h4>
+    </div>
+    <mat-divider></mat-divider>
+    <!-- 데이터 -->
+    <mat-nav-list *ngFor="let postMarker of postMarkers" class="tastyload-table">
+        <a mat-list-item (click)="pressPost(postMarker.postsID)">
+            <p class="tastyload-table-id">{{postMarker.postsID}}</p>
+            <h4 class="tastyload-table-author">{{postMarker.publisher}}</h4>
+            <p class="tastyload-table-title">{{postMarker.title}} [{{postMarker.commentCount}}]</p>
+            <h4 class="tastyload-table-good">{{postMarker.good}}</h4>
+            <h4 class="tastyload-table-bad">{{postMarker.bad}}</h4>
+        </a>
+        <mat-divider></mat-divider>
+    </mat-nav-list>
+    
+    <mat-paginator [length]="pageLength" [pageSize]="pageSize" [showFirstLastButtons]="true" [hidePageSize]="true" (page)="pageEvent($event)">
+    </mat-paginator>
+</div>

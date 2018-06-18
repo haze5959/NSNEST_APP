@@ -1,0 +1,52 @@
+<!-- 로그인 중 -->
+<mat-card *ngIf="appService.isAppLogin" class="userInfoCard">
+    <mat-card-header class="userInfoCard-header">
+        <div mat-card-avatar [ngStyle]="{ 'background-image': 'url(' + appService.myInfo.image + ')'}" class="profileImage" (click)="openProfileImage()"></div>
+        <mat-card-title>{{appService.myInfo.name}}</mat-card-title>
+        <mat-card-subtitle>{{appService.myInfo.intro}}</mat-card-subtitle>
+    </mat-card-header>
+    <b class="userInfoCard-userinfo">잉어력: {{appService.myInfo.point}}</b>
+    <b class="userInfoCard-userinfo">학번: {{appService.myInfo.studentNum}}</b>
+    <b class="userInfoCard-userinfo">생일: {{appService.myInfo.birthDay}}</b>
+    <b class="userInfoCard-userinfo">성별: {{appService.myInfo.gender}}</b>
+    <b class="userInfoCard-userinfo">최근활동일: {{appService.myInfo.recentDate}}</b>
+    <!-- <img mat-card-image src="{{profileImage}}" alt="Photo of a user"> -->
+    <mat-card-content>
+        <pre>{{appService.myInfo.description}}</pre>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button (click)="pressLogout()">로그아웃</button>
+        <button mat-raised-button (click)="openSetUserInfoDialog()">상태정보 변경</button>
+    </mat-card-actions>
+</mat-card>
+
+<!-- 로그인 안됨 -->
+<mat-card *ngIf="!appService.isAppLogin" class="userInfoCard">
+    <div>
+        <mat-form-field>
+            <input matInput placeholder="아이디" [formControl]="userId">
+            <mat-error *ngIf="userId.invalid">아이디 입력해라</mat-error>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field>
+            <input matInput placeholder="패스워드" [type]="hide ? 'text' : 'password'" [formControl]="userPw">
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+            <mat-error *ngIf="userPw.invalid">비밀번호 입력해라</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="userInfoCard-btn-bundle">
+        <button mat-raised-button (click)="pressLogin()">로그인</button>
+        <button mat-raised-button (click)="pressRegistration()">회원가입</button>
+    </div>
+</mat-card>
+
+<!-- 사이트 정보 --> 
+<mat-card class="siteInfo">
+    <p class="font-bold font-size20">
+        {{appName}} {{appVersion}} 
+    </p>
+    <p class="font-Italic font-size16">
+        {{appCopyrights}}
+    </p>
+</mat-card>

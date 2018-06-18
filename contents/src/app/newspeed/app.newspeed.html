@@ -1,0 +1,147 @@
+<div *ngIf="!appService.isAppLogin" class="app-newspeed">
+    로그인 필요
+</div>
+<div *ngIf="appService.isAppLogin" class="app-newspeed">
+    <ptr-container #newspeedScroll (onPull)="onPull()" [refresh]="isInProgress" class="newspeed-backgound" infinite-scroll [infiniteScrollDistance]="1.4" [infiniteScrollThrottle]="500" [scrollTop]="100" (scrolled)="onScroll()" [scrollWindow]="false" [immediateCheck]="true">
+        <mat-list>
+            <mat-nav-list *ngFor="let posts of appService.newspeedPosts" class="posts-list">
+                <!--========================================에러 발생========================================-->
+                <mat-card *ngIf="posts.postClassify == 99" class="posts-card" (click)="pressPosts(posts.postsID)">
+                    <mat-card-header class="posts-card-header">
+                        <div class="posts-card-classify-logo">
+                            <mat-icon mat-list-icon>subtitles</mat-icon>
+                        </div>
+                        <div class="comment-count">
+                            <mat-icon mat-list-icon>comment</mat-icon>
+                            {{posts.commentCount}}
+                        </div>
+                        <div class="like-btn">
+                            <mat-icon mat-list-icon style="color: red;">favorite</mat-icon>
+                            {{posts.good}}
+                        </div>
+                        <div class="dislike-btn">
+                            <mat-icon mat-list-icon>thumb_down</mat-icon>
+                            {{posts.bad}}
+                        </div>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <h1>{{posts.title}}</h1>
+                    </mat-card-content>
+                </mat-card>
+
+                <!--========================================게시판 글========================================-->
+                <mat-card *ngIf="posts.postClassify == 10" class="posts-card" (click)="pressPosts(posts.postsID)">
+                    <mat-card-header class="posts-card-header">
+                        <div mat-card-avatar [ngStyle]="{ 'background-image': 'url(' + posts.publisherImg + ')'}"></div>
+                        <mat-card-title>{{posts.publisher}}</mat-card-title>
+                        <mat-card-subtitle>{{posts.publisherIntro}}</mat-card-subtitle>
+                        <div class="posts-card-classify-logo">
+                            <mat-icon mat-list-icon>subtitles</mat-icon>
+                        </div>
+                        <div class="comment-count">
+                            <mat-icon mat-list-icon>comment</mat-icon>
+                            {{posts.commentCount}}
+                        </div>
+                        <div class="like-btn">
+                            <mat-icon mat-list-icon style="color: red;">favorite</mat-icon>
+                            {{posts.good}}
+                        </div>
+                        <div class="dislike-btn">
+                            <mat-icon mat-list-icon>thumb_down</mat-icon>
+                            {{posts.bad}}
+                        </div>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <h1>{{posts.title}}</h1>
+                    </mat-card-content>
+                </mat-card>
+
+                <!-- ========================================앨범 글========================================-->
+                <mat-card *ngIf="posts.postClassify == 20" class="posts-card" (click)="pressPosts(posts.postsID)">
+                        <mat-card-header class="posts-card-header">
+                            <div mat-card-avatar [ngStyle]="{ 'background-image': 'url(' + posts.publisherImg + ')'}"></div>
+                            <mat-card-title>{{posts.publisher}}</mat-card-title>
+                            <mat-card-subtitle>{{posts.publisherIntro}}</mat-card-subtitle>
+                            <div class="posts-card-classify-logo">
+                                <mat-icon mat-list-icon>photo</mat-icon>
+                            </div>
+                            <div class="comment-count">
+                                <mat-icon mat-list-icon>comment</mat-icon>
+                                {{posts.commentCount}}
+                            </div>
+                            <div class="like-btn">
+                                <mat-icon mat-list-icon style="color: red;">favorite</mat-icon>
+                                {{posts.good}}
+                            </div>
+                            <div class="dislike-btn">
+                                <mat-icon mat-list-icon>thumb_down</mat-icon>
+                                {{posts.bad}}
+                            </div>
+                        </mat-card-header>
+                        <img mat-card-image src="{{posts.images[0]}}" alt="Photo" onError="this.src='/../assets/testImage.jpg';">
+                        <div class="mat-card-image-cover" *ngIf="posts.images.length > 1">{{posts.images.length}} +</div>
+                        <mat-card-content>
+                            <p class="posts-image-title"> {{posts.body}} </p>
+                        </mat-card-content>
+                    </mat-card>
+
+                    <!--========================================맛집 글========================================-->
+                <mat-card *ngIf="posts.postClassify == 30" class="posts-card" (click)="pressPosts(posts.postsID)">
+                    <mat-card-header class="posts-card-header">
+                        <div mat-card-avatar [ngStyle]="{ 'background-image': 'url(' + posts.publisherImg + ')'}"></div>
+                        <mat-card-title>{{posts.publisher}}</mat-card-title>
+                        <mat-card-subtitle>{{posts.publisherIntro}}</mat-card-subtitle>
+                        <div class="posts-card-classify-logo">
+                            <mat-icon mat-list-icon>place</mat-icon>
+                        </div>
+                        <div class="comment-count">
+                            <mat-icon mat-list-icon>comment</mat-icon>
+                            {{posts.commentCount}}
+                        </div>
+                        <div class="like-btn">
+                            <mat-icon mat-list-icon style="color: red;">favorite</mat-icon>
+                            {{posts.good}}
+                        </div>
+                        <div class="dislike-btn">
+                            <mat-icon mat-list-icon>thumb_down</mat-icon>
+                            {{posts.bad}}
+                        </div>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <h3>{{posts.title}}
+                            <mat-chip-list aria-orientation="horizontal" class="posts-card-chip">
+                                <mat-chip  *ngFor="let tag of posts.tag" color="primary">{{tag}}</mat-chip>
+                            </mat-chip-list>
+                        </h3>
+                        <p> {{posts.body}} </p>
+                    </mat-card-content>
+                    <div  *ngIf="posts.images" class="posts-image-box">
+                        <!-- 이미지 1개일 때 -->
+                        <img *ngIf="posts.images.length == 1" mat-card-image src="{{posts.images[0]}}" alt="image of posts">
+                        <!-- 이미지 2개일 때 -->
+                        <mat-grid-list cols="2" *ngIf="posts.images.length == 2">
+                            <mat-grid-tile>
+                                <img mat-card-image src="{{posts.images[0]}}" alt="image of posts">
+                            </mat-grid-tile>
+                            <mat-grid-tile>
+                                <img mat-card-image src="{{posts.images[1]}}" alt="image of posts">
+                            </mat-grid-tile>
+                        </mat-grid-list>
+                        <!-- 이미지 3개 이상일 때 -->
+                        <mat-grid-list cols="3" *ngIf="posts.images.length > 2">
+                            <mat-grid-tile>
+                                <img mat-card-image src="{{posts.images[0]}}" alt="image of posts">
+                            </mat-grid-tile>
+                            <mat-grid-tile>
+                                <img mat-card-image src="{{posts.images[1]}}" alt="image of posts">
+                            </mat-grid-tile>
+                            <mat-grid-tile>
+                                <img mat-card-image src="{{posts.images[2]}}" alt="image of posts">
+                            </mat-grid-tile>
+                        </mat-grid-list>
+                    </div>
+                </mat-card>
+            </mat-nav-list>
+        </mat-list>
+    </ptr-container>
+</div>

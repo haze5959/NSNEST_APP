@@ -1,0 +1,120 @@
+.app-elbum {
+    height: calc(100% - 70px);
+    width: 95%;
+    margin-left: 10px;
+    overflow: scroll;
+}
+
+.elbum-header {
+    min-height: 64px;
+    padding: 8px 24px 0; 
+}
+
+.elbum-loading-shade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 56px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.elbum-card {
+    margin: 10px;
+}
+
+.elbum-card:hover {
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+.detail-elbum-imglist {
+    margin: 30px auto;
+}
+
+/* .detail-elbum-card-title {
+    margin-bottom: 30px;
+}
+
+.detail-elbum-card-content {
+    margin-top: 30px;
+} */
+
+.elbum-header-image {
+    background-size: cover;
+}
+
+.mat-card-image {
+    height: 400px;
+    width: 400px;
+    /* background-size: fill; */
+}
+
+.mat-card-header {
+    height: 60px;
+}
+
+.card-header {
+    margin-bottom: 20px;
+}
+
+.mat-card-image-cover {
+    height: 400px;
+    position: absolute;
+    top: 104px;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5em;
+}
+
+.like-btn {
+    float: left;
+    margin-left: 15px;
+}
+.dislike-btn {
+    float: left;
+    margin-left: 15px;
+}
+.comment-count {
+    float: left;
+    margin-left: 15px;
+}
+
+.label-date {
+    float: right;
+    margin-right: 15px;
+}
+
+@media screen and (max-width: 1000px) {
+    .app-elbum {
+        margin-left: 0px;
+        height: calc(100% - 56px);
+        width: 100%;
+        /* background-color: #CFD8DC; */
+    }
+
+    .elbum-header {
+        display: none;
+    }
+
+    .mat-card-image {
+        margin: -30px -16px;
+        width: calc(100% + 32px);
+    }
+
+    .mat-card-image-cover {
+        top: 74px;
+    }
+
+    .mat-card-content {
+        margin-top: 30px;
+    }
+}

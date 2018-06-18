@@ -1,0 +1,145 @@
+.app-detail {
+    height: calc(100% - 70px);
+    width: 95%;
+    margin-left: 10px;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 12px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, .5);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
+.detail-post-card {
+    margin-left: 2px;
+    margin-right: 3px;
+    margin-bottom: 3px;
+}
+
+.post-card-header {
+    margin-bottom: 20px;
+}
+
+.detail-chip {
+    float: right;
+}
+
+.detail-goodBad {
+    margin: 10px auto;
+    text-align: center;
+}
+
+.detail-goodBad-btn {
+    margin: 0px 10px;
+}
+
+.profile-image {
+    background-size: cover;
+}
+
+.elbum-card {
+    margin: 10px;
+}
+
+.elbum-card:hover {
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+.detail-elbum-card-img {
+    max-width:100%;
+    max-height:100%;
+}
+
+.detail-map-card-img {
+    max-width:450px;
+    max-height:300px;
+}
+
+.detail-elbum-image {
+    max-width: 100%; 
+    margin-bottom: 20px;
+}
+
+.detail-elbum-body {
+    font-size: 20px;
+}
+
+.comment-content {
+    padding-left: 5px;
+    margin: 10px 0px;
+    border-left: thin solid #CFD8DC;
+    width: calc(100% - 178px);
+    word-wrap: break-word;
+}
+
+.detail-comment{
+    padding: 20px 0;
+    height: auto !important;
+    border-bottom: 1px solid #CFD8DC;
+}
+
+.detail-comment-input{
+    height: 100px !important;
+}
+
+.comment-content-input {
+    height: auto !important;
+    width: 100% !important;
+}
+
+.comment-remove-btn {
+    margin-left: auto;
+}
+
+.detail-regist-comment {
+    text-align:center;
+    margin-top: 50px;
+    margin-bottom: 100px;
+}
+
+.agm-map {
+    height: 600px;
+}
+
+@media screen and (max-width: 1000px) {
+    .app-detail {
+        margin-left: 0px;
+        height: calc(100% - 56px);
+        width: 100%;
+        /* background-color: #CFD8DC; */
+    }
+
+    .agm-map {
+        height: 300px;
+    }
+
+    .detail-comment {
+        font-size: 12px;
+    }
+
+    .detail-comment p {
+        font-size: 12px !important;
+    }
+    
+    .detail-comment-input {
+        font-size: 12px;
+    }
+
+    .comment-content {
+        width: calc(100% - 148px);
+    }
+
+    ::-webkit-scrollbar {
+        width: 0px;  /* remove scrollbar space */
+        background: transparent;  /* optional: just make scrollbar invisible */
+    }
+    /* optional: show position indicator in red */
+    /* ::-webkit-scrollbar-thumb {
+        background: #FF0000;
+    } */
+}

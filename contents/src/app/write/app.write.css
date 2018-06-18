@@ -1,0 +1,77 @@
+.app-write {
+    height: calc(100% - 70px);
+    width: 95%;
+    margin-left: 10px;
+    /* padding-bottom: 500px; */
+    overflow: scroll;
+}
+
+.write-loading-screen {
+    height: calc(100% - 70px);
+    width: 95%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 99;
+}
+
+.write-editor {
+    height: calc(80% - 70px);
+}
+
+/* .write-title {
+    width: 80%;
+} */
+
+.write-elbum {
+}
+
+.elbum-image {
+    height: 280px !important;
+}
+
+.write-elbum-desc {
+    width: 100%;
+}
+
+.mat-card-image {
+    height: 500px;
+    /* background-size: fill; */
+}
+
+.write-save-btn {
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+.map-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+}
+  
+.map-margin {
+    margin: 0 10px;
+}
+
+.agm-map {
+    height: 600px;
+}
+
+@media screen and (max-width: 1000px) {
+    .app-write {
+        margin-left: 0px;
+        height: calc(100% - 56px);
+        width: 100%;
+    }
+    
+    .write-loading-screen {
+        margin-left: 0px;
+        height: calc(100% - 56px);
+        width: 100%;
+    }
+
+    .agm-map {
+        height: 300px;
+    }
+}

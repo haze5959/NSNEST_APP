@@ -1,0 +1,86 @@
+<div *ngIf="appService && appService.isAppLoading" class="app-loading-screen">
+  <div  class="fulfilling-square-spinner">
+    <div class="spinner-inner"></div>
+  </div>
+</div>
+<mat-sidenav-container class="app-container">
+  <!-- GNB -->
+  <mat-toolbar color="primary" class="depth-4">
+    <!-- GNB 왼쪽 버튼 -->
+    <button type="button" mat-button (click)="sidenav.open()" class="app-showSidenavBtn">
+        <mat-icon>account_circle</mat-icon>
+    </button>
+    <button type="button" mat-button (click)="openSideUserListDialog()" [ngClass]="appService && appService.isPhone?'app-showSidenavBtn':'app-showSidenavBtn-hide'">
+      <!-- PC의 경우 사이드뷰로 대체 -->
+        <mat-icon>people</mat-icon> 
+    </button>
+    <!-- GNB 가운데 라벨 -->
+    <div class="app-Title">
+      {{appTitle}}
+    </div>
+    <!-- GNB 오른쪽 버튼 -->
+    <button mat-button [matMenuTriggerFor]="writeMenu" class="app-showSidenavBtn" [disabled]="!appService || !appService.isAppLogin">
+        <mat-icon>add_circle_outline</mat-icon>
+    </button>
+    <button mat-button [matMenuTriggerFor]="menu" class="app-showSidenavBtn" [disabled]="!appService || !appService.isAppLogin">
+        <mat-icon>format_align_justify</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <!-- GNB 왼쪽 버튼 클릭 시 나오는 뷰 -->
+  <mat-sidenav #sidenav class="app-sidenav depth-5 color_50">
+      <app-userInfo></app-userInfo>
+  </mat-sidenav>
+  
+  <!-- GNB 오른쪽 버튼 클릭 시 나오는 뷰 (글쓰기 메뉴보기) -->
+  <mat-menu #writeMenu="matMenu">
+    <button mat-menu-item routerLink="/write/post">글 작성</button>
+    <button mat-menu-item routerLink="/write/elbum">앨범 작성</button>
+    <button mat-menu-item routerLink="/write/map">맛집 올리기</button>
+  </mat-menu>
+
+  <!-- GNB 오른쪽 버튼 클릭 시 나오는 뷰 (메뉴보기) -->
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/">뉴스피드</button>
+    <button mat-menu-item routerLink="/board">게시판</button>
+    <button mat-menu-item routerLink="/elbum">사진첩</button>
+    <button mat-menu-item routerLink="/tastyLoad">맛집지도</button>
+    <button mat-menu-item routerLink="/admin" *ngIf="appService && appService.myInfo && appService.myInfo.userId == 1060">admin</button>
+    <button mat-menu-item>알CALL!!(공사 중...)</button>
+    <button mat-menu-item>실시간 그림판(공사 중...)</button>
+    <button mat-menu-item>낙둥뮤직(공사 중...)</button>
+    <button mat-menu-item>관리자 화면(이모티콘 등록)</button>
+  </mat-menu>
+
+  <!-- PC 화면 컨텐츠 -->
+  <div class="app-sidenav-content color-50"  *ngIf="!appService || !appService.isPhone">
+    <mat-grid-list cols="4" rowHeight="100%">
+      <mat-grid-tile [colspan]=3 [rowspan]=1>
+        <div class="app-div-newspeed">
+
+          <!-- <app-newspeed></app-newspeed> -->
+          <router-outlet></router-outlet>
+
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]=1 [rowspan]=1>
+        <div class="app-div-sideUserList">
+
+          <app-sideUserList></app-sideUserList>
+
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+    
+  </div>
+
+  <!-- 모바일 화면 컨텐츠 -->
+  <div class="app-sidenav-content color-50"  *ngIf="appService && appService.isPhone">
+    <div class="app-div-newspeed">
+
+      <router-outlet></router-outlet>
+
+    </div>
+  </div>
+
+</mat-sidenav-container>

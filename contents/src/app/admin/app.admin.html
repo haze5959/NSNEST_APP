@@ -1,0 +1,14 @@
+<input hidden #fileInput type='file' accept="image/*" (change)="uploadEmoticon($event)" multiple>
+<div class="app-admin">
+
+    <!--=================== 앨범 올리기 =====================-->
+    <form class="write-elbum">
+        <mat-form-field>
+            <input matInput placeholder="이모티콘 명" [formControl]="emoFormControl">
+        </mat-form-field>
+    
+        <!-- 이미지 인풋 -->
+        <button mat-raised-button color="primary" (click)="fileInput.click()" class="emoticon-btn">이모티콘 등록</button>
+    </form>
+
+</div>

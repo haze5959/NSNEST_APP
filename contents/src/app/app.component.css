@@ -1,0 +1,67 @@
+.app-Title {
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+}
+
+.app-sidenav {
+    padding: 20px;
+    width: 50%;
+}
+
+.app-showSidenavBtn {
+    height: 100%;
+}
+
+.app-showSidenavBtn-hide {
+    height: 100%;
+    visibility: hidden;
+}
+
+.app-container {
+    height: 100%;
+    width: 100%;
+}
+
+.app-loading-screen {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 99;
+}
+
+.app-sidenav-content {
+    padding-top: 10px;
+    height: 100%;
+}
+
+.app-div-newspeed {
+    height: 100%;
+    width: 100%;
+}
+
+.app-div-sideUserList {
+    height: 100%;
+    width: 100%;
+}
+
+mat-toolbar {
+    padding: 0px;
+}
+
+mat-icon{
+    font-size:50px; 
+    height:50px; 
+    width:50px;
+}
+
+@media screen and (max-width: 1000px) {
+    .app-sidenav {
+        width: 90%;
+    }
+
+    .app-sidenav-content {
+        padding-top: 0px;
+    }
+}

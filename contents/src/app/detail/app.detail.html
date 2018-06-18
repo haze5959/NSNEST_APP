@@ -1,0 +1,127 @@
+<div class="app-detail">
+  <!--=================== 게시글 =====================-->
+  <div *ngIf="classify == 'post' || classify == 'error'" class="detail-post">
+    <mat-card class="detail-post-card">
+      <mat-card-header class="post-card-header">
+        <div mat-card-avatar [ngStyle]="{ 'background-image': 'url(' + post.publisherImg + ')'}" class="profile-image" (click)="pressOneUser(post.publisherId)"></div>
+        <mat-card-title>{{post.publisher}}</mat-card-title>
+        <mat-card-subtitle>{{post.publisherIntro}}</mat-card-subtitle>
+      </mat-card-header>
+      <h1>{{post.title}}</h1>
+      <mat-divider></mat-divider>
+      <mat-card-content class="ql-editor font-size20">
+        <p [innerHTML]="safeHtml"></p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!--=================== 앨범 =====================-->
+  <div *ngIf="classify == 'elbum'" class="detail-elbum">
+    <mat-card class="detail-post-card">
+      <mat-card-header class="post-card-header">
+        <div mat-card-avatar [ngStyle]="{ 'background-image': 'url(' + post.publisherImg + ')'}" class="profile-image" (click)="pressOneUser(post.publisherId)"></div>
+        <mat-card-title>{{post.publisher}}</mat-card-title>
+        <mat-card-subtitle>{{post.publisherIntro}}</mat-card-subtitle>
+      </mat-card-header>
+      <div *ngFor="let image of post.images">
+        <img class="detail-elbum-image" src="{{image}}">
+      </div>
+      <mat-card-content>
+        <p class="detail-elbum-body">{{post.body}}</p>
+      </mat-card-content>
+      <button mat-raised-button (click)="pressImageDownload(post.images)">총 [{{post.images.length}}]개의 이미지 다운로드</button>
+    </mat-card>
+  </div>
+
+  <!--=================== 지도 =====================-->
+  <div *ngIf="classify == 'map'" class="detail-map">
+    <mat-card class="detail-post-card">
+      <mat-card-header class="post-card-header">
+        <div mat-card-avatar [ngStyle]="{ 'background-image': 'url(' + post.publisherImg + ')'}" class="profile-image" (click)="pressOneUser(post.publisherId)"></div>
+        <mat-card-title>{{post.publisher}}</mat-card-title>
+        <mat-card-subtitle>{{post.publisherIntro}}</mat-card-subtitle>
+      </mat-card-header>
+      <h1 class="detail-elbum-card-title">{{post.title}}
+        <mat-chip-list aria-orientation="horizontal" class="detail-chip">
+          <mat-chip  *ngFor="let tag of post.tag" color="primary">{{tag}}</mat-chip>
+        </mat-chip-list>
+      </h1>
+
+      <!-- 이미지 표시 -->
+      <mat-grid-list cols="{{appService.isPhone?'1':'2'}}" rowHeight="1:2" rowHeight="400px" gutterSize="0px" class="detail-elbum-imglist" *ngIf="post.images.length != 0">
+          <mat-grid-tile *ngFor="let image of post.images">
+              <mat-card class="elbum-card" (click)="openImageVeiwer(image)">
+                  <img class="detail-map-card-img" src="{{image}}" alt="Photo">
+              </mat-card>
+          </mat-grid-tile>
+      </mat-grid-list>
+
+      <mat-card-content>
+        <p>{{post.body}}</p>
+      </mat-card-content>
+      <agm-map class="agm-map" [latitude]="marker.lat" [longitude]="marker.lng" [zoom]="15" [disableDefaultUI]="false" [zoomControl]="true">
+        <agm-marker
+            [latitude]="marker.lat"
+            [longitude]="marker.lng"
+            [label]="marker.label">
+        </agm-marker>
+      </agm-map>
+    </mat-card>
+  </div>
+
+  <!--=================== 일정 =====================-->
+  <div *ngIf="classify == 'schedule'" class="detail-post">
+    <mat-card class="detail-post-card">
+      <mat-card-header class="post-card-header">
+        <div mat-card-avatar [ngStyle]="{ 'background-image': 'url(' + post.publisherImg + ')'}" class="profile-image" (click)="pressOneUser(post.publisherId)"></div>
+        <mat-card-title>{{post.publisher}}</mat-card-title>
+        <mat-card-subtitle>{{post.publisherIntro}}</mat-card-subtitle>
+      </mat-card-header>
+      <h1>{{post.title}}</h1>
+      <mat-divider></mat-divider>
+      <mat-card-content class="font-size20">
+        <p></p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!--=================== 좋아요 싫어요 글삭제 =====================-->
+  <div class="detail-goodBad" *ngIf="!isMine">
+    <button mat-raised-button color="primary" class="detail-goodBad-btn" (click)="pressGood(post.postsID)">좋아요({{post?post.good:0}})</button>
+    <button mat-raised-button color="accent" class="detail-goodBad-btn" (click)="pressBad(post.postsID)">싫어요({{post?post.bad:0}})</button>
+  </div>
+  <div class="detail-goodBad" *ngIf="isMine">
+    <button mat-raised-button color="primary" class="detail-goodBad-btn" (click)="pressGood(post.postsID)">좋아요({{post?post.good:0}})</button>
+    <button mat-raised-button color="accent" class="detail-goodBad-btn" (click)="pressBad(post.postsID)">싫어요({{post?post.bad:0}})</button>
+    <button mat-raised-button color="accent" class="detail-goodBad-btn" (click)="pressDeletePost(post.postsID)">게시글 삭제하기</button>
+  </div>
+  <!--=================== 코맨트 =====================-->
+  <mat-list>
+    <mat-list-item *ngFor="let thisComment of comments" class="detail-comment">
+      <div mat-list-icon [ngStyle]="{ 'background-image': 'url(' + thisComment.userImg + ')'}" class="profile-image" (click)="pressOneUser(thisComment.userId)"></div>
+      <h4 mat-line>{{thisComment.userName}}</h4>
+      <p mat-line>{{thisComment.commentDate}}</p>
+      <div class="comment-content" [innerHTML]="replaceLineBreak(thisComment.comment)"></div>
+      <button mat-mini-fab color="accent" class="comment-remove-btn" (click)="pressDeleteComment(thisComment.commentId)" *ngIf="thisComment.userId == appService.myInfo.userId">삭제</button>
+    </mat-list-item>
+  </mat-list>
+  <!--=================== 코맨트 달기 =====================-->
+  <mat-list>
+    <mat-list-item class="detail-comment-input">
+      <div mat-list-icon [ngStyle]="{ 'background-image': 'url(' + appService.myInfo.image + ')'}" class="profile-image"></div>
+      <h4 mat-line>{{appService.myInfo.name}}</h4>
+      <!-- <p mat-line>{{comment.commentDate | date:'M월 d일 H시'}}</p> -->
+      <mat-form-field class="comment-content-input">
+        <textarea [(ngModel)]="commentInput" #comment matInput placeholder="댓글달기" style="resize:none; height: 70px;"></textarea>
+      </mat-form-field>
+    </mat-list-item>
+  </mat-list>
+
+  <div class="detail-regist-comment">
+    <button mat-raised-button (click)="pressCommentRegist(comment.value)">댓글 등록하기</button>
+    <button mat-raised-button (click)="fileInput.click()">이미지 등록</button>
+    <button mat-raised-button (click)="openEmoticonDialog()">이모티콘 등록</button>
+  </div>
+</div>
+
+<input hidden #fileInput type='file' accept="image/*" (change)="uploadImages($event)">

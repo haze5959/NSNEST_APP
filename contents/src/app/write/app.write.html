@@ -1,0 +1,94 @@
+<input hidden #fileInput type='file' accept="image/*" (change)="addImageAndUploadServer($event)" multiple>
+<div class="app-write">
+    <!--=================== 게시글 작성 =====================-->
+    <div *ngIf="classify == 'post'" class="write-editor">
+        <mat-form-field class="write-title">
+            <input matInput placeholder="게시글 제목" [formControl]="titleFormControl">
+            <mat-error *ngIf="titleFormControl.invalid">제목 입력해라</mat-error>
+        </mat-form-field>
+
+        <quill-editor [modules]="editorModule" [formControl]="editorContent" (onEditorCreated)="onEditorCreated($event)" [style]="{height: '100%'}">
+        </quill-editor>
+
+        <!-- 수정 저장 -->
+        <button class="write-save-btn" mat-raised-button color="primary" (click)="pressSaveBtn()">올리기</button>
+    </div>
+
+    <!--=================== 앨범 올리기 =====================-->
+    <form *ngIf="classify == 'elbum'" class="write-elbum">
+        <!-- <mat-form-field class="write-title">
+            <input matInput placeholder="게시글 제목" [formControl]="titleFormControl">
+        </mat-form-field> -->
+        <mat-form-field class="write-elbum-desc">
+            <textarea matInput [formControl]="editorContent" placeholder="게시글 설명"></textarea>
+        </mat-form-field>
+    
+        <!-- 이미지 인풋 -->
+        <button mat-raised-button color="primary" (click)="fileInput.click()" style="margin-bottom:20px;">이미지 등록</button>
+        
+        <!-- 이미지 표시 -->
+        <mat-grid-list cols="{{appService.isPhone?'1':'3'}}" rowHeight="1:2" rowHeight="400px" gutterSize="20px">
+            <mat-grid-tile *ngFor="let image of imageArr; let index = index">
+                <mat-card class="elbum-card">
+                    <img mat-card-image class="elbum-image" src="{{image}}" alt="Photo">
+                    <mat-card-actions>
+                        <button mat-raised-button color="primary" style="margin-bottom:10px;" (click)="pressDeleteImage(index)">삭제</button>
+                        <button mat-raised-button color="primary" style="margin-bottom:10px;" (click)="pressDetailmage(index)">자세히 보기</button>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+        
+        <!-- 수정 저장 -->
+        <button class="write-save-btn" mat-raised-button color="primary" (click)="pressSaveBtn()">올리기</button>
+    </form>
+
+    <!--=================== 지도 작성 =====================-->
+    <div *ngIf="classify == 'map'" class="write-map">
+        <mat-form-field class="write-title">
+            <input matInput placeholder="지점명" [formControl]="titleFormControl">
+        </mat-form-field>
+        <section class="map-section">
+            <mat-radio-group [(ngModel)]="selectType">
+              <mat-radio-button class="map-margin" value="cafe">카페</mat-radio-button>
+              <mat-radio-button class="map-margin" value="restaurant">맛집</mat-radio-button>
+              <mat-radio-button class="map-margin" value="drinkBar">술집</mat-radio-button>
+              <mat-radio-button class="map-margin" value="friendRoom">친구집</mat-radio-button>
+              <mat-radio-button class="map-margin" value="entertainment">편의시설</mat-radio-button>
+              <mat-radio-button class="map-margin" value="etc">기타</mat-radio-button>
+            </mat-radio-group>
+        </section>
+        <mat-form-field class="write-elbum-desc">
+            <textarea matInput [formControl]="editorContent" placeholder="메뉴나 대략적인 가격, 분위기 등을 적어주세요."></textarea>
+        </mat-form-field>
+
+        <agm-map class="agm-map" [latitude]="37.520000" [longitude]="127.000000" [zoom]="12" [disableDefaultUI]="false" [zoomControl]="true" (mapClick)="mapClicked($event)" (mapReady)="mapReady($event)">
+            <agm-marker *ngIf="marker"
+                [latitude]="marker.lat"
+                [longitude]="marker.lng"
+                [label]="marker.label">
+            </agm-marker>
+        </agm-map>
+
+        <!-- [Cordova]현재위치 표시 -->
+        <button mat-raised-button color="primary" (click)="cordovaLocationService()" style="margin-top:10px; margin-bottom:10px;">현재 위치 등록</button>
+        <!-- 이미지 인풋 -->
+        <button mat-raised-button color="primary" (click)="fileInput.click()" style="margin-top:10px; margin-bottom:10px;">이미지 등록</button>
+        
+        <!-- 이미지 표시 -->
+        <mat-grid-list cols="{{appService.isPhone?'1':'3'}}" rowHeight="1:2" rowHeight="400px" gutterSize="20px">
+            <mat-grid-tile *ngFor="let image of imageArr; let index = index">
+                <mat-card class="elbum-card">
+                    <img mat-card-image class="elbum-image" src="{{image}}" alt="Photo">
+                    <mat-card-actions>
+                        <button mat-raised-button color="primary" style="margin-bottom:10px;" (click)="pressDeleteImage(index)">삭제</button>
+                        <button mat-raised-button color="primary" style="margin-bottom:10px;" (click)="pressDetailmage(index)">자세히 보기</button>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <!-- 수정 저장 -->
+        <button class="write-save-btn" mat-raised-button color="primary" (click)="pressSaveBtn()">올리기</button>
+    </div>
+</div>

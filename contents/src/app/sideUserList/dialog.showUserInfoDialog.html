@@ -1,0 +1,19 @@
+<!-- max-height: 500px; -->
+<mat-card>
+    <mat-card-header style="margin-bottom: 20px;">
+        <mat-card-title>{{user.name}}</mat-card-title>
+        <mat-card-subtitle>{{user.intro}}</mat-card-subtitle>
+    </mat-card-header>
+    <b style="display: block; margin-bottom: 10px;">잉어력: {{user.point}}</b>
+    <b style="display: block; margin-bottom: 10px;">학번: {{user.studentNum}}</b>
+    <b style="display: block; margin-bottom: 10px;">생일: {{user.birthDay}}</b>
+    <b style="display: block; margin-bottom: 10px;">성별: {{user.gender}}</b>
+    <b style="display: block; margin-bottom: 10px;">최근활동일: {{user.recentDate}}</b>
+    <img mat-card-image src="{{user.image}}" alt="user image">
+    <mat-card-content>
+        <pre>{{user.description}}</pre>
+    </mat-card-content>
+    <!-- <mat-card-actions>
+        <button mat-button>PUSH PUSH</button>
+    </mat-card-actions> -->
+</mat-card>

@@ -1,0 +1,48 @@
+<div class="app-elbum">
+
+    <div class="elbum-header">
+        <!-- <mat-form-field style="width: 60%;">
+            <input #filterBtn matInput placeholder="Filter">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="applyFilter(filterBtn.value)">검색</button> -->
+    </div>
+    <mat-grid-list cols="{{appService.isPhone?'1':'2'}}" rowHeight="1:2" rowHeight="{{appService.isPhone?'550px':'650px'}}">
+        <mat-grid-tile *ngFor="let postImage of postImages">
+            <mat-card class="elbum-card" (click)="pressOneImage(postImage.postsID)">
+                <mat-card-header class="card-header">
+                    <div mat-card-avatar class="elbum-header-image" [ngStyle]="{ 'background-image': 'url(' + postImage.publisherImg + ')'}"></div>
+                    <mat-card-title>{{postImage.publisher}}</mat-card-title>
+                    <mat-card-subtitle>{{postImage.publisherIntro}}</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image src="{{postImage.images[0]}}" alt="Photo">
+                <div class="mat-card-image-cover" *ngIf="postImage.images && postImage.images.length > 1">{{postImage.images.length}} +</div>
+                <mat-card-content>
+                    <p>
+                        {{postImage.body}}
+                    </p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <!-- <button mat-button>좋아요</button>
+                    <button mat-button>끔찍해요</button> -->
+                    <div class="like-btn">
+                        <mat-icon mat-list-icon style="color: red;">favorite</mat-icon>
+                        {{postImage.good}}
+                    </div>
+                    <div class="dislike-btn">
+                        <mat-icon mat-list-icon>thumb_down</mat-icon>
+                        {{postImage.bad}}
+                    </div>
+                    <div class="comment-count">
+                        <mat-icon mat-list-icon>comment</mat-icon>
+                        {{postImage.commentCount}}
+                    </div>
+                    <div class="label-date">
+                        <mat-icon mat-list-icon>date_range</mat-icon>
+                        {{postImage.postDate}}
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <mat-paginator class="color-50" [length]="pageLength" [pageSize]="pageSize" [showFirstLastButtons]="true" [hidePageSize]="true" (page)="setPageEvent($event)"></mat-paginator>
+</div>

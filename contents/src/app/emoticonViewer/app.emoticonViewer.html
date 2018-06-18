@@ -1,0 +1,20 @@
+<!-- <mat-card class="app-card-emoticon"> -->
+        <tabset (onSelect)="tabChange($event)">
+            <tab title={{emoKey}} index={{emoKeyIndex}} *ngFor="let emoKey of emoticonKeyList; let emoKeyIndex = index">
+                <!-- 이모티콘 이미지들 -->
+                <mat-grid-list cols="{{appService.isPhone?'2':'4'}}" rowHeight="1:2" rowHeight="{{appService.isPhone?'100px':'150px'}}">
+                    <mat-grid-tile *ngFor="let emoticon of selectEmoticonList; let i = index">
+                    
+                        <img class="emoticon-img" src="{{emoticon}}" alt="Photo" (click)="pressEmoticon(i)">
+
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </tab>
+            <!-- <tab title="Panda">
+                Pandas are cool animals
+            </tab>
+            <tab title="Duck">
+                Ducks are cool animals too
+            </tab> -->
+        </tabset>
+<!-- </mat-card> -->

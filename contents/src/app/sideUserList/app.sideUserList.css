@@ -1,0 +1,30 @@
+.app-card-sideUserList {
+    width: 80%;
+    height: 85%;
+}
+
+.app-tab-group {
+    /* border: 1px solid #e8e8e8; */
+}
+
+.profile-image {
+    background-size: cover;
+}
+
+.profile-info {
+    margin: 0px 0px 0px 10px;
+}
+
+.profile-info-name {
+    margin: 0px;
+}
+
+.profile-info-intro {
+    margin: 0px;
+}
+
+@media screen and (max-width: 1000px) {
+    .app-card-sideUserList {
+        width: 100%;
+    }
+}
