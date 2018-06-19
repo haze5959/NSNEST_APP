@@ -2,10 +2,10 @@
 <widget id="com.nsnest" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>NSNEST</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        NSNEST Community
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="rnjsdhrb1@gmail.com" href="http://nsnest.iptime.org">
+        Kwon OQ
     </author>
     <content src="index.html" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
@@ -22,6 +22,7 @@
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+        <plugin name="PushPlugin" value="PushPlugin" />
     </platform>
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />

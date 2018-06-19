@@ -18,6 +18,8 @@
 		6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */; };
 		A65CD00BE5944A6DBD217FA1 /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BADA83B0A203411A8108FF16 /* CDVStatusBar.m */; };
 		CD87CE17FD1C4459930D018D /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D06B78C7A0A449E96EA17F7 /* CDVLocation.m */; };
+		CEBA3A1D20D8CB7F00550713 /* AppDelegate+notification.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBA3A1A20D8CB7F00550713 /* AppDelegate+notification.m */; };
+		CEBA3A1E20D8CB7F00550713 /* PushPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBA3A1B20D8CB7F00550713 /* PushPlugin.m */; };
 		FD1CD6900E49409EA7C7F22F /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FF908E79D1471CA05B21BE /* CDVSplashScreen.m */; };
 /* End PBXBuildFile section */
 
@@ -69,8 +71,16 @@
 		9531BDF63B564E00B44EB341 /* CDVViewController+SplashScreen.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = "CDVViewController+SplashScreen.m"; path = "cordova-plugin-splashscreen/CDVViewController+SplashScreen.m"; sourceTree = "<group>"; };
 		9764BA575FA946179F3C68BC /* CDVViewController+SplashScreen.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "CDVViewController+SplashScreen.h"; path = "cordova-plugin-splashscreen/CDVViewController+SplashScreen.h"; sourceTree = "<group>"; };
 		A9FF908E79D1471CA05B21BE /* CDVSplashScreen.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVSplashScreen.m; path = "cordova-plugin-splashscreen/CDVSplashScreen.m"; sourceTree = "<group>"; };
+		B12044CC6417DD382EF4DB83 /* libPods-NSNEST.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NSNEST.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BADA83B0A203411A8108FF16 /* CDVStatusBar.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVStatusBar.m; path = "cordova-plugin-statusbar/CDVStatusBar.m"; sourceTree = "<group>"; };
 		C304E5C66C3544B6BF072600 /* CDVLocation.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVLocation.h; path = "cordova-plugin-geolocation/CDVLocation.h"; sourceTree = "<group>"; };
+		CEBA3A0B20D8C27500550713 /* libFirebaseCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFirebaseCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEBA3A0D20D8C27900550713 /* libGoogleToolboxForMac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libGoogleToolboxForMac.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEBA3A0F20D8C27C00550713 /* libnanopb.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libnanopb.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEBA3A1920D8CB7F00550713 /* AppDelegate+notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+notification.h"; sourceTree = "<group>"; };
+		CEBA3A1A20D8CB7F00550713 /* AppDelegate+notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+notification.m"; sourceTree = "<group>"; };
+		CEBA3A1B20D8CB7F00550713 /* PushPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushPlugin.m; sourceTree = "<group>"; };
+		CEBA3A1C20D8CB7F00550713 /* PushPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushPlugin.h; sourceTree = "<group>"; };
 		EB87FDF31871DA8E0020F90C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../www; sourceTree = "<group>"; };
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		ED33DF2A687741AEAF9F8254 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -124,6 +134,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				E422BF5763CCB8B8DC098518 /* Pods */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -154,7 +165,11 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CEBA3A0F20D8C27C00550713 /* libnanopb.a */,
+				CEBA3A0D20D8C27900550713 /* libGoogleToolboxForMac.a */,
+				CEBA3A0B20D8C27500550713 /* libFirebaseCore.a */,
 				04C2588AB6B04698AF4A4F97 /* CoreLocation.framework */,
+				B12044CC6417DD382EF4DB83 /* libPods-NSNEST.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -181,6 +196,10 @@
 		307C750510C5A3420062BCA9 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				CEBA3A1920D8CB7F00550713 /* AppDelegate+notification.h */,
+				CEBA3A1A20D8CB7F00550713 /* AppDelegate+notification.m */,
+				CEBA3A1C20D8CB7F00550713 /* PushPlugin.h */,
+				CEBA3A1B20D8CB7F00550713 /* PushPlugin.m */,
 				BADA83B0A203411A8108FF16 /* CDVStatusBar.m */,
 				6D6137E22D0E4A6A8B9D8A63 /* CDVStatusBar.h */,
 				A9FF908E79D1471CA05B21BE /* CDVSplashScreen.m */,
@@ -193,6 +212,13 @@
 			name = Plugins;
 			path = NSNEST/Plugins;
 			sourceTree = SOURCE_ROOT;
+		};
+		E422BF5763CCB8B8DC098518 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Pods;
+			sourceTree = "<group>";
 		};
 		EB87FDF11871DA420020F90C /* Staging */ = {
 			isa = PBXGroup;
@@ -234,8 +260,13 @@
 				LastUpgradeCheck = 510;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = Z97K7ZHNKX;
+						DevelopmentTeam = 3FS54SRT8S;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -247,6 +278,7 @@
 				en,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectReferences = (
 				{
@@ -317,7 +349,9 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
+				CEBA3A1D20D8CB7F00550713 /* AppDelegate+notification.m in Sources */,
 				A65CD00BE5944A6DBD217FA1 /* CDVStatusBar.m in Sources */,
+				CEBA3A1E20D8CB7F00550713 /* PushPlugin.m in Sources */,
 				FD1CD6900E49409EA7C7F22F /* CDVSplashScreen.m in Sources */,
 				58F88B133536403F8359197E /* CDVViewController+SplashScreen.m in Sources */,
 				CD87CE17FD1C4459930D018D /* CDVLocation.m in Sources */,
@@ -349,17 +383,24 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = Z97K7ZHNKX;
+				DEVELOPMENT_TEAM = 3FS54SRT8S;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NSNEST/NSNEST-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = (
+					"\"$(TARGET_BUILD_DIR)/usr/local/lib/include\"",
+					"\"$(OBJROOT)/UninstalledProducts/include\"",
+					"\"$(OBJROOT)/UninstalledProducts/$(PLATFORM_NAME)/include\"",
+					"\"$(BUILT_PRODUCTS_DIR)\"",
+					"\"$(inherited)\"",
+				);
 				INFOPLIST_FILE = "NSNEST/NSNEST-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nsnest2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nsnest;
 				PRODUCT_NAME = NSNEST;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -379,15 +420,22 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				DEVELOPMENT_TEAM = Z97K7ZHNKX;
+				DEVELOPMENT_TEAM = 3FS54SRT8S;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NSNEST/NSNEST-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = (
+					"\"$(TARGET_BUILD_DIR)/usr/local/lib/include\"",
+					"\"$(OBJROOT)/UninstalledProducts/include\"",
+					"\"$(OBJROOT)/UninstalledProducts/$(PLATFORM_NAME)/include\"",
+					"\"$(BUILT_PRODUCTS_DIR)\"",
+					"\"$(inherited)\"",
+				);
 				INFOPLIST_FILE = "NSNEST/NSNEST-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nsnest2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nsnest;
 				PRODUCT_NAME = NSNEST;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

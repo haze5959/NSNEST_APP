@@ -10,7 +10,7 @@
     <button type="button" mat-button (click)="sidenav.open()" class="app-showSidenavBtn">
         <mat-icon>account_circle</mat-icon>
     </button>
-    <button type="button" mat-button (click)="openSideUserListDialog()" [ngClass]="appService && appService.isPhone?'app-showSidenavBtn':'app-showSidenavBtn-hide'">
+    <button type="button" mat-button (click)="openSideUserListDialog()" [ngClass]="appService && appService.isPhone?'app-showSidenavBtn':'app-showSidenavBtn-hide'" [disabled]="!appService || !appService.isAppLogin">
       <!-- PC의 경우 사이드뷰로 대체 -->
         <mat-icon>people</mat-icon> 
     </button>
@@ -49,7 +49,6 @@
     <button mat-menu-item>알CALL!!(공사 중...)</button>
     <button mat-menu-item>실시간 그림판(공사 중...)</button>
     <button mat-menu-item>낙둥뮤직(공사 중...)</button>
-    <button mat-menu-item>관리자 화면(이모티콘 등록)</button>
   </mat-menu>
 
   <!-- PC 화면 컨텐츠 -->
