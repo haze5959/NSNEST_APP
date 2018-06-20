@@ -30,12 +30,15 @@
     <feature name="Geolocation">
         <param name="ios-package" value="CDVLocation" />
     </feature>
+    <feature name="FCMPlugin">
+        <param name="ios-package" value="FCMPlugin" />
+    </feature>
     <name>NSNEST</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        NSNEST Community
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="rnjsdhrb1@gmail.com" href="http://nsnest.iptime.org">
+        Kwon OQ
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -62,7 +65,4 @@
     <preference name="PaginationMode" value="unpaginated" />
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="StatusBarStyle" value="lightcontent" />
-    <feature name="FCMPlugin">
-        <param name="ios-package" value="FCMPlugin" />
-    </feature>
 </widget>
