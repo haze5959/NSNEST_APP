@@ -25,6 +25,10 @@
     margin-bottom: 20px;
 }
 
+.card-header-regitdate {
+    margin-left: auto;
+}
+
 .detail-chip {
     float: right;
 }

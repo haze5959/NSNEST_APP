@@ -18,6 +18,9 @@
     },
     "cordova-plugin-geolocation": {
       "PACKAGE_NAME": "com.nsnest"
+    },
+    "cordova-plugin-fcm": {
+      "PACKAGE_NAME": "com.nsnest"
     }
   },
   "dependent_plugins": {}

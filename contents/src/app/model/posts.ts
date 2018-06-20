@@ -18,4 +18,5 @@ export class posts {
     marker?: marker;
     tag?: Array<string>;
     commentCount?: number;
+    regitDate?: string;
 }

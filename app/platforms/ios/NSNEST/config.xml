@@ -62,4 +62,7 @@
     <preference name="PaginationMode" value="unpaginated" />
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="StatusBarStyle" value="lightcontent" />
+    <feature name="FCMPlugin">
+        <param name="ios-package" value="FCMPlugin" />
+    </feature>
 </widget>

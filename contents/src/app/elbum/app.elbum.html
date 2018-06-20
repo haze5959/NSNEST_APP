@@ -36,9 +36,9 @@
                         <mat-icon mat-list-icon>comment</mat-icon>
                         {{postImage.commentCount}}
                     </div>
-                    <div class="label-date">
-                        <mat-icon mat-list-icon>date_range</mat-icon>
-                        {{postImage.postDate}}
+                    <div class="label-date" *ngIf="postImage.regitDate">
+                        <mat-icon mat-list-icon style="vertical-align: sub;">date_range</mat-icon>
+                        {{postImage.regitDate}}
                     </div>
                 </mat-card-actions>
             </mat-card>

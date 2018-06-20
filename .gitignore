@@ -1,3 +1,7 @@
 app/platforms/ios/Index/
 app/platforms/ios/I/
 app/platforms/ios/NSNEST.xcworkspace/
+app/platforms/android/.gradle/
+app/platforms/android/.idea/
+app/platforms/android/app/build/
+app/platforms/android/CordovaLib/build/

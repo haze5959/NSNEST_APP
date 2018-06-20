@@ -6,6 +6,10 @@
         <div mat-card-avatar [ngStyle]="{ 'background-image': 'url(' + post.publisherImg + ')'}" class="profile-image" (click)="pressOneUser(post.publisherId)"></div>
         <mat-card-title>{{post.publisher}}</mat-card-title>
         <mat-card-subtitle>{{post.publisherIntro}}</mat-card-subtitle>
+        <div class="card-header-regitdate" *ngIf="post.regitDate">
+          <mat-icon mat-list-icon style="vertical-align: sub;">date_range</mat-icon>
+            {{post.regitDate}}
+        </div>
       </mat-card-header>
       <h1>{{post.title}}</h1>
       <mat-divider></mat-divider>

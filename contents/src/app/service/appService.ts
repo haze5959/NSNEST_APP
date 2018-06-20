@@ -21,7 +21,8 @@ import { marker } from '../model/marker';
 import { Subscriber } from 'rxjs';
 
 declare var device;
-declare var window;
+declare var FCMPlugin;
+// declare var window;
 
 @Injectable()
 export class AppService implements LoggedInCallback {
@@ -65,86 +66,20 @@ export class AppService implements LoggedInCallback {
     document.addEventListener('deviceready', function() { 
       alert('OQ - ' + device.platform); 
     }, false); 
-  }
 
-  registPush(){
-    let pushNotification = window.plugins.pushNotification;
-    console.log('OQ1 - ' + pushNotification);
-    
-    if (device.platform == 'android' || device.platform == 'Android') {
-      pushNotification.register(this.successHandler, this.errorHandler, {"senderID":"replace_with_sender_id","ecb":"onNotificationGCM"});
-    } else {
-      pushNotification.register(this.tokenHandler, this.errorHandler, {"badge":"true","sound":"true","alert":"true","ecb":"onNotificationAPN"});
-    }
-  }
+    FCMPlugin.onNotification(data => {
+      if(data.wasTapped){
+        //Notification was received on device tray and tapped by the user.
+        alert( JSON.stringify(data) );
+      }else{
+        //Notification was received in foreground. Maybe the user needs to be notified.
+        alert( JSON.stringify(data) );
+      }
+    });
 
-  successHandler (result) {
-    alert('result = '+result)
-  }
-
-  errorHandler (error) {
-    alert('error = '+error)
-  }
-
-  // iOS
-  onNotificationAPN(event) {
-    if (event.alert) {
-      alert(event.alert);
-    }
-    
-    // if (event.sound) {
-    //   var snd = new Media(event.sound);
-    //   snd.play();
-    // }
-    
-    if (event.badge) {
-      let pushNotification = window.plugins.pushNotification;
-      pushNotification.setApplicationIconBadgeNumber(this.successHandler, this.errorHandler, event.badge);  //iOS only
-    }
-  }
-
-  // Android
-  onNotificationGCM(e) {
-    
-    switch( e.event )
-    {
-      case 'registered':
-        if ( e.regid.length > 0 ){
-          // Your GCM push server needs to know the regID before it can push to this device
-          // here is where you might want to send it the regID for later use.
-          console.log("regID = " + e.regID);
-        }
-        break;
-      
-      case 'message':
-        // if this flag is set, this notification happened while we were in the foreground.
-        // you might want to play a sound to get the user's attention, throw up a dialog, etc.
-        if (e.foreground){
-  
-        // if the notification contains a soundname, play it.
-
-        } else {	// otherwise we were launched because the user touched a notification in the notification tray.
-
-        }
-
-        console.log('OQ - ' + e.payload.message);
-        console.log('OQ - ' + e.payload.msgcnt);
-      break;
-        
-              
-      case 'error':
-        console.error('OQ - ' + e.msg);
-      break;
-      default:
-      console.error('Wrong event');
-      break;
-    }
-}
-
-  tokenHandler (result) {
-    // Your iOS push server needs to know the token before it can push to this device
-    // here is where you might want to send it the token for later use.
-    alert('device token = '+result)
+    FCMPlugin.onTokenRefresh(function(token){
+      alert( token );
+    });
   }
 
   isTokenExpired(token: string) {
@@ -189,7 +124,8 @@ export class AppService implements LoggedInCallback {
           postDate: element[12],
           marker: marker,
           tag: tagArr,
-          commentCount: element[15]
+          commentCount: element[15],
+          regitDate: element[16]
         };
         result.push(posts);
     });
@@ -233,7 +169,8 @@ export class AppService implements LoggedInCallback {
           postDate: element[10],
           marker: marker,
           tag: tagArr,
-          commentCount: element[13]
+          commentCount: element[13],
+          regitDate: element[14]
         };
         result.push(posts);
     });
