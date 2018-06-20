@@ -77,7 +77,7 @@ export class AppService implements LoggedInCallback {
       }
     });
 
-    FCMPlugin.onTokenRefresh(function(token){
+    FCMPlugin.onTokenRefresh(token => {
       alert( token );
     });
   }
