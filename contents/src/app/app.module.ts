@@ -30,7 +30,8 @@ import {
   MatCheckboxModule,
   MatRadioModule,
   MatSnackBarModule,
-  MatChipsModule
+  MatChipsModule,
+  MatSlideToggleModule
 } from '@angular/material';
 
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -116,7 +117,8 @@ import { TAB_COMPONENTS  } from './emoticonViewer/Tabset';
     MatRadioModule,
     MatSnackBarModule,
     MatChipsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSlideToggleModule
   ],
   providers: [
     AppService,

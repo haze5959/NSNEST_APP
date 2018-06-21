@@ -20,7 +20,9 @@ export class AppNewspeed implements OnInit, OnDestroy {
   onPull() {
     if(!this.isInProgress){
       this.isInProgress = true;
-      this.initPosts(); 
+      setTimeout(() => {
+        this.initPosts(); 
+      }, 500);
     }
   }
   constructor(private router: Router, private httpService: HttpService, public appService: AppService, private cognitoUtil: CognitoUtil) {}

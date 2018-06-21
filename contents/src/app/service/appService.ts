@@ -6,6 +6,8 @@ import { Ng2DeviceService } from 'ng2-device-detector';
 import { UserLoginService } from "../service/awsService/user-login.service";
 import { HttpService } from '../service/http.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
+import { CookieService } from 'ngx-cookie-service';
 
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
@@ -35,6 +37,7 @@ export class AppService implements LoggedInCallback {
   isAppLoading = true;  //로딩 프로그레스를 보일지말지를 관장하는 환경변수
   isAppLogin = false;  //로그인이 됐는지 안됐는지 관장
   isPhone = false;
+  commentPushChecked = false; //코맨트 푸시 설정했는지 안했는지
 
   // 상태저장
   newspeedPosts: posts[] = [];
@@ -45,7 +48,7 @@ export class AppService implements LoggedInCallback {
   });
   refreshSubscriber:Subscriber<{}>;
 
-  constructor(private router: Router, private cognitoUtil: CognitoUtil, private deviceService: Ng2DeviceService, private userService: UserLoginService, private httpService: HttpService) {
+  constructor(private router: Router, private cognitoUtil: CognitoUtil, private deviceService: Ng2DeviceService, private userService: UserLoginService, private httpService: HttpService, public snackBar: MatSnackBar, private cookieService:CookieService) {
     this.userService.isAuthenticated(this); //로그인 중인지 검사
     
     let deviceInfo = this.deviceService.getDeviceInfo();
@@ -63,23 +66,70 @@ export class AppService implements LoggedInCallback {
       image: this.emptyUserImage
     }
 
-    document.addEventListener('deviceready', function() { 
-      alert('OQ - ' + device.platform); 
-    }, false); 
-
     FCMPlugin.onNotification(data => {
       if(data.wasTapped){
         //Notification was received on device tray and tapped by the user.
-        alert( JSON.stringify(data) );
+        alert( 'BG - ' + JSON.stringify(data) );
       }else{
         //Notification was received in foreground. Maybe the user needs to be notified.
-        alert( JSON.stringify(data) );
+        // alert( 'FG - ' + JSON.stringify(data) );
+        let type:number = data.type?data.type:0;
+
+        switch (Number(type)) {
+          case 10:  //게시글
+            this.snackBar.open(`${data.user?data.user:''}님이 게시글을 올렸습니다.`, '확인');
+            break;
+
+          case 20:  //댓글
+            this.snackBar.open(`${data.user?data.user:''}님이 댓글을 올렸습니다.`, '확인');
+            break;
+        
+          default:
+            this.snackBar.open(`알 수 없는 푸시`, '확인');
+            break;
+        }
       }
     });
 
     FCMPlugin.onTokenRefresh(token => {
-      alert( token );
+      alert( '톡끈 - ' + token );
+      FCMPlugin.subscribeToTopic('all');
+      this.setCommentPush(true);
     });
+  }
+
+  setCommentPushBtn(){
+    var commentPush:string = this.cookieService.get('push_commet');
+    if(commentPush == '1'){ //사용
+      this.commentPushChecked = true;
+    } else if(commentPush == '0'){ //미사용
+      this.commentPushChecked = false;
+    } else {  //처음
+      this.setCommentPush(true);
+    }
+  }
+
+  setCommentPush(isEnalble:boolean){
+    //댓글 주제 푸시==================================================
+    var commentPush:string = this.cookieService.get('push_commet');
+    if(!commentPush){
+      FCMPlugin.subscribeToTopic('comment');
+      this.cookieService.set('push_commet', '1');
+
+    } else {
+      if(isEnalble){  //사용
+        FCMPlugin.subscribeToTopic('comment');
+        this.cookieService.set('push_commet', '1');
+
+      } else {  //해제
+        FCMPlugin.unsubscribeFromTopic('comment');
+        this.cookieService.set('push_commet', '0');
+
+      }
+    }
+
+    this.setCommentPushBtn();
+    //=============================================================
   }
 
   isTokenExpired(token: string) {
@@ -282,6 +332,7 @@ export class AppService implements LoggedInCallback {
           if(data.length > 0){
             this.myInfo = this.userFactory(data)[0]; //로그인 유저 매핑
             this.isAppLogin = true;
+            this.setCommentPushBtn();
             this.refreshSubscriber.next(true);
           } else {
             console.error("[error] - error: 데이터 없음");

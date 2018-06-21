@@ -6,6 +6,7 @@ import { ShowDetailImageDialog } from '../image-viewer/image-viewer.component';
 import { UserLoginService } from "../service/awsService/user-login.service";
 import { CognitoCallback } from "../service/awsService/cognito.service";
 import { environment } from '../../environments/environment';
+import { CookieService } from 'ngx-cookie-service';
 
 import { AppService } from '../service/appService';
 import { CognitoUtil } from '../service/awsService/cognito.service';
@@ -24,7 +25,7 @@ export class AppUserInfo implements CognitoCallback, OnInit {
   userId = new FormControl('', [Validators.required]);
   userPw = new FormControl('', [Validators.required]);
  
-  constructor(public dialog: MatDialog, private userService: UserLoginService, private snackBar: MatSnackBar, public appService: AppService, private httpService: HttpService, private cognitoUtil: CognitoUtil, private router: Router) {}
+  constructor(public dialog: MatDialog, private userService: UserLoginService, private snackBar: MatSnackBar, public appService: AppService, private httpService: HttpService, private cookieService:CookieService) {}
 
   ngOnInit(){
     // this.appService.isAppLoading = true;
@@ -139,6 +140,7 @@ export class AppUserInfo implements CognitoCallback, OnInit {
           if(data.length > 0){
             this.appService.myInfo = this.appService.userFactory(data)[0]; //로그인 유저 매핑
             this.appService.isAppLogin = true;
+            this.appService.setCommentPushBtn();
             this.snackBar.open("로그인 성공", "확인", {
               duration: 2000,
             });
@@ -159,6 +161,14 @@ export class AppUserInfo implements CognitoCallback, OnInit {
           this.appService.isAppLoading = false;
         }
       );
+    }
+  }
+
+  pressCommentPush(e){
+    if (e.checked == true) {
+      this.appService.setCommentPush(true);
+    } else {
+      this.appService.setCommentPush(false);
     }
   }
 }
