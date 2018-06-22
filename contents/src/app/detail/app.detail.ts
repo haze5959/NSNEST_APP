@@ -235,7 +235,7 @@ export class AppDetail implements OnInit {
         postId: this.postId,
         // studentNum: 99,
         userId: this.appService.myInfo.userId,
-        // userName: "에러",
+        userName: this.appService.myInfo.name,
         // userImg: null,
         emoticon: '',
         comment: comment

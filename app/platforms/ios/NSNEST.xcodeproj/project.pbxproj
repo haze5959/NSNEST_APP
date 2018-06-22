@@ -320,8 +320,8 @@
 				LastUpgradeCheck = 510;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = 3FS54SRT8S;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = Z97K7ZHNKX;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -457,12 +457,12 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 오규 권 (AM9UZ3FW7P)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 오규 권 (AM9UZ3FW7P)";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = 3FS54SRT8S;
+				DEVELOPMENT_TEAM = Z97K7ZHNKX;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"NSNEST/Plugins/cordova-plugin-fcm\"",
@@ -490,9 +490,10 @@
 				INFOPLIST_FILE = "NSNEST/NSNEST-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nsnest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oq.nsnest;
 				PRODUCT_NAME = NSNEST;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "160266da-2011-4358-a06d-e45f16413285";
+				PROVISIONING_PROFILE_SPECIFIER = "NSNEST DEV";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -506,11 +507,11 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: OGyu kwon (Z97K7ZHNKX)";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = YES;
-				DEVELOPMENT_TEAM = 3FS54SRT8S;
+				DEVELOPMENT_TEAM = Z97K7ZHNKX;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"NSNEST/Plugins/cordova-plugin-fcm\"",
@@ -536,9 +537,10 @@
 				INFOPLIST_FILE = "NSNEST/NSNEST-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nsnest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oq.nsnest;
 				PRODUCT_NAME = NSNEST;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "da86f870-deb0-41c4-81c6-aa72e045b739";
+				PROVISIONING_PROFILE_SPECIFIER = "NSNEST 2018";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
