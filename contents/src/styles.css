@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+/* @import "~@angular/material/prebuilt-themes/indigo-pink.css"; */
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 body{
     position: absolute;
@@ -17,46 +18,46 @@ body{
 
 /* 색 */
 .color-primary{
-    background-color: #3F51B5;   
+    background-color: #9C27B0;   
 }
 .color-50{
     background-color: #E8EAF6;   
 }
 .color-100{
-    background-color: #C5CAE9;   
+    background-color: #E1BEE7;   
 }
 .color-200{
-    background-color: #9FA8DA;   
+    background-color: #CE93D8;   
 }
 .color-300{
-    background-color: #7986CB;   
+    background-color: #BA68C8;   
 }
 .color-400{
-    background-color: #5C6BC0;   
+    background-color: #AB47BC;   
 }
 .color-600{
-    background-color: #3949AB;   
+    background-color: #8E24AA;   
 }
 .color-700{
-    background-color: #303F9F;   
+    background-color: #7B1FA2;   
 }
 .color-800{
-    background-color: #283593;   
+    background-color: #6A1B9A;   
 }
 .color-900{
-    background-color: #1A237E;   
+    background-color: #4A148C;   
 }
 .color-A100{
-    background-color: #FF80AB;   
+    background-color: #EA80FC;   
 }
 .color-A200{
-    background-color: #FF4081;   
+    background-color: #E040FB;   
 }
 .color-A400{
-    background-color: #F50057;   
+    background-color: #D500F9;   
 }
 .color-A700{
-    background-color: #C51162;   
+    background-color: #AA00FF;   
 }
 
 /* 그림자 */
@@ -126,6 +127,17 @@ body{
 /* 디테일뷰의 게시글 이미지 크기를 맟추기 위함(quill 라이브러리를 써서 어쩔 수 없음) */
 .ql-editor > p > p > img { 
     max-width: 100% !important;
+}
+
+.posts-content > p > p > img { 
+    max-width: 100% !important;
+}
+
+.ql-video {
+    display: block;
+    max-width: 100%;
+    height: 35vmax;
+    width: 70vmax;
 }
 
 /* 스피너 */

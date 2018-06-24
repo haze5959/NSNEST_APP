@@ -1,4 +1,4 @@
-import { SafeStyle } from "@angular/platform-browser/src/security/dom_sanitization_service";
+import { SafeStyle, SafeHtml } from "@angular/platform-browser/src/security/dom_sanitization_service";
 import { marker } from "./marker";
 
 export class posts {
@@ -19,4 +19,5 @@ export class posts {
     tag?: Array<string>;
     commentCount?: number;
     regitDate?: string;
+    safeHtml?: SafeHtml;
 }

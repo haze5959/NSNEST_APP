@@ -6,6 +6,7 @@ import { Ng2DeviceService } from 'ng2-device-detector';
 import { UserLoginService } from "../service/awsService/user-login.service";
 import { HttpService } from '../service/http.service';
 import { Router } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -42,13 +43,14 @@ export class AppService implements LoggedInCallback {
   // 상태저장
   newspeedPosts: posts[] = [];
   newspeedScrollY:number = 10;
+  newspeedPageIndex:number = 1;
 
   refreshObserber = new Observable(observer => {
     this.refreshSubscriber = observer;
   });
   refreshSubscriber:Subscriber<{}>;
 
-  constructor(private router: Router, private cognitoUtil: CognitoUtil, private deviceService: Ng2DeviceService, private userService: UserLoginService, private httpService: HttpService, public snackBar: MatSnackBar, private cookieService:CookieService) {
+  constructor(private router: Router, private cognitoUtil: CognitoUtil, private deviceService: Ng2DeviceService, private userService: UserLoginService, private httpService: HttpService, public snackBar: MatSnackBar, private cookieService:CookieService, private sanitizer: DomSanitizer) {
     this.userService.isAuthenticated(this); //로그인 중인지 검사
     
     let deviceInfo = this.deviceService.getDeviceInfo();
@@ -176,6 +178,53 @@ export class AppService implements LoggedInCallback {
           tag: tagArr,
           commentCount: element[15],
           regitDate: element[16]
+        };
+        result.push(posts);
+    });
+
+    return result
+  }
+
+  postSafeHtmlFactory(postArr: Array<any>){
+    var result:posts[] = [];
+
+    postArr.forEach(element => {
+      let imageArr:string[] = [];
+      if(element[7]){
+        let imageStr:string = element[7];
+        imageArr = imageStr.split(',');
+      }
+
+      let marker:marker = null;
+      if(element[13]){
+        marker = JSON.parse(element[13]);
+      }
+
+      let tagArr:string[] = [];
+      if(element[14]){
+        let tagStr:string = element[14];
+        tagArr = tagStr.split(',');
+      }
+
+        let posts:posts = {
+          postsID: element[0],
+          postClassify: element[1],
+          studentNum: element[2],
+          publisherId: element[3],
+          publisher: element[4],
+          publisherIntro: element[5],
+          publisherImg: element[6]?element[6]:this.emptyUserImage,
+          images: imageArr,
+          title: element[8],
+          body: (element[1] == 10)?'':element[9],
+          good: element[10],
+          bad: element[11],
+          postDate: element[12],
+          marker: marker,
+          tag: tagArr,
+          commentCount: element[15],
+          regitDate: element[16],
+          safeHtml: (element[1] == 10)?this.sanitizer.bypassSecurityTrustHtml(element[9]):null
         };
         result.push(posts);
     });

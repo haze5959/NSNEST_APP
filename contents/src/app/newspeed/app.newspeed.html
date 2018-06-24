@@ -51,8 +51,12 @@
                             {{posts.bad}}
                         </div>
                     </mat-card-header>
-                    <mat-card-content>
+                    <mat-card-content class="posts-content" #postContent>
+                        <div class="posts-overflow-hidden" *ngIf="postContent.offsetHeight > 400 || (this.appService.isPhone && postContent.offsetHeight > 350)">
+                            <mat-icon mat-list-icon class="posts-overflow-arrow">expand_more</mat-icon>
+                        </div>
                         <h1>{{posts.title}}</h1>
+                        <p [innerHTML]="posts.safeHtml"></p>
                     </mat-card-content>
                 </mat-card>
 
@@ -78,7 +82,7 @@
                                 {{posts.bad}}
                             </div>
                         </mat-card-header>
-                        <img mat-card-image src="{{posts.images[0]}}" alt="Photo" onError="this.src='/../assets/testImage.jpg';">
+                        <img mat-card-image class="elbum-image" src="{{posts.images[0]}}" alt="Photo" onError="this.src='/../assets/testImage.jpg';">
                         <div class="mat-card-image-cover" *ngIf="posts.images.length > 1">{{posts.images.length}} +</div>
                         <mat-card-content>
                             <p class="posts-image-title"> {{posts.body}} </p>

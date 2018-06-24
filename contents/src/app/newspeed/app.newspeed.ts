@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { posts } from '../model/posts';
 import { Router } from '@angular/router';
 
 import { AppService } from "../service/appService";
@@ -13,7 +12,6 @@ import { PullToRefreshComponent } from './pullToRefresh';
   styleUrls: ['./app.newspeed.css']
 })
 export class AppNewspeed implements OnInit, OnDestroy {
-  pageIndex: number = 1;
 
   isInProgress:boolean = false;
 
@@ -52,12 +50,12 @@ export class AppNewspeed implements OnInit, OnDestroy {
 
   public initPosts(){
     if(this.cognitoUtil.getCurrentUser()){
-      this.pageIndex = 1;
+      this.appService.newspeedPageIndex = 1;
       this.appService.isAppLoading = true;
-      this.httpService.getPosts(0, "date", "desc", this.pageIndex) //해당 게시글 DB에서 빼온다
+      this.httpService.getPosts(0, "date", "desc", this.appService.newspeedPageIndex) //해당 게시글 DB에서 빼온다
       .subscribe(
         data => {
-          this.appService.newspeedPosts = this.appService.postFactory(data);
+          this.appService.newspeedPosts = this.appService.newspeedPageIndex(data);
           // console.log(JSON.stringify(this.recentPosts));
           this.isInProgress = false;
           setTimeout(() => {
@@ -91,15 +89,15 @@ export class AppNewspeed implements OnInit, OnDestroy {
    */
   onScroll () {
     this.appService.isAppLoading = true;
-    this.httpService.getPosts(0, "date", "desc", this.pageIndex + 1) //해당 게시글 DB에서 빼온다
+    this.httpService.getPosts(0, "date", "desc", this.appService.newspeedPageIndex + 1) //해당 게시글 DB에서 빼온다
     .subscribe(
       data => {
         // console.log(JSON.stringify(data));
         if(data.length == 0){ //데이터가 더이상 없을 경우
           alert("마지막 게시글 입니다.");
         } else {
-          this.appService.newspeedPosts = this.appService.newspeedPosts.concat(this.appService.postFactory(data));
-          this.pageIndex++;
+          this.appService.newspeedPosts = this.appService.newspeedPosts.concat(this.appService.newspeedPageIndex(data));
+          this.appService.newspeedPageIndex++;
         }
         
         this.appService.isAppLoading = false;
