@@ -11,7 +11,6 @@
 		03CCE8D26A4941A6B1E66AF4 /* GoogleSymbolUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A101C9A605E845FEBEE5CE64 /* GoogleSymbolUtilities.framework */; };
 		04406D524BC24E50B28F5381 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8889240C886D4591922DDEA3 /* libc++.tbd */; };
 		0E8ABB3D05064ABC9484C34D /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C1FDBD3515B4C288A7A506E /* FirebaseInstanceID.framework */; };
-		173A342920DA465F00D489D2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 173A342820DA465F00D489D2 /* GoogleService-Info.plist */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1EBF7C79FA38459188D6549E /* FirebaseMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7456FD92667A48438E631BE6 /* FirebaseMessaging.framework */; };
@@ -32,6 +31,10 @@
 		C23B193D9FE343ABAF390325 /* FCMPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = DC07E8FDC394440F9D055B11 /* FCMPlugin.m */; };
 		C91358A224E6493AB652693C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0013F027BFB6460BA0067F4C /* Security.framework */; };
 		CD87CE17FD1C4459930D018D /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D06B78C7A0A449E96EA17F7 /* CDVLocation.m */; };
+		CE3E675020E086EC00C671FD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE3E674F20E086EC00C671FD /* GoogleService-Info.plist */; };
+		CE3E675320E08EB700C671FD /* Entitlements-Debug.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE3E675120E08EB700C671FD /* Entitlements-Debug.plist */; };
+		CE3E675420E08EB700C671FD /* Entitlements-Release.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE3E675220E08EB700C671FD /* Entitlements-Release.plist */; };
+		CE3E675520E0A0B300C671FD /* NSNEST-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D1107310486CEB800E47090 /* NSNEST-Info.plist */; };
 		D38F5CBA98B246B6AC697F9A /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 500B932AC0864F2F85BA735B /* FirebaseAnalytics.framework */; };
 		E7B5923343EB49EA9C9BF328 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E3CCB827773409497B3610B /* AddressBook.framework */; };
 		FB42890958B4480F907D1ABE /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6A08B1CAC834ECB98BE50D3 /* GoogleUtilities.framework */; };
@@ -67,7 +70,6 @@
 		0207DA571B56EA530066E2B4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = NSNEST/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		04C2588AB6B04698AF4A4F97 /* CoreLocation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		05818EF15C854C63A9CDB013 /* FCMPlugin.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = FCMPlugin.h; path = "cordova-plugin-fcm/FCMPlugin.h"; sourceTree = "<group>"; };
-		173A342820DA465F00D489D2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "NSNEST/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* NSNEST.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NSNEST.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +107,9 @@
 		B6A08B1CAC834ECB98BE50D3 /* GoogleUtilities.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = GoogleUtilities.framework; path = "NSNEST/Plugins/cordova-plugin-fcm/GoogleUtilities.framework"; sourceTree = "<group>"; };
 		BADA83B0A203411A8108FF16 /* CDVStatusBar.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVStatusBar.m; path = "cordova-plugin-statusbar/CDVStatusBar.m"; sourceTree = "<group>"; };
 		C304E5C66C3544B6BF072600 /* CDVLocation.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVLocation.h; path = "cordova-plugin-geolocation/CDVLocation.h"; sourceTree = "<group>"; };
+		CE3E674F20E086EC00C671FD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CE3E675120E08EB700C671FD /* Entitlements-Debug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Entitlements-Debug.plist"; path = "NSNEST/Entitlements-Debug.plist"; sourceTree = "<group>"; };
+		CE3E675220E08EB700C671FD /* Entitlements-Release.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Entitlements-Release.plist"; path = "NSNEST/Entitlements-Release.plist"; sourceTree = "<group>"; };
 		CEBA3A0B20D8C27500550713 /* libFirebaseCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFirebaseCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEBA3A0D20D8C27900550713 /* libGoogleToolboxForMac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libGoogleToolboxForMac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEBA3A0F20D8C27C00550713 /* libnanopb.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libnanopb.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,6 +173,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				CE3E675120E08EB700C671FD /* Entitlements-Debug.plist */,
+				CE3E675220E08EB700C671FD /* Entitlements-Release.plist */,
 				EB87FDF41871DAF40020F90C /* config.xml */,
 				EB87FDF31871DA8E0020F90C /* www */,
 				EB87FDF11871DA420020F90C /* Staging */,
@@ -197,7 +204,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				173A342820DA465F00D489D2 /* GoogleService-Info.plist */,
+				CE3E674F20E086EC00C671FD /* GoogleService-Info.plist */,
 				0207DA571B56EA530066E2B4 /* Images.xcassets */,
 				3047A50E1AB8057F00498E2A /* config */,
 				8D1107310486CEB800E47090 /* NSNEST-Info.plist */,
@@ -376,8 +383,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */,
-				173A342920DA465F00D489D2 /* GoogleService-Info.plist in Resources */,
+				CE3E675320E08EB700C671FD /* Entitlements-Debug.plist in Resources */,
+				CE3E675020E086EC00C671FD /* GoogleService-Info.plist in Resources */,
+				CE3E675520E0A0B300C671FD /* NSNEST-Info.plist in Resources */,
 				0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */,
+				CE3E675420E08EB700C671FD /* Entitlements-Release.plist in Resources */,
 				6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -415,7 +425,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${SRCROOT}/Podfile.lock\" \"${SRCROOT}/Pods/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -457,8 +467,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 오규 권 (AM9UZ3FW7P)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 오규 권 (AM9UZ3FW7P)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: rnjsdhrb1@naver.com (GM9445BKN6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: rnjsdhrb1@naver.com (GM9445BKN6)";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
@@ -492,7 +502,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.oq.nsnest;
 				PRODUCT_NAME = NSNEST;
-				PROVISIONING_PROFILE = "160266da-2011-4358-a06d-e45f16413285";
+				PROVISIONING_PROFILE = "2a813857-a443-40c8-bf18-64a824c578c1";
 				PROVISIONING_PROFILE_SPECIFIER = "NSNEST DEV";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

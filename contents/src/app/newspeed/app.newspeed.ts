@@ -55,7 +55,7 @@ export class AppNewspeed implements OnInit, OnDestroy {
       this.httpService.getPosts(0, "date", "desc", this.appService.newspeedPageIndex) //해당 게시글 DB에서 빼온다
       .subscribe(
         data => {
-          this.appService.newspeedPosts = this.appService.newspeedPageIndex(data);
+          this.appService.newspeedPosts = this.appService.postSafeHtmlFactory(data);
           // console.log(JSON.stringify(this.recentPosts));
           this.isInProgress = false;
           setTimeout(() => {
@@ -96,7 +96,7 @@ export class AppNewspeed implements OnInit, OnDestroy {
         if(data.length == 0){ //데이터가 더이상 없을 경우
           alert("마지막 게시글 입니다.");
         } else {
-          this.appService.newspeedPosts = this.appService.newspeedPosts.concat(this.appService.newspeedPageIndex(data));
+          this.appService.newspeedPosts = this.appService.newspeedPosts.concat(this.appService.postSafeHtmlFactory(data));
           this.appService.newspeedPageIndex++;
         }
         

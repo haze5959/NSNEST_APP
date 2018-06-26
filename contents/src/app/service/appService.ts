@@ -76,7 +76,7 @@ export class AppService implements LoggedInCallback {
         //Notification was received in foreground. Maybe the user needs to be notified.
         // alert( 'FG - ' + JSON.stringify(data) );
         let type:number = data.type?data.type:0;
-
+        console.log( 'OQ noto come' );
         switch (Number(type)) {
           case 10:  //게시글
             this.snackBar.open(`${data.user?data.user:''}님이 게시글을 올렸습니다.`, '확인');
@@ -93,11 +93,14 @@ export class AppService implements LoggedInCallback {
       }
     });
 
-    FCMPlugin.onTokenRefresh(token => {
-      alert( '톡끈 - ' + token );
-      FCMPlugin.subscribeToTopic('all');
-      this.setCommentPush(true);
-    });
+    setTimeout(() => {
+      FCMPlugin.onTokenRefresh(token => {
+        console.log( 'OQ token - ' + token );
+        FCMPlugin.subscribeToTopic('all');
+        this.setCommentPush(true);
+      });
+    }, 1000);
+    
   }
 
   setCommentPushBtn(){
@@ -112,7 +115,7 @@ export class AppService implements LoggedInCallback {
   }
 
   setCommentPush(isEnalble:boolean){
-    //댓글 주제 푸시==================================================
+  //   //댓글 주제 푸시==================================================
     var commentPush:string = this.cookieService.get('push_commet');
     if(!commentPush){
       FCMPlugin.subscribeToTopic('comment');
@@ -131,7 +134,7 @@ export class AppService implements LoggedInCallback {
     }
 
     this.setCommentPushBtn();
-    //=============================================================
+  //   //=============================================================
   }
 
   isTokenExpired(token: string) {
