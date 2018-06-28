@@ -31,6 +31,10 @@
             {
               "xml": "<feature name=\"FCMPlugin\"><param name=\"ios-package\" value=\"FCMPlugin\" /></feature>",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
+              "count": 1
             }
           ]
         }
@@ -71,6 +75,9 @@
       "PACKAGE_NAME": "com.nsnest"
     },
     "cordova-plugin-fcm": {
+      "PACKAGE_NAME": "com.nsnest"
+    },
+    "cordova-plugin-device": {
       "PACKAGE_NAME": "com.nsnest"
     }
   },
@@ -131,6 +138,14 @@
       "clobbers": [
         "FCMPlugin"
       ]
+    },
+    {
+      "id": "cordova-plugin-device.device",
+      "file": "plugins/cordova-plugin-device/www/device.js",
+      "pluginId": "cordova-plugin-device",
+      "clobbers": [
+        "device"
+      ]
     }
   ],
   "plugin_metadata": {
@@ -138,6 +153,7 @@
     "cordova-plugin-statusbar": "2.4.2",
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-geolocation": "4.0.1",
-    "cordova-plugin-fcm": "2.1.2"
+    "cordova-plugin-fcm": "2.1.2",
+    "cordova-plugin-device": "2.0.2"
   }
 }

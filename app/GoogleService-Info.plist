@@ -7,9 +7,9 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>478971408198-99bb4agjv7psm6uqgkhjbrf4u902jt83.apps.googleusercontent.com</string>
+	<string>478971408198-k54kutflgp7c9u4b6825s3d5mi22g7ef.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.478971408198-99bb4agjv7psm6uqgkhjbrf4u902jt83</string>
+	<string>com.googleusercontent.apps.478971408198-k54kutflgp7c9u4b6825s3d5mi22g7ef</string>
 	<key>API_KEY</key>
 	<string>AIzaSyA7v_Wc_aFzzDg3LaftGLxjKzoN2x2Wtmk</string>
 	<key>GCM_SENDER_ID</key>
@@ -17,7 +17,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.nsnest</string>
+	<string>com.oq.nsnest</string>
 	<key>PROJECT_ID</key>
 	<string>nsnest-eeb97</string>
 	<key>STORAGE_BUCKET</key>
@@ -33,7 +33,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:478971408198:ios:8a7394e67ca2ff97</string>
+	<string>1:478971408198:ios:50c18df8ee54b6a4</string>
 	<key>DATABASE_URL</key>
 	<string>https://nsnest-eeb97.firebaseio.com</string>
 </dict>

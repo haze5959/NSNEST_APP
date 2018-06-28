@@ -103,6 +103,16 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     return YES;
 }
 
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    
+    // for development
+    [[FIRInstanceID instanceID] setAPNSToken:deviceToken type:FIRInstanceIDAPNSTokenTypeSandbox];
+    
+    // for production
+    // [[FIRInstanceID instanceID] setAPNSToken:deviceToken type:FIRInstanceIDAPNSTokenTypeProd];
+    
+}
+
 // [START message_handling]
 // Receive displayed notifications for iOS 10 devices.
 

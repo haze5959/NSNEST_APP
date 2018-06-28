@@ -33,6 +33,9 @@
     <feature name="FCMPlugin">
         <param name="ios-package" value="FCMPlugin" />
     </feature>
+    <feature name="Device">
+        <param name="ios-package" value="CDVDevice" />
+    </feature>
     <name>NSNEST</name>
     <description>
         NSNEST Community
@@ -65,4 +68,5 @@
     <preference name="PaginationMode" value="unpaginated" />
     <preference name="StatusBarOverlaysWebView" value="false" />
     <preference name="StatusBarStyle" value="lightcontent" />
+    <preference name="StatusBarBackgroundColor" value="#000000" />
 </widget>

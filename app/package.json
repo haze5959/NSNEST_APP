@@ -12,6 +12,7 @@
     "dependencies": {
         "cordova-android": "^7.0.0",
         "cordova-ios": "^4.5.4",
+        "cordova-plugin-device": "^2.0.2",
         "cordova-plugin-fcm": "^2.1.2",
         "cordova-plugin-geolocation": "^4.0.1",
         "cordova-plugin-splashscreen": "^5.0.2",
@@ -24,7 +25,8 @@
             "cordova-plugin-statusbar": {},
             "cordova-plugin-splashscreen": {},
             "cordova-plugin-geolocation": {},
-            "cordova-plugin-fcm": {}
+            "cordova-plugin-fcm": {},
+            "cordova-plugin-device": {}
         },
         "platforms": [
             "ios",

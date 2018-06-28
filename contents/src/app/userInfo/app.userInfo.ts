@@ -165,6 +165,7 @@ export class AppUserInfo implements CognitoCallback, OnInit {
   }
 
   pressCommentPush(e){
+    alert(e.checked);
     if (e.checked == true) {
       this.appService.setCommentPush(true);
     } else {

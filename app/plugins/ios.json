@@ -21,6 +21,9 @@
     },
     "cordova-plugin-fcm": {
       "PACKAGE_NAME": "com.nsnest"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.nsnest"
     }
   },
   "dependent_plugins": {}

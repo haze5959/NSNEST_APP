@@ -36,6 +36,7 @@
 		CE3E675420E08EB700C671FD /* Entitlements-Release.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE3E675220E08EB700C671FD /* Entitlements-Release.plist */; };
 		CE3E675520E0A0B300C671FD /* NSNEST-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D1107310486CEB800E47090 /* NSNEST-Info.plist */; };
 		D38F5CBA98B246B6AC697F9A /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 500B932AC0864F2F85BA735B /* FirebaseAnalytics.framework */; };
+		D5043B976CF046D29734B0E1 /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = E23DC411A9F3413EB556810B /* CDVDevice.m */; };
 		E7B5923343EB49EA9C9BF328 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E3CCB827773409497B3610B /* AddressBook.framework */; };
 		FB42890958B4480F907D1ABE /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6A08B1CAC834ECB98BE50D3 /* GoogleUtilities.framework */; };
 		FD1CD6900E49409EA7C7F22F /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FF908E79D1471CA05B21BE /* CDVSplashScreen.m */; };
@@ -102,6 +103,7 @@
 		9E3CCB827773409497B3610B /* AddressBook.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		9F3C37CCB99F490F9FC1B39E /* AppDelegate+FCMPlugin.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "AppDelegate+FCMPlugin.h"; path = "cordova-plugin-fcm/AppDelegate+FCMPlugin.h"; sourceTree = "<group>"; };
 		A101C9A605E845FEBEE5CE64 /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = GoogleSymbolUtilities.framework; path = "NSNEST/Plugins/cordova-plugin-fcm/GoogleSymbolUtilities.framework"; sourceTree = "<group>"; };
+		A4D1348C8F764357BB0F2AEC /* CDVDevice.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVDevice.h; path = "cordova-plugin-device/CDVDevice.h"; sourceTree = "<group>"; };
 		A9FF908E79D1471CA05B21BE /* CDVSplashScreen.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVSplashScreen.m; path = "cordova-plugin-splashscreen/CDVSplashScreen.m"; sourceTree = "<group>"; };
 		B12044CC6417DD382EF4DB83 /* libPods-NSNEST.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NSNEST.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6A08B1CAC834ECB98BE50D3 /* GoogleUtilities.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = GoogleUtilities.framework; path = "NSNEST/Plugins/cordova-plugin-fcm/GoogleUtilities.framework"; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 		CEBA3A0D20D8C27900550713 /* libGoogleToolboxForMac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libGoogleToolboxForMac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEBA3A0F20D8C27C00550713 /* libnanopb.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libnanopb.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC07E8FDC394440F9D055B11 /* FCMPlugin.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = FCMPlugin.m; path = "cordova-plugin-fcm/FCMPlugin.m"; sourceTree = "<group>"; };
+		E23DC411A9F3413EB556810B /* CDVDevice.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVDevice.m; path = "cordova-plugin-device/CDVDevice.m"; sourceTree = "<group>"; };
 		EB87FDF31871DA8E0020F90C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../www; sourceTree = "<group>"; };
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		ED33DF2A687741AEAF9F8254 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -274,6 +277,8 @@
 				05818EF15C854C63A9CDB013 /* FCMPlugin.h */,
 				9F3C37CCB99F490F9FC1B39E /* AppDelegate+FCMPlugin.h */,
 				23535A79642C416DA43D0970 /* Firebase.h */,
+				E23DC411A9F3413EB556810B /* CDVDevice.m */,
+				A4D1348C8F764357BB0F2AEC /* CDVDevice.h */,
 			);
 			name = Plugins;
 			path = NSNEST/Plugins;
@@ -444,6 +449,7 @@
 				CD87CE17FD1C4459930D018D /* CDVLocation.m in Sources */,
 				C23B193D9FE343ABAF390325 /* FCMPlugin.m in Sources */,
 				5734AE4FB5AC44279D89EE6C /* AppDelegate+FCMPlugin.m in Sources */,
+				D5043B976CF046D29734B0E1 /* CDVDevice.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,8 +508,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.oq.nsnest;
 				PRODUCT_NAME = NSNEST;
-				PROVISIONING_PROFILE = "2a813857-a443-40c8-bf18-64a824c578c1";
-				PROVISIONING_PROFILE_SPECIFIER = "NSNEST DEV";
+				PROVISIONING_PROFILE = "3cd243f1-138d-4d5f-b5b3-d0b70e8d46a1";
+				PROVISIONING_PROFILE_SPECIFIER = "NSNEST DEV 2018";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;

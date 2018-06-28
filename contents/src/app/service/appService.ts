@@ -68,43 +68,41 @@ export class AppService implements LoggedInCallback {
       image: this.emptyUserImage
     }
 
-    FCMPlugin.onNotification(data => {
-      if(data.wasTapped){
-        //Notification was received on device tray and tapped by the user.
-        alert( 'BG - ' + JSON.stringify(data) );
-      }else{
-        //Notification was received in foreground. Maybe the user needs to be notified.
-        // alert( 'FG - ' + JSON.stringify(data) );
-        let type:number = data.type?data.type:0;
-        console.log( 'OQ noto come' );
-        switch (Number(type)) {
-          case 10:  //게시글
-            this.snackBar.open(`${data.user?data.user:''}님이 게시글을 올렸습니다.`, '확인');
-            break;
+    document.addEventListener("deviceready", function() { 
 
-          case 20:  //댓글
-            this.snackBar.open(`${data.user?data.user:''}님이 댓글을 올렸습니다.`, '확인');
-            break;
-        
-          default:
-            this.snackBar.open(`알 수 없는 푸시`, '확인');
-            break;
+      FCMPlugin.onNotification(data => {
+        if(data.wasTapped){
+          //Notification was received on device tray and tapped by the user.
+          alert( 'BG - ' + JSON.stringify(data) );
+        }else{
+          //Notification was received in foreground. Maybe the user needs to be notified.
+          // alert( 'FG - ' + JSON.stringify(data) );
+          let type:number = data.type?data.type:0;
+          switch (Number(type)) {
+            case 10:  //게시글
+              this.snackBar.open(`${data.user?data.user:''}님이 게시글을 올렸습니다.`, '확인');
+              break;
+  
+            case 20:  //댓글
+              this.snackBar.open(`${data.user?data.user:''}님이 댓글을 올렸습니다.`, '확인');
+              break;
+          
+            default:
+              this.snackBar.open(`알 수 없는 푸시`, '확인');
+              break;
+          }
         }
-      }
-    });
-
-    setTimeout(() => {
+      });
+  
       FCMPlugin.onTokenRefresh(token => {
-        console.log( 'OQ token - ' + token );
-        FCMPlugin.subscribeToTopic('all');
         this.setCommentPush(true);
       });
-    }, 1000);
-    
+    }, false);     
   }
 
   setCommentPushBtn(){
     var commentPush:string = this.cookieService.get('push_commet');
+    alert('commentPush - ' + commentPush);
     if(commentPush == '1'){ //사용
       this.commentPushChecked = true;
     } else if(commentPush == '0'){ //미사용
