@@ -15,6 +15,13 @@
     -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 }
 
+.footer {
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
 .detail-post-card {
     margin-left: 2px;
     margin-right: 3px;

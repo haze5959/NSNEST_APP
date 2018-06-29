@@ -27,7 +27,7 @@ import { CognitoUtil } from '../service/awsService/cognito.service';
 })
 export class PullToRefreshComponent {
   private lastScrollTop:number = 0;
-  private isAtTop:boolean = false;
+  private isAtTop:boolean = true;
   private element:any;
 
   color = 'primary';
@@ -53,7 +53,7 @@ export class PullToRefreshComponent {
           } else {
             setTimeout(() => {
               this.isAtTop = true;
-            }, 2000);
+            }, 1000);
           }
       }
       this.lastScrollTop = this.scrollTop;

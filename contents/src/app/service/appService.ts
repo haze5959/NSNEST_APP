@@ -68,70 +68,70 @@ export class AppService implements LoggedInCallback {
       image: this.emptyUserImage
     }
 
-    document.addEventListener("deviceready", function() { 
+    // document.addEventListener("deviceready", function() { 
 
-      FCMPlugin.onNotification(data => {
-        if(data.wasTapped){
-          //Notification was received on device tray and tapped by the user.
-          alert( 'BG - ' + JSON.stringify(data) );
-        }else{
-          //Notification was received in foreground. Maybe the user needs to be notified.
-          // alert( 'FG - ' + JSON.stringify(data) );
-          let type:number = data.type?data.type:0;
-          switch (Number(type)) {
-            case 10:  //게시글
-              this.snackBar.open(`${data.user?data.user:''}님이 게시글을 올렸습니다.`, '확인');
-              break;
+    //   FCMPlugin.onNotification(data => {
+    //     if(data.wasTapped){
+    //       //Notification was received on device tray and tapped by the user.
+    //       alert( 'BG - ' + JSON.stringify(data) );
+    //     }else{
+    //       //Notification was received in foreground. Maybe the user needs to be notified.
+    //       // alert( 'FG - ' + JSON.stringify(data) );
+    //       let type:number = data.type?data.type:0;
+    //       switch (Number(type)) {
+    //         case 10:  //게시글
+    //           this.snackBar.open(`${data.user?data.user:''}님이 게시글을 올렸습니다.`, '확인');
+    //           break;
   
-            case 20:  //댓글
-              this.snackBar.open(`${data.user?data.user:''}님이 댓글을 올렸습니다.`, '확인');
-              break;
+    //         case 20:  //댓글
+    //           this.snackBar.open(`${data.user?data.user:''}님이 댓글을 올렸습니다.`, '확인');
+    //           break;
           
-            default:
-              this.snackBar.open(`알 수 없는 푸시`, '확인');
-              break;
-          }
-        }
-      });
+    //         default:
+    //           this.snackBar.open(`알 수 없는 푸시`, '확인');
+    //           break;
+    //       }
+    //     }
+    //   });
   
-      FCMPlugin.onTokenRefresh(token => {
-        this.setCommentPush(true);
-      });
-    }, false);     
+    //   FCMPlugin.onTokenRefresh(token => {
+    //     this.setCommentPush(true);
+    //   });
+    // }, false);     
   }
 
   setCommentPushBtn(){
-    var commentPush:string = this.cookieService.get('push_commet');
-    alert('commentPush - ' + commentPush);
-    if(commentPush == '1'){ //사용
-      this.commentPushChecked = true;
-    } else if(commentPush == '0'){ //미사용
-      this.commentPushChecked = false;
-    } else {  //처음
-      this.setCommentPush(true);
-    }
+    // var commentPush:string = this.cookieService.get('push_commet');
+    // alert('commentPush - ' + commentPush);
+    // if(commentPush == '1'){ //사용
+    //   this.commentPushChecked = true;
+    // } else if(commentPush == '0'){ //미사용
+    //   this.commentPushChecked = false;
+    // } else {  //처음
+    //   this.setCommentPush(true);
+    // }
   }
 
   setCommentPush(isEnalble:boolean){
   //   //댓글 주제 푸시==================================================
-    var commentPush:string = this.cookieService.get('push_commet');
-    if(!commentPush){
-      FCMPlugin.subscribeToTopic('comment');
-      this.cookieService.set('push_commet', '1');
+    // var commentPush:string = this.cookieService.get('push_commet');
+    // if(!commentPush){
+    //   FCMPlugin.subscribeToTopic('comment');
+    //   this.cookieService.set('push_commet', '1');
 
-    } else {
-      if(isEnalble){  //사용
-        FCMPlugin.subscribeToTopic('comment');
-        this.cookieService.set('push_commet', '1');
+    // } else {
+    //   if(isEnalble){  //사용
+    //     FCMPlugin.subscribeToTopic('comment');
+    //     this.cookieService.set('push_commet', '1');
 
-      } else {  //해제
-        FCMPlugin.unsubscribeFromTopic('comment');
-        this.cookieService.set('push_commet', '0');
+    //   } else {  //해제
+    //     FCMPlugin.unsubscribeFromTopic('comment');
+    //     this.cookieService.set('push_commet', '0');
 
-      }
-    }
+    //   }
+    // }
 
-    this.setCommentPushBtn();
+    // this.setCommentPushBtn();
   //   //=============================================================
   }
 

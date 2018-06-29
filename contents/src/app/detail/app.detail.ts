@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { Location } from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, AUTOCOMPLETE_OPTION_HEIGHT } from '@angular/material';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -33,7 +34,7 @@ export class AppDetail implements OnInit {
   marker:marker;
   comments:comment[] = [];
   commentInput:string;
-  constructor(private router: Router, public appService: AppService, private httpService: HttpService, private route: ActivatedRoute, public dialog: MatDialog, private sanitizer: DomSanitizer, public snackBar: MatSnackBar, private cookieService:CookieService) { }
+  constructor(private router: Router, public appService: AppService, private httpService: HttpService, private route: ActivatedRoute, public dialog: MatDialog, private sanitizer: DomSanitizer, public snackBar: MatSnackBar, private cookieService:CookieService, private _location: Location) { }
   
   ngOnInit() {
     if(!this.appService.isAppLogin){
@@ -447,5 +448,9 @@ export class AppDetail implements OnInit {
         this.appService.isAppLoading = false;
       }
     );
+  }
+
+  historyBack(){
+    this._location.back();
   }
 }
