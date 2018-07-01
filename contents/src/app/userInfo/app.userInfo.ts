@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
 import { FormControl, Validators } from '@angular/forms';
@@ -6,10 +6,10 @@ import { ShowDetailImageDialog } from '../image-viewer/image-viewer.component';
 import { UserLoginService } from "../service/awsService/user-login.service";
 import { CognitoCallback } from "../service/awsService/cognito.service";
 import { environment } from '../../environments/environment';
-import { CookieService } from 'ngx-cookie-service';
+import { Observable } from 'rxjs/Observable';
+import { Subscriber, Subscription } from 'rxjs';
 
 import { AppService } from '../service/appService';
-import { CognitoUtil } from '../service/awsService/cognito.service';
 import { HttpService } from '../service/http.service';
 
 @Component({
@@ -22,13 +22,21 @@ export class AppUserInfo implements CognitoCallback, OnInit {
   appVersion = this.appService.APP_VERSION;
   appCopyrights = this.appService.APP_COPYRIGHTS;
 
+  commentPushOnOffBtnChecked = true;
+
   userId = new FormControl('', [Validators.required]);
   userPw = new FormControl('', [Validators.required]);
+
+  @ViewChild('commentPushOnOffBtn') public commentPushOnOffBtn:ElementRef;
  
-  constructor(public dialog: MatDialog, private userService: UserLoginService, private snackBar: MatSnackBar, public appService: AppService, private httpService: HttpService, private cookieService:CookieService) {}
+  constructor(public dialog: MatDialog, private userService: UserLoginService, private snackBar: MatSnackBar, public appService: AppService, private httpService: HttpService) {}
 
   ngOnInit(){
-    // this.appService.isAppLoading = true;
+    document.addEventListener("deviceready", () => { 
+      this.appService.setCommentPushBtn((isSetPush) => {
+        this.commentPushOnOffBtnChecked = isSetPush;
+      });
+    });
   }
 
   pressLogout(){
@@ -140,14 +148,13 @@ export class AppUserInfo implements CognitoCallback, OnInit {
           if(data.length > 0){
             this.appService.myInfo = this.appService.userFactory(data)[0]; //로그인 유저 매핑
             this.appService.isAppLogin = true;
-            this.appService.setCommentPushBtn();
             this.snackBar.open("로그인 성공", "확인", {
               duration: 2000,
             });
 
-            // this.router.navigate(['newspeed/']);
-            // location.reload();
-            this.appService.refreshSubscriber.next(true);
+            this.appService.refreshSubscriberArr.forEach(obs => {
+              obs.next(true);
+            });
           } else {
             console.error("[error] - error: 데이터 없음");
             alert("유저 정보를 가져오지 못하였습니다. ");
@@ -165,11 +172,14 @@ export class AppUserInfo implements CognitoCallback, OnInit {
   }
 
   pressCommentPush(e){
-    alert(e.checked);
     if (e.checked == true) {
-      this.appService.setCommentPush(true);
+      this.appService.setCommentPush(true, (isSetPush) => {
+        this.commentPushOnOffBtn.nativeElement.checked = isSetPush;
+      });
     } else {
-      this.appService.setCommentPush(false);
+      this.appService.setCommentPush(false, (isSetPush) => {
+        this.commentPushOnOffBtn.nativeElement.checked = isSetPush;
+      });
     }
   }
 }

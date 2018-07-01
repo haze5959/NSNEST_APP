@@ -54,7 +54,6 @@ import { CognitoUtil } from './service/awsService/cognito.service';
 import { UserLoginService } from './service/awsService/user-login.service';
 import { AppEmoticonDialog } from './emoticonViewer/app.emoticonViewer';
 import { AppAdmin } from './admin/app.admin';
-import { CookieService } from 'ngx-cookie-service';
 
 import { TAB_COMPONENTS  } from './emoticonViewer/Tabset';
 
@@ -125,8 +124,7 @@ import { TAB_COMPONENTS  } from './emoticonViewer/Tabset';
     HttpService,
     AwsUtil,
     CognitoUtil,
-    UserLoginService,
-    CookieService
+    UserLoginService
   ],
   bootstrap: [AppComponent]
 })

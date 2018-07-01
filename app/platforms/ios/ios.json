@@ -35,6 +35,10 @@
             {
               "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"CookieMaster\"><param name=\"ios-package\" value=\"CDVCookieMaster\" /></feature>",
+              "count": 1
             }
           ]
         }
@@ -79,6 +83,9 @@
     },
     "cordova-plugin-device": {
       "PACKAGE_NAME": "com.nsnest"
+    },
+    "com.cordova.plugins.cookiemaster": {
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     }
   },
   "dependent_plugins": {},
@@ -146,6 +153,14 @@
       "clobbers": [
         "device"
       ]
+    },
+    {
+      "id": "com.cordova.plugins.cookiemaster.cookieMaster",
+      "file": "plugins/com.cordova.plugins.cookiemaster/www/cookieMaster.js",
+      "pluginId": "com.cordova.plugins.cookiemaster",
+      "clobbers": [
+        "cookieMaster"
+      ]
     }
   ],
   "plugin_metadata": {
@@ -154,6 +169,7 @@
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-geolocation": "4.0.1",
     "cordova-plugin-fcm": "2.1.2",
-    "cordova-plugin-device": "2.0.2"
+    "cordova-plugin-device": "2.0.2",
+    "com.cordova.plugins.cookiemaster": "1.0.0"
   }
 }

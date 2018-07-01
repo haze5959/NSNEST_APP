@@ -6,11 +6,6 @@ import { posts } from '../model/posts';
 import { PageEvent } from '@angular/material';
 
 import {zip} from 'rxjs/observable/zip';
-import {of as observableOf} from 'rxjs/observable/of';
-import {catchError} from 'rxjs/operators/catchError';
-import {map} from 'rxjs/operators/map';
-import {startWith} from 'rxjs/operators/startWith';
-import {switchMap} from 'rxjs/operators/switchMap';
 
 @Component({
   selector: 'app-elbum',
@@ -25,6 +20,7 @@ export class AppElbum implements OnInit{
   constructor(private httpService: HttpService, public appService: AppService, private router: Router) {}
 
   ngOnInit() {
+    this.appService.engagingMainPage = 'elbum';
     zip(
       this.httpService.getPosts(20, 'id', 'desc', 1), //해당 게시글 DB에서 빼온다
       this.httpService.getPostSize(20)  //해당 게시글 숫자를 가져온다

@@ -23,6 +23,7 @@ export class AppBoard implements OnInit{
   constructor(private httpService: HttpService, public appService: AppService, private router: Router) {}
 
   ngOnInit() {
+    this.appService.engagingMainPage = 'board';
     zip(
       this.httpService.getPosts(10, this.orderBy, this.orderBySeq, 1), //해당 게시글 DB에서 빼온다
       this.httpService.getPostSize(10)  //해당 게시글 숫자를 가져온다

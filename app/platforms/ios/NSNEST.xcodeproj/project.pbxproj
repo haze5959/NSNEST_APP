@@ -11,6 +11,7 @@
 		03CCE8D26A4941A6B1E66AF4 /* GoogleSymbolUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A101C9A605E845FEBEE5CE64 /* GoogleSymbolUtilities.framework */; };
 		04406D524BC24E50B28F5381 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8889240C886D4591922DDEA3 /* libc++.tbd */; };
 		0E8ABB3D05064ABC9484C34D /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C1FDBD3515B4C288A7A506E /* FirebaseInstanceID.framework */; };
+		1BB6BFFA12F644FCB9BCB5BE /* CDVCookieMaster.m in Sources */ = {isa = PBXBuildFile; fileRef = CC3FBE38D2DD49DB8E196727 /* CDVCookieMaster.m */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1EBF7C79FA38459188D6549E /* FirebaseMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7456FD92667A48438E631BE6 /* FirebaseMessaging.framework */; };
@@ -109,6 +110,8 @@
 		B6A08B1CAC834ECB98BE50D3 /* GoogleUtilities.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = GoogleUtilities.framework; path = "NSNEST/Plugins/cordova-plugin-fcm/GoogleUtilities.framework"; sourceTree = "<group>"; };
 		BADA83B0A203411A8108FF16 /* CDVStatusBar.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVStatusBar.m; path = "cordova-plugin-statusbar/CDVStatusBar.m"; sourceTree = "<group>"; };
 		C304E5C66C3544B6BF072600 /* CDVLocation.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVLocation.h; path = "cordova-plugin-geolocation/CDVLocation.h"; sourceTree = "<group>"; };
+		C5FC69C50E7546C4968BEECE /* CDVCookieMaster.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVCookieMaster.h; path = com.cordova.plugins.cookiemaster/CDVCookieMaster.h; sourceTree = "<group>"; };
+		CC3FBE38D2DD49DB8E196727 /* CDVCookieMaster.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVCookieMaster.m; path = com.cordova.plugins.cookiemaster/CDVCookieMaster.m; sourceTree = "<group>"; };
 		CE3E674F20E086EC00C671FD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE3E675120E08EB700C671FD /* Entitlements-Debug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Entitlements-Debug.plist"; path = "NSNEST/Entitlements-Debug.plist"; sourceTree = "<group>"; };
 		CE3E675220E08EB700C671FD /* Entitlements-Release.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Entitlements-Release.plist"; path = "NSNEST/Entitlements-Release.plist"; sourceTree = "<group>"; };
@@ -279,6 +282,8 @@
 				23535A79642C416DA43D0970 /* Firebase.h */,
 				E23DC411A9F3413EB556810B /* CDVDevice.m */,
 				A4D1348C8F764357BB0F2AEC /* CDVDevice.h */,
+				CC3FBE38D2DD49DB8E196727 /* CDVCookieMaster.m */,
+				C5FC69C50E7546C4968BEECE /* CDVCookieMaster.h */,
 			);
 			name = Plugins;
 			path = NSNEST/Plugins;
@@ -450,6 +455,7 @@
 				C23B193D9FE343ABAF390325 /* FCMPlugin.m in Sources */,
 				5734AE4FB5AC44279D89EE6C /* AppDelegate+FCMPlugin.m in Sources */,
 				D5043B976CF046D29734B0E1 /* CDVDevice.m in Sources */,
+				1BB6BFFA12F644FCB9BCB5BE /* CDVCookieMaster.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

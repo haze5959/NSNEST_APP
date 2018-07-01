@@ -36,6 +36,9 @@
     <feature name="Device">
         <param name="ios-package" value="CDVDevice" />
     </feature>
+    <feature name="CookieMaster">
+        <param name="ios-package" value="CDVCookieMaster" />
+    </feature>
     <name>NSNEST</name>
     <description>
         NSNEST Community

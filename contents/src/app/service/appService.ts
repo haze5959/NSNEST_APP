@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Location } from '@angular/common';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CognitoUtil } from './awsService/cognito.service';
 import { LoggedInCallback } from "../service/awsService/cognito.service";
@@ -8,12 +9,11 @@ import { HttpService } from '../service/http.service';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material';
-import { CookieService } from 'ngx-cookie-service';
+import { environment } from '../../environments/environment';
 
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/shareReplay';
-import {Observable} from 'rxjs/Observable';
 
 import { user } from '../model/user';
 // import { token } from '../model/token';
@@ -21,11 +21,11 @@ import { posts } from '../model/posts';
 import { comment } from '../model/comment';
 import { schedule } from '../model/schedule';
 import { marker } from '../model/marker';
-import { Subscriber } from 'rxjs';
+import { Subscriber, Subscription } from 'rxjs';
 
 declare var device;
 declare var FCMPlugin;
-// declare var window;
+declare var cookieMaster;
 
 @Injectable()
 export class AppService implements LoggedInCallback {
@@ -38,19 +38,18 @@ export class AppService implements LoggedInCallback {
   isAppLoading = true;  //로딩 프로그레스를 보일지말지를 관장하는 환경변수
   isAppLogin = false;  //로그인이 됐는지 안됐는지 관장
   isPhone = false;
-  commentPushChecked = false; //코맨트 푸시 설정했는지 안했는지
+  deviceModel = 'iOS';
 
   // 상태저장
   newspeedPosts: posts[] = [];
   newspeedScrollY:number = 10;
   newspeedPageIndex:number = 1;
 
-  refreshObserber = new Observable(observer => {
-    this.refreshSubscriber = observer;
-  });
-  refreshSubscriber:Subscriber<{}>;
+  engagingMainPage:string = 'newspeed';
 
-  constructor(private router: Router, private cognitoUtil: CognitoUtil, private deviceService: Ng2DeviceService, private userService: UserLoginService, private httpService: HttpService, public snackBar: MatSnackBar, private cookieService:CookieService, private sanitizer: DomSanitizer) {
+  refreshSubscriberArr:Subscriber<{}>[] = [];
+
+  constructor(private router: Router, private cognitoUtil: CognitoUtil, private deviceService: Ng2DeviceService, private userService: UserLoginService, private httpService: HttpService, public snackBar: MatSnackBar, private sanitizer: DomSanitizer, private _location:Location) {
     this.userService.isAuthenticated(this); //로그인 중인지 검사
     
     let deviceInfo = this.deviceService.getDeviceInfo();
@@ -68,71 +67,89 @@ export class AppService implements LoggedInCallback {
       image: this.emptyUserImage
     }
 
-    // document.addEventListener("deviceready", function() { 
-
-    //   FCMPlugin.onNotification(data => {
-    //     if(data.wasTapped){
-    //       //Notification was received on device tray and tapped by the user.
-    //       alert( 'BG - ' + JSON.stringify(data) );
-    //     }else{
-    //       //Notification was received in foreground. Maybe the user needs to be notified.
-    //       // alert( 'FG - ' + JSON.stringify(data) );
-    //       let type:number = data.type?data.type:0;
-    //       switch (Number(type)) {
-    //         case 10:  //게시글
-    //           this.snackBar.open(`${data.user?data.user:''}님이 게시글을 올렸습니다.`, '확인');
-    //           break;
+    document.addEventListener("deviceready", () => { 
+      this.deviceModel = device.platform;
+      
+      FCMPlugin.onNotification(data => {
+        if(data.wasTapped){
+          //Notification was received on device tray and tapped by the user.
+          // alert( 'BG - ' + JSON.stringify(data) );
+          this.newspeedPosts = [];
+          this.router.navigate(['/']);
+        }else{
+          //Notification was received in foreground. Maybe the user needs to be notified.
+          let type:number = data.type?data.type:0;
+          switch (Number(type)) {
+            case 10:  //게시글
+              this.snackBar.open(`${data.user?data.user:''}님이 게시글을 올렸습니다.`, '확인');
+              break;
   
-    //         case 20:  //댓글
-    //           this.snackBar.open(`${data.user?data.user:''}님이 댓글을 올렸습니다.`, '확인');
-    //           break;
+            case 20:  //댓글
+              this.snackBar.open(`${data.user?data.user:''}님이 댓글을 올렸습니다.`, '확인');
+              break;
           
-    //         default:
-    //           this.snackBar.open(`알 수 없는 푸시`, '확인');
-    //           break;
-    //       }
-    //     }
-    //   });
-  
-    //   FCMPlugin.onTokenRefresh(token => {
-    //     this.setCommentPush(true);
-    //   });
-    // }, false);     
+            default:
+              this.snackBar.open(`알 수 없는 푸시`, '확인');
+              break;
+          }
+        }
+      });
+      
+    }, false);     
   }
 
-  setCommentPushBtn(){
-    // var commentPush:string = this.cookieService.get('push_commet');
-    // alert('commentPush - ' + commentPush);
-    // if(commentPush == '1'){ //사용
-    //   this.commentPushChecked = true;
-    // } else if(commentPush == '0'){ //미사용
-    //   this.commentPushChecked = false;
-    // } else {  //처음
-    //   this.setCommentPush(true);
-    // }
+  //뒤로가기 버튼 클릭 시
+  goBack(){
+    if(this.engagingMainPage == 'newspeed'){
+      this.router.navigate(['/']);
+    } else if(this.engagingMainPage == 'tastyLoad'){
+      this.router.navigate(['/tastyLoad']);
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 
-  setCommentPush(isEnalble:boolean){
-  //   //댓글 주제 푸시==================================================
-    // var commentPush:string = this.cookieService.get('push_commet');
-    // if(!commentPush){
-    //   FCMPlugin.subscribeToTopic('comment');
-    //   this.cookieService.set('push_commet', '1');
+  setCommentPushBtn(setPushBtn:(isSetPushBtn:boolean) => void){
+    cookieMaster.getCookieValue(environment.fileUrl, 'push_commet', (data) => {
+      if (data.cookieValue == '1'){ //사용
+        setPushBtn(true);
+      } else { //미사용
+        setPushBtn(false);
+      }
 
-    // } else {
-    //   if(isEnalble){  //사용
-    //     FCMPlugin.subscribeToTopic('comment');
-    //     this.cookieService.set('push_commet', '1');
+    }, (error) => {
+      if (error) {
+        this.setCommentPush(true, setPushBtn);
+      }
+    });
+  }
 
-    //   } else {  //해제
-    //     FCMPlugin.unsubscribeFromTopic('comment');
-    //     this.cookieService.set('push_commet', '0');
+  setCommentPush(isEnalble:boolean, setPushBtn:(isSetPushBtn:boolean) => void){
+    //댓글 주제 푸시==================================================
+    if(isEnalble){  //사용
+      FCMPlugin.subscribeToTopic('comment');
+      cookieMaster.setCookieValue(environment.fileUrl, 'push_commet', '1',
+      () => {
+        setPushBtn(true);
+      },
+      (error) => {
+          alert('Error setting cookie: '+error);
+      });
 
-    //   }
-    // }
+    } else {  //해제
+      FCMPlugin.unsubscribeFromTopic('comment');
+      cookieMaster.setCookieValue(environment.fileUrl, 'push_commet', '0',
+      () => {
+        setPushBtn(false);
+      },
+      (error) => {
+          alert('Error setting cookie: '+error);
+      });
+
+    }
 
     // this.setCommentPushBtn();
-  //   //=============================================================
+    //=============================================================
   }
 
   isTokenExpired(token: string) {
@@ -382,8 +399,9 @@ export class AppService implements LoggedInCallback {
           if(data.length > 0){
             this.myInfo = this.userFactory(data)[0]; //로그인 유저 매핑
             this.isAppLogin = true;
-            this.setCommentPushBtn();
-            this.refreshSubscriber.next(true);
+            this.refreshSubscriberArr.forEach(obs => {
+              obs.next(true);
+            });
           } else {
             console.error("[error] - error: 데이터 없음");
             alert("유저 정보를 가져오지 못하였습니다. ");

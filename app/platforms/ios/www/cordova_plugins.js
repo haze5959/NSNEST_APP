@@ -63,6 +63,14 @@ module.exports = [
     "clobbers": [
       "device"
     ]
+  },
+  {
+    "id": "com.cordova.plugins.cookiemaster.cookieMaster",
+    "file": "plugins/com.cordova.plugins.cookiemaster/www/cookieMaster.js",
+    "pluginId": "com.cordova.plugins.cookiemaster",
+    "clobbers": [
+      "cookieMaster"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -73,7 +81,8 @@ module.exports.metadata =
   "cordova-plugin-splashscreen": "5.0.2",
   "cordova-plugin-geolocation": "4.0.1",
   "cordova-plugin-fcm": "2.1.2",
-  "cordova-plugin-device": "2.0.2"
+  "cordova-plugin-device": "2.0.2",
+  "com.cordova.plugins.cookiemaster": "1.0.0"
 };
 // BOTTOM OF METADATA
 });

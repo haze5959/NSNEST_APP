@@ -131,6 +131,5 @@
 <input hidden #fileInput type='file' accept="image/*" (change)="uploadImages($event)">
 
 <!-- footer -->
-<div class="footer color-100">
-  <button mat-raised-button (click)="historyBack()" class="active">뒤로가기</button>
-</div>
+<button *ngIf="appService.deviceModel == 'iOS' && (appService.engagingMainPage == 'newspeed' || appService.engagingMainPage == 'tastyLoad')" mat-fab color="primary" class="back-btn" (click)="historyBack()"><mat-icon mat-list-icon>view_agenda</mat-icon></button>
+<button id="backBtn" hidden (click)="historyBack()"></button>

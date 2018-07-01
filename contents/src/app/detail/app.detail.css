@@ -15,11 +15,11 @@
     -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 }
 
-.footer {
+.back-btn {
     overflow: hidden;
     position: fixed;
-    bottom: 0;
-    width: 100%;
+    right: 20px;
+    bottom: 10px;
 }
 
 .detail-post-card {

@@ -24,6 +24,9 @@
     },
     "cordova-plugin-device": {
       "PACKAGE_NAME": "com.nsnest"
+    },
+    "com.cordova.plugins.cookiemaster": {
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     }
   },
   "dependent_plugins": {}

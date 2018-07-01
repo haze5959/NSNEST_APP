@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { Location } from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, AUTOCOMPLETE_OPTION_HEIGHT } from '@angular/material';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -11,13 +10,15 @@ import { ShowUserInfoDialog } from '../sideUserList/app.sideUserList';
 import { ShowDetailImageDialog } from '../image-viewer/image-viewer.component';
 import { HttpService } from '../service/http.service';
 import { AppService } from '../service/appService';
-import { CookieService } from 'ngx-cookie-service';
 import { environment } from '../../environments/environment';
 
 import * as JSZip from '../../../node_modules/jszip/dist/jszip';
 import * as JSZipUtils from '../../../node_modules/jszip-utils/dist/jszip-utils';
 import { saveAs } from 'file-saver/FileSaver';
 import { AppEmoticonDialog } from '../emoticonViewer/app.emoticonViewer';
+import { promise } from 'protractor';
+
+declare var cookieMaster;
 
 @Component({
   selector: 'app-detail',
@@ -34,9 +35,15 @@ export class AppDetail implements OnInit {
   marker:marker;
   comments:comment[] = [];
   commentInput:string;
-  constructor(private router: Router, public appService: AppService, private httpService: HttpService, private route: ActivatedRoute, public dialog: MatDialog, private sanitizer: DomSanitizer, public snackBar: MatSnackBar, private cookieService:CookieService, private _location: Location) { }
+
+  constructor(private router: Router, public appService: AppService, private httpService: HttpService, private route: ActivatedRoute, public dialog: MatDialog, private sanitizer: DomSanitizer, public snackBar: MatSnackBar) { }
   
   ngOnInit() {
+    document.addEventListener("backbutton", () => {
+      let element: HTMLElement = document.getElementById('backBtn') as HTMLElement;
+      element.click();
+    }, false);
+
     if(!this.appService.isAppLogin){
       this.router.navigate(['/']);
     } else {
@@ -265,107 +272,130 @@ export class AppDetail implements OnInit {
 
   pressGood(postId:number){ //좋아요
     var isAlreayVote = true;
-    //쿠키 가져오기==================================================
-    var userGoodBadInfo:string = this.cookieService.get('nsnest_good_bad_info');
-    if(!userGoodBadInfo){
-      isAlreayVote = false;
-    } else {
-      let usedPostIdArr:string[] = userGoodBadInfo.split(',');
-      var isContainPostId:boolean = false;
-      for (const usedPostId of usedPostIdArr) {
-        if (usedPostId == postId.toString()) {
-          isContainPostId = true;
-        }
-      }
+    var userGoodBadInfo = null;
 
-      if(!isContainPostId){
-        isAlreayVote = false;
-      }
-    }
-    //=========================================================
-
-    if(isAlreayVote){ //이미 사용하셨습니다.
-      this.openSnackBar("이미 투표하셨습니다.");
-    } else {
-      this.httpService.putPostGoodBad(postId, this.appService.myInfo.userId, true).subscribe(
-        data => {
-          // console.log(JSON.stringify(data));
-          if(data.result){
-            this.openSnackBar("좋아요 성공");
-
-            //쿠키 적용하기==================================================
-            if(!userGoodBadInfo){
-              userGoodBadInfo = postId.toString();
-            } else {
-              userGoodBadInfo = userGoodBadInfo.concat(',' + postId.toString())
-            }
-            
-            this.cookieService.set('nsnest_good_bad_info', userGoodBadInfo);
-            //=========================================================
-
-            this.post.good = this.post.good + 1;
-          } else {
-            this.openSnackBar("좋아요 실패");
+    new Promise((resolve, reject) => {
+      //쿠키 가져오기==================================================
+      cookieMaster.getCookieValue(environment.fileUrl, 'nsnest_good_bad_info', function(data) {
+        userGoodBadInfo = data.cookieValue;
+        let usedPostIdArr:string[] = userGoodBadInfo.split(',');
+        var isContainPostId:boolean = false;
+        for (const usedPostId of usedPostIdArr) {
+          if (usedPostId == postId.toString()) {
+            isContainPostId = true;
           }
-        },
-        error => {
-          console.log(error);
-          this.openSnackBar("좋아요 실패 - " + error);
         }
-      ); 
-    }
+
+        if(!isContainPostId){
+          isAlreayVote = false;
+        }
+
+        resolve();
+      }, function(error) {
+        isAlreayVote = false;
+        resolve();
+      });
+      //=========================================================
+    }).then(() => {
+      if(isAlreayVote){ //이미 사용하셨습니다.
+        this.openSnackBar("이미 투표하셨습니다.");
+      } else {
+        this.httpService.putPostGoodBad(postId, this.appService.myInfo.userId, true).subscribe(
+          data => {
+            // console.log(JSON.stringify(data));
+            if(data.result){
+              this.openSnackBar("좋아요 성공");
+
+              //쿠키 적용하기==================================================
+              if(!userGoodBadInfo){
+                userGoodBadInfo = postId.toString();
+              } else {
+                userGoodBadInfo = userGoodBadInfo.concat(',' + postId.toString())
+              }
+
+              cookieMaster.setCookieValue(environment.fileUrl, 'nsnest_good_bad_info', userGoodBadInfo,
+              function() {},
+              function(error) {
+                  alert('Error setting cookie: '+error);
+              });
+              //=========================================================
+
+              this.post.good = this.post.good + 1;
+            } else {
+              this.openSnackBar("좋아요 실패");
+            }
+          },
+          error => {
+            console.log(error);
+            this.openSnackBar("좋아요 실패 - " + error);
+          }
+        ); 
+      }
+    });
   }
 
   pressBad(postId:number){  //싫어요
     var isAlreayVote = true;
-    //쿠키 가져오기==================================================
-    var userGoodBadInfo:string = this.cookieService.get('nsnest_good_bad_info');
-    if(!userGoodBadInfo){
-      isAlreayVote = false;
-    } else {
-      let usedPostIdArr:string[] = userGoodBadInfo.split(',');
-      var isContainPostId:boolean = false;
-      for (const usedPostId of usedPostIdArr) {
-        if (usedPostId == postId.toString()) {
-          isContainPostId = true;
-        }
-      }
-
-      if(!isContainPostId){
-        isAlreayVote = false;
-      }
-    }
-    //=========================================================
-
-    if(isAlreayVote){ //이미 사용하셨습니다.
-      this.openSnackBar("이미 투표하셨습니다.");
-    } else {
-      this.httpService.putPostGoodBad(postId, this.appService.myInfo.userId, false).subscribe(
-        data => {
-          console.log(JSON.stringify(data));
-          if(data.result){
-            this.openSnackBar("싫어요 성공");
-
-            //쿠키 적용하기==================================================
-            if(!userGoodBadInfo){
-              userGoodBadInfo = postId.toString();
-            } else {
-              userGoodBadInfo = userGoodBadInfo.concat(',' + postId.toString())
-            }
-            this.cookieService.set('nsnest_good_bad_info', userGoodBadInfo);
-            //=========================================================
-
-            this.post.bad = this.post.bad + 1;
-          } else {
-            this.openSnackBar("싫어요 실패");
+    var userGoodBadInfo = null;
+    
+    new Promise((resolve, reject) => {
+      //쿠키 가져오기==================================================
+      cookieMaster.getCookieValue(environment.fileUrl, 'nsnest_good_bad_info', function(data) {
+        userGoodBadInfo = data.cookieValue;
+        let usedPostIdArr:string[] = userGoodBadInfo.split(',');
+        var isContainPostId:boolean = false;
+        for (const usedPostId of usedPostIdArr) {
+          if (usedPostId == postId.toString()) {
+            isContainPostId = true;
           }
-        },
-        error => {
-          console.log(error);
-          this.openSnackBar("싫어요 실패 - " + error);
         }
-      );
-    }
+
+        if(!isContainPostId){
+          isAlreayVote = false;
+        }
+
+        resolve();
+      }, function(error) {
+
+        isAlreayVote = false;
+        resolve();
+      });
+      //=========================================================
+    }).then(() => {
+      if(isAlreayVote){ //이미 사용하셨습니다.
+        this.openSnackBar("이미 투표하셨습니다.");
+      } else {
+        this.httpService.putPostGoodBad(postId, this.appService.myInfo.userId, false).subscribe(
+          data => {
+            if(data.result){
+              this.openSnackBar("싫어요 성공");
+
+              //쿠키 적용하기==================================================
+              if(!userGoodBadInfo){
+                userGoodBadInfo = postId.toString();
+              } else {
+                userGoodBadInfo = userGoodBadInfo.concat(',' + postId.toString())
+              }
+              
+              cookieMaster.setCookieValue(environment.fileUrl, 'nsnest_good_bad_info', userGoodBadInfo,
+              function() {},
+              function(error) {
+                  alert('Error setting cookie: '+error);
+              });
+              //=========================================================
+
+              this.post.bad = this.post.bad + 1;
+            } else {
+              this.openSnackBar("싫어요 실패");
+            }
+          },
+          error => {
+            console.log(error);
+            this.openSnackBar("싫어요 실패 - " + error);
+          }
+        );
+      }
+    });
   }
 
   pressDeletePost(postId:number){ //게시글 삭제
@@ -451,6 +481,14 @@ export class AppDetail implements OnInit {
   }
 
   historyBack(){
-    this._location.back();
+    // this.appService.goBack();
+
+    if(this.appService.engagingMainPage == 'newspeed'){
+      this.router.navigate(['/']);
+    } else if(this.appService.engagingMainPage == 'tastyLoad'){
+      this.router.navigate(['/tastyLoad']);
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 }

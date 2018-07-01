@@ -18,7 +18,7 @@
         <button mat-raised-button (click)="pressLogout()">로그아웃</button>
         <button mat-raised-button (click)="openSetUserInfoDialog()">상태정보 변경</button>
     </mat-card-actions>
-    <mat-slide-toggle [checked]="appService.commentPushChecked" (change)="pressCommentPush($event)">댓글 알림 수신</mat-slide-toggle>
+    <mat-slide-toggle #commentPushOnOffBtn [checked]='commentPushOnOffBtnChecked' (change)="pressCommentPush($event)">댓글 알림 수신</mat-slide-toggle>
 </mat-card>
 
 <!-- 로그인 안됨 -->

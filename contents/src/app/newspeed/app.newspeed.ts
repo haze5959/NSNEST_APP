@@ -5,6 +5,7 @@ import { AppService } from "../service/appService";
 import { HttpService } from '../service/http.service';
 import { CognitoUtil } from '../service/awsService/cognito.service';
 import { PullToRefreshComponent } from './pullToRefresh';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-newspeed',
@@ -27,6 +28,7 @@ export class AppNewspeed implements OnInit, OnDestroy {
   @ViewChild('newspeedScroll') public newspeedScroll:PullToRefreshComponent;
 
   ngOnInit(){
+    this.appService.engagingMainPage = 'newspeed';
     if(this.appService.isAppLogin){
       if (this.appService.newspeedPosts.length == 0) {
         this.initPosts(); 
@@ -36,7 +38,9 @@ export class AppNewspeed implements OnInit, OnDestroy {
         }, 100);
       }
     } else {
-      this.appService.refreshObserber.subscribe(
+      new Observable(observer => {
+        this.appService.refreshSubscriberArr.push(observer);
+      }).subscribe(
         value => {
           this.initPosts();
         }

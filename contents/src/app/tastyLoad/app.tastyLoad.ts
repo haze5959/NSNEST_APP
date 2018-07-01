@@ -35,6 +35,7 @@ export class AppTastyLoad {
   filterValue = "";
   
   ngOnInit() {
+    this.appService.engagingMainPage = 'tastyLoad';
     this.httpService.getPostAll(30, this.orderBy, this.orderBySeq)
     .subscribe(
       data => {
