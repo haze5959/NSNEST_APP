@@ -257,10 +257,11 @@ export class HttpService {
   /**
    * 코멘트 등록하기
    */
-  postComment(commentJson:comment): any {
+  postComment(commentJson:comment, toUser:string): any {
     const requestUrl = `${environment.apiUrl}comment`;
     const param = {
-      payload: commentJson
+      payload: commentJson,
+      toUser: toUser
     }
 
     return this.http.post(requestUrl, param).timeout(timeout)
