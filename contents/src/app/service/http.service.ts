@@ -514,7 +514,7 @@ export class HttpService {
   errorComment:comment = {
     commentId: 999999,
     postId:9999,
-    commentDate: new Date('9/99/99'),
+    commentDate: "99/12/30 59:59",
     studentNum: 99,
     userId: 9999,
     userName: "에러",

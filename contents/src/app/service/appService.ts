@@ -157,6 +157,48 @@ export class AppService implements LoggedInCallback {
     return jwtHelper.isTokenExpired(token);
   }
 
+  simpleTermNowBetween(time: string) {  //형식: 18/07/05 22:07
+    let oneMinute = 1000 * 60;
+    let oneHour = oneMinute * 60;
+    let oneDay = oneHour * 24;
+    let oneMonth = oneDay * 30;
+    let oneYear = oneMonth * 12;
+
+    let year = time.substring(0, 2);
+    let month = time.substring(3, 5);
+    let day = time.substring(6, 8);
+    let hour = time.substring(9, 11);
+    let minute = time.substring(12, 14);
+
+    let date1 = new Date();
+    let date2 = new Date(`20${year}-${month}-${day}T${hour}:${minute}:00`);
+    let timeDiff = Math.abs(date1.getTime() - date2.getTime());
+
+    if(timeDiff > oneYear){
+      let diff = Math.ceil(timeDiff / oneYear); 
+      return diff.toString() + "년 전";
+
+    } else if(timeDiff > oneMonth){
+      let diff = Math.ceil(timeDiff / oneMonth); 
+      return diff.toString() + "개월 전";
+
+    } else if(timeDiff > oneDay){
+      let diff = Math.ceil(timeDiff / oneDay); 
+      return diff.toString() + "일 전";
+
+    } else if(timeDiff > oneHour){
+      let diff = Math.ceil(timeDiff / oneHour); 
+      return diff.toString() + "시간 전";
+
+    } else if(timeDiff > oneMinute){
+      let diff = Math.ceil(timeDiff / oneMinute); 
+      return diff.toString() + "분 전";
+
+    } else {
+      return "방금";
+    }
+  }
+
   postFactory(postArr: Array<any>){
     var result:posts[] = [];
 
@@ -301,7 +343,7 @@ export class AppService implements LoggedInCallback {
     commentArr.forEach(element => {
         let comment:comment = {
           commentId: element[0],
-          commentDate: element[1],
+          commentDate: element[1]?this.simpleTermNowBetween(element[1]):"널널",
           studentNum: element[2],
           userId: element[3],
           userName: element[4],
@@ -323,8 +365,9 @@ export class AppService implements LoggedInCallback {
     userArr.forEach(element => {
       let recentDate;
       if(element[4]){
-        let tempStr:string = element[4];
-        recentDate = tempStr.replace(/\\/gi, '-');
+        // let tempStr:string = element[4];
+        // recentDate = tempStr.replace(/\\/gi, '-');
+        recentDate = element[4]?this.simpleTermNowBetween(element[4]):"널널"
       }
 
       let birthDay;

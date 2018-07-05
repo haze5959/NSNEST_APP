@@ -4,7 +4,7 @@ import { marker } from "./marker";
 export class comment {
     commentId?: number;
     postId: number;
-    commentDate?: Date;
+    commentDate?: string;
     studentNum?: number;
     userId: number;   //옵셔널 아님
     userName?: string;
