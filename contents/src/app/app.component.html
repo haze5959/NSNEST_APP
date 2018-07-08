@@ -7,7 +7,7 @@
   <!-- GNB -->
   <mat-toolbar color="primary" class="depth-4">
     <!-- GNB 왼쪽 버튼 -->
-    <button type="button" mat-button (click)="sidenav.open()" class="app-showSidenavBtn">
+    <button type="button" mat-button (click)="sidenav.open()" class="app-showSidenavBtn" [disabled]="!appService || !appService.isAppLogin">
         <mat-icon>account_circle</mat-icon>
     </button>
     <button type="button" mat-button (click)="openSideUserListDialog()" [ngClass]="appService && appService.isPhone?'app-showSidenavBtn':'app-showSidenavBtn-hide'" [disabled]="!appService || !appService.isAppLogin">
@@ -46,9 +46,6 @@
     <button mat-menu-item routerLink="/elbum">사진첩</button>
     <button mat-menu-item routerLink="/tastyLoad">맛집지도</button>
     <button mat-menu-item routerLink="/admin" *ngIf="appService && appService.myInfo && appService.myInfo.userId == 1060">admin</button>
-    <button mat-menu-item>알CALL!!(공사 중...)</button>
-    <button mat-menu-item>실시간 그림판(공사 중...)</button>
-    <button mat-menu-item>낙둥뮤직(공사 중...)</button>
   </mat-menu>
 
   <!-- PC 화면 컨텐츠 -->

@@ -1,6 +1,40 @@
-<div *ngIf="!appService.isAppLogin" class="app-newspeed">
-    로그인 필요
+<!-- 로그인 안했을 경우 -->
+<div *ngIf="!appService.isAppLoading && !appService.isAppLogin" class="app-newspeed">
+    <img src="./assets/GOLD_FAIRLY.png" alt="Amazon Cognito" title="Amazon Cognito" class="fairly-img">
+    <div class="fairly-bubble">
+		<p class="bubble-text">
+			{{fairyText}}
+		</p>
+    </div>
+    
+    <mat-card class="userInfoCard">
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="아이디" [formControl]="userId">
+                <mat-error *ngIf="userId.invalid">아이디 입력해라</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="패스워드" [type]="hide ? 'text' : 'password'" [formControl]="userPw">
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                <mat-error *ngIf="userPw.invalid">비밀번호 입력해라</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="userInfoCard-btn-bundle">
+            <button mat-raised-button (click)="pressLogin()">로그인</button>
+            <button mat-raised-button (click)="pressRegistration()">회원가입</button>
+        </div>
+        <p class="font-bold font-size20">
+            {{appService.APP_NAME}} {{appService.APP_VERSION}} 
+        </p>
+        <p class="font-Italic font-size16">
+            {{appService.APP_COPYRIGHTS}}
+        </p>
+    </mat-card>
 </div>
+
+<!-- 게시물 뉴스피드 -->
 <div *ngIf="appService.isAppLogin" class="app-newspeed">
     <ptr-container #newspeedScroll (onPull)="onPull()" [refresh]="isInProgress" class="newspeed-backgound" infinite-scroll [infiniteScrollDistance]="1.3" [infiniteScrollThrottle]="500" [scrollTop]="100" (scrolled)="onScroll()" [scrollWindow]="false" [immediateCheck]="true">
         <mat-list>
@@ -82,7 +116,7 @@
                                 {{posts.bad}}
                             </div>
                         </mat-card-header>
-                        <img mat-card-image class="elbum-image" src="{{posts.images[0]}}" alt="Photo" onError="this.src='/../assets/testImage.jpg';">
+                        <img mat-card-image  class="elbum-image" src="{{posts.images[0]}}" alt="Photo" onError="this.src='./assets/NO_PROFILE_IMG.png';">
                         <div class="mat-card-image-cover" *ngIf="posts.images.length > 1">{{posts.images.length}} +</div>
                         <mat-card-content>
                             <p class="posts-image-title"> {{posts.body}} </p>

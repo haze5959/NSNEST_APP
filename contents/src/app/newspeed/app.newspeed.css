@@ -1,3 +1,49 @@
+.fairly-img {
+    position: fixed;
+    right: 20%;
+    top: 0px;
+    height: 100%;
+    min-height: 800px;
+}
+
+.fairly-bubble {
+	background-image: url("assets/SPEECH_BUBBLE.png");
+    width: 500px;
+    height: 300px;
+    background-size: cover;
+	position: relative;
+	display: inline-block;
+    transform: rotate(-5deg) scale(-1, 1);
+    text-align: center;
+}
+
+.bubble-text {
+    font-size: 30px;
+	position: absolute;
+    top: 60%;
+    left: 0px;
+    height: 100px;
+    width: 400px;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin-top: -50px;
+    z-index: 99;
+	opacity: 1;
+    transform: rotate(-5deg) scale(-1, 1);
+}
+
+.userInfoCard {
+    position: absolute;
+    bottom: 30%;
+    width: 300px;
+    left: 5%;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.userInfoCard-btn-bundle {
+    margin-top: 10px;
+}
+
 .app-newspeed {
     height: calc(100% - 70px);
     width: 100%;
@@ -148,6 +194,38 @@
 }
 
 @media screen and (max-width: 1000px) {
+    .fairly-img {
+        position: absolute;
+        right: auto;
+        top: auto;
+        bottom: 0px;
+        height: 85%;
+        left: -25%;
+        min-height: auto;
+    }
+    
+    .fairly-bubble {
+        width: 275px;
+        height: 150px;
+        transform: rotate(0deg);
+        margin-right: 10%;
+        float: right;
+    }
+    
+    .bubble-text {
+        top: 70%;
+        font-size: 20px;
+        width: 200px;
+        padding-left: 35px;
+        padding-right: 25px;
+        transform: rotate(0deg);
+    }
+    
+    .userInfoCard {
+        bottom: 5%;
+        left: calc(50% - 162px);
+    }
+
     .app-newspeed {
         margin-left: 0px;
         height: calc(100% - 56px);

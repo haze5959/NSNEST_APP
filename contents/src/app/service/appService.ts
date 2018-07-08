@@ -32,7 +32,7 @@ export class AppService implements LoggedInCallback {
   APP_NAME = "NSNEST of Ancient";
   APP_VERSION = "V1.0";
   APP_COPYRIGHTS = "Copyright©2018 OQ All rights reserved.";
-  emptyUserImage = "./assets/testImage.jpg";
+  emptyUserImage = "./assets/NO_PROFILE_IMG.png";
 
   myInfo:user;
   isAppLoading = true;  //로딩 프로그레스를 보일지말지를 관장하는 환경변수
@@ -171,8 +171,8 @@ export class AppService implements LoggedInCallback {
     let minute = time.substring(12, 14);
 
     let date1 = new Date();
-    let date2 = new Date(`20${year}-${month}-${day}T${hour}:${minute}:00`);
-    let timeDiff = Math.abs(date1.getTime() - date2.getTime());
+    let date2 = new Date(`20${year}-${month}-${day}T${hour}:${minute}:00Z`);
+    let timeDiff = Math.abs(date1.getTime() - (date2.getTime() - 3600000 * 9));
 
     if(timeDiff > oneYear){
       let diff = Math.ceil(timeDiff / oneYear); 

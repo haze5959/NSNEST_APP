@@ -7,12 +7,14 @@ body{
     height: 100%;
     width: 100%;
     min-width: 1500px;
+    min-height: 800px;
     margin: 0px;
 }
 
 @media screen and (max-width: 1499px) {
     body{
         min-width: 100%;
+        min-height: auto;
     }
 }
 
@@ -121,7 +123,8 @@ body{
 }
 
 .ql-emoticon {
-    background-image: black;
+    background-size: cover !important;
+    background-image: url("assets/EMOTICON.png") !important;
 }
 
 /* 디테일뷰의 게시글 이미지 크기를 맟추기 위함(quill 라이브러리를 써서 어쩔 수 없음) */

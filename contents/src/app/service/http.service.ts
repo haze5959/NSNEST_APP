@@ -500,7 +500,7 @@ export class HttpService {
     publisher: '에러',
     publisherIntro: '게시글을 불러오지 못하였습니다.',
     publisherImg: null,
-    images: ["/../assets/testImage.jpg"],
+    images: ["./assets/NO_PROFILE_IMG.png"],
     title: '게시글을 불러오지 못하였습니다.',
     body: '',
     good: 9,

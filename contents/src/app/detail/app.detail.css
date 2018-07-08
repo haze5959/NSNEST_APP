@@ -117,6 +117,10 @@
     height: 600px;
 }
 
+.emoticon-btn {
+    height: 36px;
+}
+
 @media screen and (max-width: 1000px) {
     .app-detail {
         margin-left: 0px;

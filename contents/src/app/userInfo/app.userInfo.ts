@@ -29,7 +29,7 @@ export class AppUserInfo implements CognitoCallback, OnInit {
 
   @ViewChild('commentPushOnOffBtn') public commentPushOnOffBtn:ElementRef;
  
-  constructor(public dialog: MatDialog, private userService: UserLoginService, private snackBar: MatSnackBar, public appService: AppService, private httpService: HttpService) {}
+  constructor(private router: Router, public dialog: MatDialog, private userService: UserLoginService, private snackBar: MatSnackBar, public appService: AppService, private httpService: HttpService) {}
 
   ngOnInit(){
     document.addEventListener("deviceready", () => { 
@@ -44,6 +44,7 @@ export class AppUserInfo implements CognitoCallback, OnInit {
     this.userService.logout();
     this.userPw.setValue("");
     this.appService.isAppLogin = false;
+    this.router.navigate(['/']);
     this.snackBar.open("로그아웃 되었습니다.", "확인", {
       duration: 2000,
     });
@@ -56,10 +57,10 @@ export class AppUserInfo implements CognitoCallback, OnInit {
     }
   }
 
-  pressRegistration(){
-    alert("회원가입 페이지로 이동합니다.");
-    document.location.href = environment.registPage;
-  }
+  // pressRegistration(){
+  //   alert("회원가입 페이지로 이동합니다.");
+  //   document.location.href = environment.registPage;
+  // }
 
   openSetUserInfoDialog(){
     const dialogRef = this.dialog.open(SetUserInfoDialog, {
