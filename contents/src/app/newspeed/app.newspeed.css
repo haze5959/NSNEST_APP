@@ -194,28 +194,44 @@
 }
 
 @media screen and (max-width: 1000px) {
+    .userInfoCard-login-btn {
+        position: absolute;
+        top: 10%;
+        right: 5%;
+    }
+
+    .userInfoCard-regist-btn {
+        position: absolute;
+        top: calc(10% + 70px);
+        right: 5%;
+    }
+
+    .userInfoCard-logo {
+        margin-top: 0px;
+    }
+
     .fairly-img {
         position: absolute;
         right: auto;
         top: auto;
         bottom: 0px;
-        height: 85%;
+        height: 100%;
         left: -25%;
         min-height: auto;
     }
     
     .fairly-bubble {
-        width: 275px;
-        height: 150px;
+        width: 180px;
+        height: 100px;
         transform: rotate(0deg);
-        margin-right: 10%;
+        margin-right: 0%;
         float: right;
     }
     
     .bubble-text {
-        top: 70%;
-        font-size: 20px;
-        width: 200px;
+        top: 80%;
+        font-size: 15px;
+        width: 120px;
         padding-left: 35px;
         padding-right: 25px;
         transform: rotate(0deg);

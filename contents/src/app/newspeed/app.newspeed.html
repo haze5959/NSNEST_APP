@@ -22,10 +22,10 @@
             </mat-form-field>
         </div>
         <div class="userInfoCard-btn-bundle">
-            <button mat-raised-button (click)="pressLogin()">로그인</button>
-            <button mat-raised-button (click)="pressRegistration()">회원가입</button>
+            <button mat-raised-button (click)="pressLogin()" class="userInfoCard-login-btn">로그인</button>
+            <button mat-raised-button (click)="pressRegistration()" class="userInfoCard-regist-btn">회원가입</button>
         </div>
-        <p class="font-bold font-size20">
+        <p class="font-bold font-size20 userInfoCard-logo">
             {{appService.APP_NAME}} {{appService.APP_VERSION}} 
         </p>
         <p class="font-Italic font-size16">

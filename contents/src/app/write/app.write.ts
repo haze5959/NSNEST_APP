@@ -265,6 +265,7 @@ export class AppWrite implements OnInit {
     switch(this.classify){
       case 'post':{ //게시글
         //서버에 이미지 저장 후, url 리턴해서 이미지 뿌려주기=============================
+        this.appService.isAppLoading = true;
         this.httpService.uploadImage('board', $event.target.files[0])
           .subscribe(
             data => {
