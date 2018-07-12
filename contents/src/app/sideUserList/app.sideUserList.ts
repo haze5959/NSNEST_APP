@@ -16,27 +16,16 @@ export class AppSideUserList implements OnInit {
   
   userOrderByLank: user[] = [];
   recentUsers: user[] = [];
-  scheduleArr: schedule[] = [];
+  allUsers: user[] = [];
   
   constructor(public dialog: MatDialog, private appService: AppService, private httpService: HttpService, private router: Router) {}
   
   ngOnInit() {
-    //해당 게시글 DB에서 빼온다
-    this.httpService.getUsers('update', 10)
-    .subscribe(
-      data => {
-        // console.log(JSON.stringify(data));
-        if (data.length == 0) {
-          alert("유저 정보를 가져오지 못하였습니다.");
-        } else {
-          this.recentUsers = this.appService.userFactory(data)
-        }
-      },
-      error => {
-        console.error("[error] - " + error.error.text);
-        alert("유저 정보를 가져오지 못하였습니다. - " + error.error.text);
-      }
-    );
+    if(this.appService.isAppLogin){
+      this.tabChange(0);
+    } else {
+      this.tabChange(0);
+    }
   }
 
   pressOneUser(user:user){
@@ -91,15 +80,15 @@ export class AppSideUserList implements OnInit {
         );
         break;
 
-      case 2: //schedule==================================================
-        this.httpService.getPosts(40, 'id', 'desc', 1)
+        case 2: //schedule==================================================
+        this.httpService.getUsers('update', 100)
         .subscribe(
           data => {
             console.log(JSON.stringify(data));
             if (data.length == 0) {
               alert("스케쥴 정보를 가져오지 못하였습니다.");
             } else {
-              this.scheduleArr = this.appService.scheduleFactory(data)              
+              this.allUsers = this.appService.userFactory(data)              
             }
           },
           error => {

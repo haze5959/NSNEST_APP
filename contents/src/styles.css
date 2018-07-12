@@ -3,6 +3,7 @@
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 body{
+    overflow: hidden;
     position: absolute;
     height: 100%;
     width: 100%;
@@ -134,6 +135,10 @@ body{
 
 .posts-content > p > p > img { 
     max-width: 100% !important;
+}
+
+.mat-tab-body{
+    overflow-y: hidden !important;
 }
 
 .ql-video {

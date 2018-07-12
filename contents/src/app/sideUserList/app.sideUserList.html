@@ -45,16 +45,16 @@
         </mat-tab>
 
         <!-- 일정 리스트 -->
-        <mat-tab label="일정" disabled>
+        <mat-tab label="전체">
             <mat-list>
-                <h3 mat-subheader>Folders</h3>
-                <mat-nav-list *ngFor="let schedule of scheduleArr">
-                    <a mat-list-item (click)="pressOneSchedule(schedule.postId)">
+                <!-- <h3 mat-subheader>Folders</h3> -->
+                <mat-nav-list *ngFor="let user of allUsers">
+                    <a mat-list-item (click)="pressOneUser(user)">
                         <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
+                        <div mat-card-avatar [ngStyle]="{ 'background-image': 'url(' + user.image + ')'}" class="profile-image"></div>
                         <div class="profile-info">
-                            <h4 class="profile-info-name">{{schedule.title}}</h4>
-                            <p class="profile-info-intro"> {{schedule.startDate | date:'M월 d일 H시'}} ~ {{schedule.endDate | date:'M월 d일 H시'}}</p>
-                            <p class="profile-info-intro"> 참석자 수: {{schedule.participantsId.length}}</p>
+                            <h4 class="profile-info-name">{{user.name}}</h4>
+                            <p class="profile-info-intro"> {{user.intro}} </p>
                         </div>
                     </a>
                     <mat-divider></mat-divider>
