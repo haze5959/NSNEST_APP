@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
 		03CCE8D26A4941A6B1E66AF4 /* GoogleSymbolUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A101C9A605E845FEBEE5CE64 /* GoogleSymbolUtilities.framework */; };
@@ -41,6 +40,7 @@
 		E7B5923343EB49EA9C9BF328 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E3CCB827773409497B3610B /* AddressBook.framework */; };
 		FB42890958B4480F907D1ABE /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6A08B1CAC834ECB98BE50D3 /* GoogleUtilities.framework */; };
 		FD1CD6900E49409EA7C7F22F /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FF908E79D1471CA05B21BE /* CDVSplashScreen.m */; };
+		C72ABAB704D94183AF3CD8A1 /* CDVInAppBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD2B06676C945FBA49CC52F /* CDVInAppBrowser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +126,8 @@
 		ED5AF808C115405F9456F678 /* AppDelegate+FCMPlugin.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = "AppDelegate+FCMPlugin.m"; path = "cordova-plugin-fcm/AppDelegate+FCMPlugin.m"; sourceTree = "<group>"; };
 		F7CBB0CA1226491483742566 /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = NSNEST/config.xml; sourceTree = "<group>"; };
+		CBD2B06676C945FBA49CC52F /* CDVInAppBrowser.m */ = {isa = PBXFileReference; name = "CDVInAppBrowser.m"; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		09EB81920E474A9FB417534E /* CDVInAppBrowser.h */ = {isa = PBXFileReference; name = "CDVInAppBrowser.h"; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +286,8 @@
 				A4D1348C8F764357BB0F2AEC /* CDVDevice.h */,
 				CC3FBE38D2DD49DB8E196727 /* CDVCookieMaster.m */,
 				C5FC69C50E7546C4968BEECE /* CDVCookieMaster.h */,
+				CBD2B06676C945FBA49CC52F /* CDVInAppBrowser.m */,
+				09EB81920E474A9FB417534E /* CDVInAppBrowser.h */,
 			);
 			name = Plugins;
 			path = NSNEST/Plugins;
@@ -456,6 +460,7 @@
 				5734AE4FB5AC44279D89EE6C /* AppDelegate+FCMPlugin.m in Sources */,
 				D5043B976CF046D29734B0E1 /* CDVDevice.m in Sources */,
 				1BB6BFFA12F644FCB9BCB5BE /* CDVCookieMaster.m in Sources */,
+				C72ABAB704D94183AF3CD8A1 /* CDVInAppBrowser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

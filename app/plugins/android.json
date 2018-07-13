@@ -27,6 +27,9 @@
     },
     "com.cordova.plugins.cookiemaster": {
       "PACKAGE_NAME": "com.nsnest"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.nsnest"
     }
   },
   "dependent_plugins": {}

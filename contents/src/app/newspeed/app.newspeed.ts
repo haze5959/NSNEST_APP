@@ -12,6 +12,8 @@ import { CognitoUtil } from '../service/awsService/cognito.service';
 import { PullToRefreshComponent } from './pullToRefresh';
 import { Observable } from 'rxjs/Observable';
 
+declare var cordova;
+
 @Component({
   selector: 'app-newspeed',
   templateUrl: './app.newspeed.html',
@@ -132,7 +134,8 @@ export class AppNewspeed implements OnInit, OnDestroy, CognitoCallback {
    * 로그인 관련
    */
   pressRegistration(){
-    document.location.href = environment.registPage;
+    cordova.InAppBrowser.open('http://apache.org', '_blank', 'location=yes');
+    // document.location.href = environment.registPage;
   }
 
   pressLogin(){

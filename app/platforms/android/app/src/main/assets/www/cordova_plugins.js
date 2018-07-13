@@ -53,6 +53,15 @@ module.exports = [
     "clobbers": [
       "cookieMaster"
     ]
+  },
+  {
+    "id": "cordova-plugin-inappbrowser.inappbrowser",
+    "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+    "pluginId": "cordova-plugin-inappbrowser",
+    "clobbers": [
+      "cordova.InAppBrowser.open",
+      "window.open"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -64,7 +73,8 @@ module.exports.metadata =
   "cordova-plugin-geolocation": "4.0.1",
   "cordova-plugin-fcm": "2.1.2",
   "cordova-plugin-device": "2.0.2",
-  "com.cordova.plugins.cookiemaster": "1.0.0"
+  "com.cordova.plugins.cookiemaster": "1.0.0",
+  "cordova-plugin-inappbrowser": "3.0.0"
 };
 // BOTTOM OF METADATA
 });
