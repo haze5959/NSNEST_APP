@@ -46,3 +46,5 @@
     </mat-grid-list>
     <mat-paginator class="color-50" [length]="pageLength" [pageSize]="pageSize" [showFirstLastButtons]="true" [hidePageSize]="true" (page)="setPageEvent($event)"></mat-paginator>
 </div>
+
+<button id="backBtn" hidden (click)="historyBack()"></button>

@@ -78,19 +78,27 @@ export class AppService implements LoggedInCallback {
           this.router.navigate(['/']);
         }else{
           //Notification was received in foreground. Maybe the user needs to be notified.
-          let type:number = data.type?data.type:0;
-          switch (Number(type)) {
-            case 10:  //게시글
-              this.snackBar.open(`${data.user?data.user:''}님이 게시글을 올렸습니다.`, '확인');
-              break;
-  
-            case 20:  //댓글
-              this.snackBar.open(`${data.user?data.user:''}님이 댓글을 올렸습니다.`, '확인');
-              break;
-          
-            default:
-              this.snackBar.open(`알 수 없는 푸시`, '확인');
-              break;
+          if(data.user && data.user != this.myInfo.name){
+            let type:number = data.type?data.type:0;
+            switch (Number(type)) {
+              case 10:  //게시글
+                this.snackBar.open(`${data.user?data.user:''}님이 게시글을 올렸습니다.`, null, {
+                  duration: 1000,
+                });
+                break;
+    
+              case 20:  //댓글
+                this.snackBar.open(`${data.user?data.user:''}님이 댓글을 올렸습니다.`, null, {
+                  duration: 1000,
+                });
+                break;
+            
+              default:
+                this.snackBar.open(`알 수 없는 푸시`, null, {
+                  duration: 1000,
+                });
+                break;
+            }
           }
         }
       });

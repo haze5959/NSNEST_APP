@@ -21,6 +21,12 @@ export class AppSideUserList implements OnInit {
   constructor(public dialog: MatDialog, private appService: AppService, private httpService: HttpService, private router: Router) {}
   
   ngOnInit() {
+    //뒤로가기
+    document.addEventListener("backbutton", () => {
+      let element: HTMLElement = document.getElementById('backBtn') as HTMLElement;
+      element.click();
+    }, false);
+    
     if(this.appService.isAppLogin){
       this.tabChange(0);
     } else {
@@ -100,6 +106,18 @@ export class AppSideUserList implements OnInit {
     
       default:
         break;
+    }
+  }
+
+  historyBack(){
+    // this.appService.goBack();
+
+    if(this.appService.engagingMainPage == 'newspeed'){
+      this.router.navigate(['/']);
+    } else if(this.appService.engagingMainPage == 'tastyLoad'){
+      this.router.navigate(['/tastyLoad']);
+    } else {
+      this.router.navigate(['/']);
     }
   }
 }

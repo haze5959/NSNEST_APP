@@ -58,6 +58,12 @@ export class AppWrite implements OnInit {
     if(!this.appService.isAppLogin){
       this.router.navigate(['/']);
     } else {
+      //뒤로가기
+      document.addEventListener("backbutton", () => {
+        let element: HTMLElement = document.getElementById('backBtn') as HTMLElement;
+        element.click();
+      }, false);
+
       this.activeRoute.params.forEach((params: Params) => {
         this.classify = params['classify'];
         this.marker = null;
@@ -423,5 +429,17 @@ export class AppWrite implements OnInit {
       if (this.map)
         this.map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
     });
+  }
+
+  historyBack(){
+    // this.appService.goBack();
+
+    if(this.appService.engagingMainPage == 'newspeed'){
+      this.router.navigate(['/']);
+    } else if(this.appService.engagingMainPage == 'tastyLoad'){
+      this.router.navigate(['/tastyLoad']);
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 }

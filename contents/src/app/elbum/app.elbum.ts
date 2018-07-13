@@ -20,6 +20,12 @@ export class AppElbum implements OnInit{
   constructor(private httpService: HttpService, public appService: AppService, private router: Router) {}
 
   ngOnInit() {
+    //뒤로가기
+    document.addEventListener("backbutton", () => {
+      let element: HTMLElement = document.getElementById('backBtn') as HTMLElement;
+      element.click();
+    }, false);
+
     this.appService.engagingMainPage = 'elbum';
     zip(
       this.httpService.getPosts(20, 'id', 'desc', 1), //해당 게시글 DB에서 빼온다
@@ -61,5 +67,15 @@ export class AppElbum implements OnInit{
 
   pressOneImage(postId:number){
     this.router.navigate(['detail/' + postId]);
+  }
+
+  historyBack(){
+    if(this.appService.engagingMainPage == 'newspeed'){
+      this.router.navigate(['/']);
+    } else if(this.appService.engagingMainPage == 'tastyLoad'){
+      this.router.navigate(['/tastyLoad']);
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 }
