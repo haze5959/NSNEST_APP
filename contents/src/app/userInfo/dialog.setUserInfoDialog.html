@@ -12,7 +12,7 @@
 
 <!-- 이미지 인풋 -->
 <button mat-raised-button color="primary" (click)="imgFileInput.click()">이미지 변경</button>
-<input hidden type="file" #imgFileInput (change)="changeImage($event)" accept=".jpg,.jpeg,.png,.gif,.bmp"/>
+<input hidden type="file" #imgFileInput (change)="changeImage($event)" accept="image/*"/>
 
 <!-- 이미지 표시 -->
 <mat-card class="example-card" style="margin-top: 20px; margin-bottom: 20px; max-width: 400px;">

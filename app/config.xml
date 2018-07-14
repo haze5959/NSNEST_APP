@@ -34,7 +34,7 @@
     <plugin name="cordova-plugin-fcm" spec="^2.1.2" />
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="com.cordova.plugins.cookiemaster" spec="~1.0.0" />
+    <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <engine name="ios" spec="^4.5.4" />
     <engine name="android" spec="^7.0.0" />
-    <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
 </widget>

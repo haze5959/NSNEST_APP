@@ -1,5 +1,4 @@
-<input hidden #fileInput type='file' accept="image/*" (change)="addImageAndUploadServer($event)" multiple *ngIf="classify != 'post'">
-<input hidden #fileInput type='file' accept="image/*" (change)="addImageAndUploadServer($event)" *ngIf="classify == 'post'">
+<input hidden #fileInput type='file' accept="image/*" (change)="addImageAndUploadServer($event)" [multiple]="classify != 'post'">
 
 <div class="app-write">
     <!--=================== 게시글 작성 =====================-->

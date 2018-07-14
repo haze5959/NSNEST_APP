@@ -134,7 +134,7 @@ export class AppNewspeed implements OnInit, OnDestroy, CognitoCallback {
    * 로그인 관련
    */
   pressRegistration(){
-    cordova.InAppBrowser.open('http://apache.org', '_blank', 'location=yes');
+    cordova.InAppBrowser.open('http://nsnest.s3-website.ap-northeast-2.amazonaws.com/', '_blank', 'location=no,EnableViewPortScale=yes');
     // document.location.href = environment.registPage;
   }
 
