@@ -92,11 +92,12 @@
   <!--=================== 좋아요 싫어요 글삭제 =====================-->
   <div class="detail-goodBad" *ngIf="!isMine">
     <button mat-raised-button color="primary" class="detail-goodBad-btn" (click)="pressGood(post.postsID)">좋아요({{post?post.good:0}})</button>
-    <button mat-raised-button color="accent" class="detail-goodBad-btn" (click)="pressBad(post.postsID)">싫어요({{post?post.bad:0}})</button>
+    <!-- <button mat-raised-button color="accent" class="detail-goodBad-btn" (click)="pressBad(post.postsID)">싫어요({{post?post.bad:0}})</button> -->
+    <button mat-raised-button color="accent" class="detail-goodBad-btn" (click)="pressBad(post.postsID)">유해한 게시글 신고</button>
   </div>
   <div class="detail-goodBad" *ngIf="isMine">
     <button mat-raised-button color="primary" class="detail-goodBad-btn" (click)="pressGood(post.postsID)">좋아요({{post?post.good:0}})</button>
-    <button mat-raised-button color="accent" class="detail-goodBad-btn" (click)="pressBad(post.postsID)">싫어요({{post?post.bad:0}})</button>
+    <!-- <button mat-raised-button color="accent" class="detail-goodBad-btn" (click)="pressBad(post.postsID)">싫어요({{post?post.bad:0}})</button> -->
     <button mat-raised-button color="accent" class="detail-goodBad-btn" (click)="pressDeletePost(post.postsID)">게시글 삭제하기</button>
   </div>
   <!--=================== 코맨트 =====================-->

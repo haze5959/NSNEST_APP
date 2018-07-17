@@ -335,67 +335,70 @@ export class AppDetail implements OnInit {
   }
 
   pressBad(postId:number){  //싫어요
-    var isAlreayVote = true;
-    var userGoodBadInfo = null;
-    
-    new Promise((resolve, reject) => {
-      //쿠키 가져오기==================================================
-      cookieMaster.getCookieValue(environment.fileUrl, 'nsnest_good_bad_info', function(data) {
-        userGoodBadInfo = data.cookieValue;
-        let usedPostIdArr:string[] = userGoodBadInfo.split(',');
-        var isContainPostId:boolean = false;
-        for (const usedPostId of usedPostIdArr) {
-          if (usedPostId == postId.toString()) {
-            isContainPostId = true;
-          }
-        }
-
-        if(!isContainPostId){
-          isAlreayVote = false;
-        }
-
-        resolve();
-      }, function(error) {
-
-        isAlreayVote = false;
-        resolve();
-      });
-      //=========================================================
-    }).then(() => {
-      if(isAlreayVote){ //이미 사용하셨습니다.
-        this.openSnackBar("이미 투표하셨습니다.");
-      } else {
-        this.httpService.putPostGoodBad(postId, this.appService.myInfo.userId, false).subscribe(
-          data => {
-            if(data.result){
-              this.openSnackBar("싫어요 성공");
-
-              //쿠키 적용하기==================================================
-              if(!userGoodBadInfo){
-                userGoodBadInfo = postId.toString();
-              } else {
-                userGoodBadInfo = userGoodBadInfo.concat(',' + postId.toString())
-              }
-              
-              cookieMaster.setCookieValue(environment.fileUrl, 'nsnest_good_bad_info', userGoodBadInfo,
-              function() {},
-              function(error) {
-                  alert('Error setting cookie: '+error);
-              });
-              //=========================================================
-
-              this.post.bad = this.post.bad + 1;
-            } else {
-              this.openSnackBar("싫어요 실패");
+    var con_test = confirm("해당 게시글을 신고하시겠습니까?");
+    if(con_test == true){
+      var isAlreayVote = true;
+      var userGoodBadInfo = null;
+      
+      new Promise((resolve, reject) => {
+        //쿠키 가져오기==================================================
+        cookieMaster.getCookieValue(environment.fileUrl, 'nsnest_good_bad_info', function(data) {
+          userGoodBadInfo = data.cookieValue;
+          let usedPostIdArr:string[] = userGoodBadInfo.split(',');
+          var isContainPostId:boolean = false;
+          for (const usedPostId of usedPostIdArr) {
+            if (usedPostId == postId.toString()) {
+              isContainPostId = true;
             }
-          },
-          error => {
-            console.log(error);
-            this.openSnackBar("싫어요 실패 - " + error);
           }
-        );
-      }
-    });
+
+          if(!isContainPostId){
+            isAlreayVote = false;
+          }
+
+          resolve();
+        }, function(error) {
+
+          isAlreayVote = false;
+          resolve();
+        });
+        //=========================================================
+      }).then(() => {
+        if(isAlreayVote){ //이미 사용하셨습니다.
+          this.openSnackBar("이미 신고된 게시글입니다.");
+        } else {
+          this.httpService.putPostGoodBad(postId, this.appService.myInfo.userId, false).subscribe(
+            data => {
+              if(data.result){
+                this.openSnackBar("게시글 신고 완료");
+
+                //쿠키 적용하기==================================================
+                if(!userGoodBadInfo){
+                  userGoodBadInfo = postId.toString();
+                } else {
+                  userGoodBadInfo = userGoodBadInfo.concat(',' + postId.toString())
+                }
+                
+                cookieMaster.setCookieValue(environment.fileUrl, 'nsnest_good_bad_info', userGoodBadInfo,
+                function() {},
+                function(error) {
+                    alert('Error setting cookie: '+error);
+                });
+                //=========================================================
+
+                this.post.bad = this.post.bad + 1;
+              } else {
+                this.openSnackBar("게시글 신고 실패");
+              }
+            },
+            error => {
+              console.log(error);
+              this.openSnackBar("게시글 신고 실패 - " + error);
+            }
+          );
+        }
+      });
+    }
   }
 
   pressDeletePost(postId:number){ //게시글 삭제
