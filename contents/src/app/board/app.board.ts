@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 
 import {zip} from 'rxjs/observable/zip';
 import { AppService } from '../service/appService';
+import { CognitoUtil } from '../service/awsService/cognito.service';
 
 @Component({
   selector: 'app-board',
@@ -20,28 +21,36 @@ export class AppBoard implements OnInit{
   orderBySeq = "desc";
   filterValue = "";
 
-  constructor(private httpService: HttpService, public appService: AppService, private router: Router) {}
+  constructor(private httpService: HttpService, public appService: AppService, private router: Router, private cognitoUtil: CognitoUtil) {}
 
   ngOnInit() {
     this.appService.engagingMainPage = 'board';
-    zip(
-      this.httpService.getPosts(10, this.orderBy, this.orderBySeq, 1), //해당 게시글 DB에서 빼온다
-      this.httpService.getPostSize(10)  //해당 게시글 숫자를 가져온다
-    ).subscribe(
-      data => {
-        // console.log(JSON.stringify(data));
-        this.boardPosts = this.appService.postFactory(data[0]);
-        this.pageLength = data[1][0];
-        this.pageSize = this.boardPosts.length;
-        this.appService.isAppLoading = false;
-      },
-      error => {
-        console.error("[error] - " + error.error.text);
-        alert("[error] - " + error.error.text);
-        this.boardPosts.push(this.httpService.errorPost);
-        this.appService.isAppLoading = false;
+    let parentClass = this;
+    this.cognitoUtil.getAccessToken({
+      callback(): void{},
+      callbackWithParam(token: any): void {
+        parentClass.httpService.checkAccessToken(token).then((accessToken) => {
+          zip(
+            parentClass.httpService.getPosts(accessToken, 10, parentClass.orderBy, parentClass.orderBySeq, 1), //해당 게시글 DB에서 빼온다
+            parentClass.httpService.getPostSize(10)  //해당 게시글 숫자를 가져온다
+          ).subscribe(
+            data => {
+              // console.log(JSON.stringify(data));
+              parentClass.boardPosts = parentClass.appService.postFactory(data[0]);
+              parentClass.pageLength = data[1][0];
+              parentClass.pageSize = parentClass.boardPosts.length;
+              parentClass.appService.isAppLoading = false;
+            },
+            error => {
+              console.error("[error] - " + error.error.text);
+              alert("[error] - " + error.error.text);
+              parentClass.boardPosts.push(parentClass.httpService.errorPost);
+              parentClass.appService.isAppLoading = false;
+            }
+          );
+        });
       }
-    );
+    });
   }
 
   applyFilter(filterValue: string) {
@@ -49,43 +58,60 @@ export class AppBoard implements OnInit{
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     console.log(filterValue);
     this.appService.isAppLoading = true;
-    zip(
-      this.httpService.getPosts(10, this.orderBy, this.orderBySeq, 1, filterValue), //해당 게시글 DB에서 빼온다
-      this.httpService.getPostSize(10, filterValue)  //해당 게시글 숫자를 가져온다
-    ).subscribe(
-      data => {
-        // console.log(JSON.stringify(data));
-        this.boardPosts = this.appService.postFactory(data[0]);
-        this.pageLength = data[1][0];
-        this.pageSize = this.boardPosts.length;
-        this.appService.isAppLoading = false;
-        this.filterValue = filterValue;
-      },
-      error => {
-        console.error("[error] - " + error.error.text);
-        alert("[error] - " + error.error.text);
-        this.boardPosts.push(this.httpService.errorPost);
-        this.appService.isAppLoading = false;
+    
+    let parentClass = this;
+    this.cognitoUtil.getAccessToken({
+      callback(): void{},
+      callbackWithParam(token: any): void {
+        parentClass.httpService.checkAccessToken(token).then((accessToken) => {
+          zip(
+            parentClass.httpService.getPosts(accessToken, 10, parentClass.orderBy, parentClass.orderBySeq, 1, filterValue), //해당 게시글 DB에서 빼온다
+            parentClass.httpService.getPostSize(10, filterValue)  //해당 게시글 숫자를 가져온다
+          ).subscribe(
+            data => {
+              // console.log(JSON.stringify(data));
+              parentClass.boardPosts = parentClass.appService.postFactory(data[0]);
+              parentClass.pageLength = data[1][0];
+              parentClass.pageSize = parentClass.boardPosts.length;
+              parentClass.appService.isAppLoading = false;
+              parentClass.filterValue = filterValue;
+            },
+            error => {
+              console.error("[error] - " + error.error.text);
+              alert("[error] - " + error.error.text);
+              parentClass.boardPosts.push(parentClass.httpService.errorPost);
+              parentClass.appService.isAppLoading = false;
+            }
+          );
+        });
       }
-    );
+    });
   }
 
   pageEvent(pageEvent: PageEvent) {
     this.appService.isAppLoading = true;
-    this.httpService.getPosts(10, this.orderBy, this.orderBySeq, pageEvent.pageIndex + 1)
-    .subscribe(
-      data => {
-        // console.log(JSON.stringify(data));
-        this.boardPosts = this.appService.postFactory(data);
-        this.appService.isAppLoading = false;
-      },
-      error => {
-        console.error("[error] - " + error.error.text);
-        alert("[error] - " + error.error.text);
-        this.boardPosts.push(this.httpService.errorPost);
-        this.appService.isAppLoading = false;
+    let parentClass = this;
+    this.cognitoUtil.getAccessToken({
+      callback(): void{},
+      callbackWithParam(token: any): void {
+        parentClass.httpService.checkAccessToken(token).then((accessToken) => {
+          parentClass.httpService.getPosts(accessToken, 10, parentClass.orderBy, parentClass.orderBySeq, pageEvent.pageIndex + 1)
+          .subscribe(
+            data => {
+              // console.log(JSON.stringify(data));
+              parentClass.boardPosts = parentClass.appService.postFactory(data);
+              parentClass.appService.isAppLoading = false;
+            },
+            error => {
+              console.error("[error] - " + error.error.text);
+              alert("[error] - " + error.error.text);
+              parentClass.boardPosts.push(parentClass.httpService.errorPost);
+              parentClass.appService.isAppLoading = false;
+            }
+          );
+        });
       }
-    );
+    });
   }
 
   pressOrderBy(orderByStr:string){

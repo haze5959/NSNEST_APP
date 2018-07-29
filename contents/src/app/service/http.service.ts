@@ -17,6 +17,25 @@ export class HttpService {
 
   constructor(private http: HttpClient, private cognitoUtil: CognitoUtil){}
 
+  checkAccessToken(accessToken: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if(!accessToken || accessToken == "" || this.isTokenExpired(accessToken)){
+          this.cognitoUtil.getAccessToken({
+            callback(): void{},
+            callbackWithParam(token: any): void {
+              accessToken = token;
+            }
+          });
+  
+          alert("토큰 리프레시 - " + accessToken);
+          resolve(accessToken);
+        } else {
+          resolve(accessToken);
+        }
+      }, 1000);
+    });
+  }
   //============================================================
   //GET
   //============================================================
@@ -51,26 +70,7 @@ export class HttpService {
    * classify = 0:전체 / 10:게시글 / 20:앨범 / 30:지도 / 40:스케쥴
    * sort = id / good / bad
    */
-  getPosts(classify: number, sort: string, order: string, page: number, contents?: string): Observable<Array<any>> {
-    var accessToken = "";
-    this.cognitoUtil.getAccessToken({
-        callback(): void{},
-        callbackWithParam(result: any): void {
-          accessToken = result;
-        }
-    });
-
-    if(!accessToken || accessToken == "" || this.isTokenExpired(accessToken)){
-      // alert("토큰 리프레시");
-      this.cognitoUtil.refresh();
-      this.cognitoUtil.getAccessToken({
-        callback(): void{},
-        callbackWithParam(result: any): void {
-          accessToken = result;
-        }
-      });
-    }
-  
+  getPosts(accessToken:string, classify: number, sort: string, order: string, page: number, contents?: string): Observable<Array<any>> {
     let requestUrl = `${environment.apiUrl}posts?classify=${classify}&sort=${sort}&order=${order}&page=${page}&accessToken=${accessToken}`;
     if(contents){
       requestUrl = `${environment.apiUrl}posts?classify=${classify}&sort=${sort}&order=${order}&page=${page}&contents=${contents}&accessToken=${accessToken}`;
@@ -89,26 +89,7 @@ export class HttpService {
    * classify = 0:전체 / 10:게시글 / 20:앨범 / 30:지도 / 40:스케쥴
    * sort = id / good / bad
    */
-  getPostAll(classify: number, sort: string, order: string, contents?: string): Observable<Array<any>> {
-    var accessToken = "";
-    this.cognitoUtil.getAccessToken({
-        callback(): void{},
-        callbackWithParam(result: any): void {
-          accessToken = result;
-        }
-    });
-
-    if(!accessToken || accessToken == "" || this.isTokenExpired(accessToken)){
-      // alert("토큰 리프레시");
-      this.cognitoUtil.refresh();
-      this.cognitoUtil.getAccessToken({
-        callback(): void{},
-        callbackWithParam(result: any): void {
-          accessToken = result;
-        }
-      });
-    }
-
+  getPostAll(accessToken:string, classify: number, sort: string, order: string, contents?: string): Observable<Array<any>> {
     let requestUrl = `${environment.apiUrl}posts/all?classify=${classify}&sort=${sort}&order=${order}&accessToken=${accessToken}`;
     if(contents){
       requestUrl = `${environment.apiUrl}posts/all?classify=${classify}&sort=${sort}&order=${order}&contents=${contents}&accessToken=${accessToken}`;
@@ -122,26 +103,7 @@ export class HttpService {
     });
   }
 
-  getPost(postId: number): Observable<Array<any>> {
-    var accessToken = "";
-    this.cognitoUtil.getAccessToken({
-        callback(): void{},
-        callbackWithParam(result: any): void {
-          accessToken = result;
-        }
-    });
-
-    if(!accessToken || accessToken == "" || this.isTokenExpired(accessToken)){
-      // alert("토큰 리프레시");
-      this.cognitoUtil.refresh();
-      this.cognitoUtil.getAccessToken({
-        callback(): void{},
-        callbackWithParam(result: any): void {
-          accessToken = result;
-        }
-      });
-    }
-
+  getPost(accessToken:string, postId: number): Observable<Array<any>> {
     const requestUrl = `${environment.apiUrl}posts?postId=${postId}&accessToken=${accessToken}`;
     return this.http.get<Array<any>>(requestUrl).timeout(timeout)
     .catch((err:Response) => {
@@ -221,26 +183,7 @@ export class HttpService {
   /**
    * 게시글 등록하기
    */
-  postPost(postJson:posts): any {
-    var accessToken = "";
-    this.cognitoUtil.getAccessToken({
-        callback(): void{},
-        callbackWithParam(result: any): void {
-          accessToken = result;
-        }
-    });
-
-    if(!accessToken || accessToken == "" || this.isTokenExpired(accessToken)){
-      // alert("토큰 리프레시");
-      this.cognitoUtil.refresh();
-      this.cognitoUtil.getAccessToken({
-        callback(): void{},
-        callbackWithParam(result: any): void {
-          accessToken = result;
-        }
-      });
-    }
-
+  postPost(accessToken:string, postJson:posts): any {
     const requestUrl = `${environment.apiUrl}posts`;
     let param = {
       accessToken: accessToken,
@@ -275,26 +218,7 @@ export class HttpService {
   /**
    * 이미지 등록하기
    */
-  uploadImage(type:string ,image: File): any {
-    var accessToken = "";
-    this.cognitoUtil.getAccessToken({
-        callback(): void{},
-        callbackWithParam(result: any): void {
-          accessToken = result;
-        }
-    });
-
-    if(!accessToken || accessToken == "" || this.isTokenExpired(accessToken)){
-      // alert("토큰 리프레시");
-      this.cognitoUtil.refresh();
-      this.cognitoUtil.getAccessToken({
-        callback(): void{},
-        callbackWithParam(result: any): void {
-          accessToken = result;
-        }
-      });
-    }
-
+  uploadImage(accessToken:string, type:string ,image: File): any {
     const requestUrl = `${environment.apiUrl}file/${type}`;
 
     const formData = new FormData();
@@ -312,26 +236,7 @@ export class HttpService {
     /**
    * 이모티콘 등록하기
    */
-  postEmoticon(emoticonName:string ,image: File): any {
-    var accessToken = "";
-    this.cognitoUtil.getAccessToken({
-        callback(): void{},
-        callbackWithParam(result: any): void {
-          accessToken = result;
-        }
-    });
-
-    if(!accessToken || accessToken == "" || this.isTokenExpired(accessToken)){
-      // alert("토큰 리프레시");
-      this.cognitoUtil.refresh();
-      this.cognitoUtil.getAccessToken({
-        callback(): void{},
-        callbackWithParam(result: any): void {
-          accessToken = result;
-        }
-      });
-    }
-
+  postEmoticon(accessToken:string, emoticonName:string ,image: File): any {
     const requestUrl = `${environment.apiUrl}admin/emoticon`;
 
     const formData = new FormData();
@@ -357,26 +262,7 @@ export class HttpService {
   /**
    * 게시글 수정하기
    */
-  putPostGoodBad(postId:number, userId:number, isGood:boolean): any {
-    var accessToken = "";
-    this.cognitoUtil.getAccessToken({
-        callback(): void{},
-        callbackWithParam(result: any): void {
-          accessToken = result;
-        }
-    });
-
-    if(!accessToken || accessToken == "" || this.isTokenExpired(accessToken)){
-      // alert("토큰 리프레시");
-      this.cognitoUtil.refresh();
-      this.cognitoUtil.getAccessToken({
-        callback(): void{},
-        callbackWithParam(result: any): void {
-          accessToken = result;
-        }
-      });
-    }
-
+  putPostGoodBad(accessToken:string, postId:number, userId:number, isGood:boolean): any {
     const requestUrl = `${environment.apiUrl}posts`;
 
     let param = {
@@ -399,26 +285,7 @@ export class HttpService {
   /**
    * 프로필 수정하기
    */
-  putUserInfo(userId:number, intro:string, description:string, profileImage:string): any {
-    var accessToken = "";
-    this.cognitoUtil.getAccessToken({
-        callback(): void{},
-        callbackWithParam(result: any): void {
-          accessToken = result;
-        }
-    });
-
-    if(!accessToken || accessToken == "" || this.isTokenExpired(accessToken)){
-      // alert("토큰 리프레시");
-      this.cognitoUtil.refresh();
-      this.cognitoUtil.getAccessToken({
-        callback(): void{},
-        callbackWithParam(result: any): void {
-          accessToken = result;
-        }
-      });
-    }
-
+  putUserInfo(accessToken:string, userId:number, intro:string, description:string, profileImage:string): any {
     const requestUrl = `${environment.apiUrl}users`;
 
     let param = {
@@ -445,26 +312,7 @@ export class HttpService {
   /**
    * 게시글 삭제
    */
-  deletePost(postId:number): any {
-    var accessToken = "";
-    this.cognitoUtil.getAccessToken({
-        callback(): void{},
-        callbackWithParam(result: any): void {
-          accessToken = result;
-        }
-    });
-
-    if(!accessToken || accessToken == "" || this.isTokenExpired(accessToken)){
-      // alert("토큰 리프레시");
-      this.cognitoUtil.refresh();
-      this.cognitoUtil.getAccessToken({
-        callback(): void{},
-        callbackWithParam(result: any): void {
-          accessToken = result;
-        }
-      });
-    }
-    
+  deletePost(accessToken:string, postId:number): any {
     const requestUrl = `${environment.apiUrl}posts?postId=${postId}&accessToken=${accessToken}`;
 
     return this.http.delete(requestUrl).timeout(timeout)
@@ -500,7 +348,7 @@ export class HttpService {
     publisher: '에러',
     publisherIntro: '게시글을 불러오지 못하였습니다.',
     publisherImg: null,
-    images: ["./assets/NO_PROFILE_IMG.png"],
+    images: ["/../assets/NO_PROFILE_IMG.png"],
     title: '게시글을 불러오지 못하였습니다.',
     body: '',
     good: 9,

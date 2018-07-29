@@ -67,29 +67,43 @@ export class AppNewspeed implements OnInit, OnDestroy, CognitoCallback {
   }
 
   public initPosts(){
+    //리쥼 이벤트
+    document.addEventListener("resume", () => { 
+      alert("리쥼");
+      this.initPosts();
+    });
+
     if(this.cognitoUtil.getCurrentUser()){
       this.appService.newspeedPageIndex = 1;
       this.appService.isAppLoading = true;
-      this.httpService.getPosts(0, "date", "desc", this.appService.newspeedPageIndex) //해당 게시글 DB에서 빼온다
-      .subscribe(
-        data => {
-          this.appService.newspeedPosts = this.appService.postSafeHtmlFactory(data);
-          // console.log(JSON.stringify(this.recentPosts));
-          this.isInProgress = false;
-          setTimeout(() => {
-            this.appService.isAppLoading = false;
-            this.newspeedScroll.scrollTop = 10;
-          }, 200);
-          
-        },
-        error => {
-          console.error("[error] - " + error.error.text);
-          alert("[error] - " + error.error.text);
-          this.appService.newspeedPosts.push(this.httpService.errorPost);
-          this.appService.isAppLoading = false;
-          this.isInProgress = false;
+      let parentClass = this;
+      this.cognitoUtil.getAccessToken({
+        callback(): void{},
+        callbackWithParam(token: any): void {
+          console.log(token);
+          parentClass.httpService.checkAccessToken(token).then((accessToken) => {
+            parentClass.httpService.getPosts(accessToken, 0, "date", "desc", parentClass.appService.newspeedPageIndex) //해당 게시글 DB에서 빼온다
+            .subscribe(
+              data => {
+                parentClass.appService.newspeedPosts = parentClass.appService.postSafeHtmlFactory(data);
+                // console.log(JSON.stringify(this.recentPosts));
+                parentClass.isInProgress = false;
+                setTimeout(() => {
+                  parentClass.appService.isAppLoading = false;
+                  parentClass.newspeedScroll.scrollTop = 10;
+                }, 200);
+              },
+              error => {
+                console.error("[error] - " + error.error.text);
+                alert("[error] - " + error.error.text);
+                parentClass.appService.newspeedPosts.push(parentClass.httpService.errorPost);
+                parentClass.appService.isAppLoading = false;
+                parentClass.isInProgress = false;
+              }
+            );
+          });
         }
-      );
+      });
     } else {
       this.appService.isAppLoading = false;
       this.appService.isAppLogin = false;
@@ -107,26 +121,34 @@ export class AppNewspeed implements OnInit, OnDestroy, CognitoCallback {
    */
   onScroll () {
     this.appService.isAppLoading = true;
-    this.httpService.getPosts(0, "date", "desc", this.appService.newspeedPageIndex + 1) //해당 게시글 DB에서 빼온다
-    .subscribe(
-      data => {
-        // console.log(JSON.stringify(data));
-        if(data.length == 0){ //데이터가 더이상 없을 경우
-          alert("마지막 게시글 입니다.");
-        } else {
-          this.appService.newspeedPosts = this.appService.newspeedPosts.concat(this.appService.postSafeHtmlFactory(data));
-          this.appService.newspeedPageIndex++;
-        }
-        
-        this.appService.isAppLoading = false;
-      },
-      error => {
-        console.error("[error] - " + error.error.text);
-        alert("[error] - " + error.error.text);
-        this.appService.newspeedPosts.push(this.httpService.errorPost);
-        this.appService.isAppLoading = false;
+    let parentClass = this;
+    this.cognitoUtil.getAccessToken({
+      callback(): void{},
+      callbackWithParam(token: any): void {
+        parentClass.httpService.checkAccessToken(token).then((accessToken) => {
+          parentClass.httpService.getPosts(accessToken, 0, "date", "desc", parentClass.appService.newspeedPageIndex + 1) //해당 게시글 DB에서 빼온다
+          .subscribe(
+            data => {
+              // console.log(JSON.stringify(data));
+              if(data.length == 0){ //데이터가 더이상 없을 경우
+                alert("마지막 게시글 입니다.");
+              } else {
+                parentClass.appService.newspeedPosts = parentClass.appService.newspeedPosts.concat(parentClass.appService.postSafeHtmlFactory(data));
+                parentClass.appService.newspeedPageIndex++;
+              }
+              
+              parentClass.appService.isAppLoading = false;
+            },
+            error => {
+              console.error("[error] - " + error.error.text);
+              alert("[error] - " + error.error.text);
+              parentClass.appService.newspeedPosts.push(parentClass.httpService.errorPost);
+              parentClass.appService.isAppLoading = false;
+            }
+          );
+        });
       }
-    );
+    });
   }
 
 

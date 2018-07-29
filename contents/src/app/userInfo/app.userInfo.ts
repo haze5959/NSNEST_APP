@@ -11,6 +11,7 @@ import { Subscriber, Subscription } from 'rxjs';
 
 import { AppService } from '../service/appService';
 import { HttpService } from '../service/http.service';
+import { CognitoUtil } from '../service/awsService/cognito.service';
 
 @Component({
   selector: 'app-userInfo',
@@ -199,6 +200,7 @@ export class SetUserInfoDialog {
   constructor(
     public appService: AppService,
     private httpService: HttpService,
+    private cognitoUtil: CognitoUtil,
     public dialogRef: MatDialogRef<ShowDetailImageDialog>){}
     // @Inject(MAT_DIALOG_DATA) public data: any, fb: FormBuilder) {}
 
@@ -214,54 +216,70 @@ export class SetUserInfoDialog {
 
     //유저정보 수정 저장
     pressSaveBtn(): void {
-      this.httpService.putUserInfo(this.appService.myInfo.userId, this.profileText.value, this.profileDescription.value, this.profileImage)
-      .subscribe(
-        data => {
-          console.log(JSON.stringify(data));
-          if(data.result){  //성공
-            this.dialogRef.close(true);
-          } else {  //실패
-            throw new Error(data.message);
-          }
-        },
-        error => {
-          console.error("프로필 수정 실패 - " + error.message);
-          alert("프로필 수정 실패 - " + error.message);
-          this.appService.isAppLoading = false;
+      let parentClass = this;
+      this.cognitoUtil.getAccessToken({
+        callback(): void{},
+        callbackWithParam(token: any): void {
+          parentClass.httpService.checkAccessToken(token).then((accessToken) => {
+            parentClass.httpService.putUserInfo(accessToken, parentClass.appService.myInfo.userId, parentClass.profileText.value, parentClass.profileDescription.value, parentClass.profileImage)
+            .subscribe(
+              data => {
+                console.log(JSON.stringify(data));
+                if(data.result){  //성공
+                  parentClass.dialogRef.close(true);
+                } else {  //실패
+                  throw new Error(data.message);
+                }
+              },
+              error => {
+                console.error("프로필 수정 실패 - " + error.message);
+                alert("프로필 수정 실패 - " + error.message);
+                parentClass.appService.isAppLoading = false;
+              }
+            );
+          });
         }
-      );
+      });
     }
 
     uploadImages(imageFile:File){
       this.appService.isAppLoading = true;
-      this.httpService.uploadImage('profile', imageFile)
-      .subscribe(
-        data => {
-          // console.log(JSON.stringify(data));
-          if(data.result){  //성공
-            const fileInfo = data.message.files.file;
-            if(fileInfo && fileInfo.path){
-              let filePath:string = fileInfo.path;
-              filePath = filePath.replace('/1TB_Drive/NSNEST_PUBLIC/', '');
-              const fileUrl = environment.fileUrl + filePath;
-              console.log('이미지 업로드 완료 - ' + fileUrl);
-              this.profileImage = fileUrl;
+      let parentClass = this;
+      this.cognitoUtil.getAccessToken({
+        callback(): void{},
+        callbackWithParam(token: any): void {
+          parentClass.httpService.checkAccessToken(token).then((accessToken) => {
+            parentClass.httpService.uploadImage(accessToken, 'profile', imageFile)
+            .subscribe(
+              data => {
+                // console.log(JSON.stringify(data));
+                if(data.result){  //성공
+                  const fileInfo = data.message.files.file;
+                  if(fileInfo && fileInfo.path){
+                    let filePath:string = fileInfo.path;
+                    filePath = filePath.replace('/1TB_Drive/NSNEST_PUBLIC/', '');
+                    const fileUrl = environment.fileUrl + filePath;
+                    console.log('이미지 업로드 완료 - ' + fileUrl);
+                    parentClass.profileImage = fileUrl;
 
-              this.appService.isAppLoading = false;
-            } else {
-              throw new Error('이미지 형식이 이상합니다.');
-            }
-          } else {  //실패
-            console.error("앨범 업로드 실패 - " + data.message);
-            alert("앨범 업로드 실패 - " + data.message);
-            this.appService.isAppLoading = false;
-          }
-        },
-        error => {
-          console.error("앨범 업로드 실패 - " + error.message);
-          alert("앨범 업로드 실패 - " + error.message);
-          this.appService.isAppLoading = false;
+                    parentClass.appService.isAppLoading = false;
+                  } else {
+                    throw new Error('이미지 형식이 이상합니다.');
+                  }
+                } else {  //실패
+                  console.error("앨범 업로드 실패 - " + data.message);
+                  alert("앨범 업로드 실패 - " + data.message);
+                  parentClass.appService.isAppLoading = false;
+                }
+              },
+              error => {
+                console.error("앨범 업로드 실패 - " + error.message);
+                alert("앨범 업로드 실패 - " + error.message);
+                parentClass.appService.isAppLoading = false;
+              }
+            );
+          });
         }
-      );
+      });
     }
 }

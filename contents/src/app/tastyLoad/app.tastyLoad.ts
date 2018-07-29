@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material';
 import { HttpService } from '../service/http.service';
 import { Router } from '@angular/router';
+import { CognitoUtil } from '../service/awsService/cognito.service';
 
 import { AppService } from '../service/appService';
 
@@ -27,7 +28,7 @@ export class AppTastyLoad {
 
   postMarkers: posts[] = [];
 
-  constructor(public appService: AppService, private httpService: HttpService, private router: Router) {}
+  constructor(public appService: AppService, private httpService: HttpService, private router: Router, private cognitoUtil: CognitoUtil) {}
   pageSize = 0;
   pageLength = 0;
   orderBy = "id";
@@ -36,22 +37,30 @@ export class AppTastyLoad {
   
   ngOnInit() {
     this.appService.engagingMainPage = 'tastyLoad';
-    this.httpService.getPostAll(30, this.orderBy, this.orderBySeq)
-    .subscribe(
-      data => {
-        // console.log(JSON.stringify(data));
-        this.postMarkers = this.appService.simplePostFactory(data);
-        this.pageLength = this.postMarkers.length;
-        this.pageSize = this.postMarkers.length;
-        this.appService.isAppLoading = false;
-      },
-      error => {
-        console.error("[error] - " + error.error.text);
-        alert("[error] - " + error.error.text);
-        this.postMarkers.push(this.httpService.errorPost);
-        this.appService.isAppLoading = false;
+    let parentClass = this;
+    this.cognitoUtil.getAccessToken({
+      callback(): void{},
+      callbackWithParam(token: any): void {
+        parentClass.httpService.checkAccessToken(token).then((accessToken) => {
+          parentClass.httpService.getPostAll(accessToken, 30, parentClass.orderBy, parentClass.orderBySeq)
+          .subscribe(
+            data => {
+              // console.log(JSON.stringify(data));
+              parentClass.postMarkers = parentClass.appService.simplePostFactory(data);
+              parentClass.pageLength = parentClass.postMarkers.length;
+              parentClass.pageSize = parentClass.postMarkers.length;
+              parentClass.appService.isAppLoading = false;
+            },
+            error => {
+              console.error("[error] - " + error.error.text);
+              alert("[error] - " + error.error.text);
+              parentClass.postMarkers.push(parentClass.httpService.errorPost);
+              parentClass.appService.isAppLoading = false;
+            }
+          );
+        });
       }
-    );
+    });
   }
 
   applyFilter(filterValue: string) {
@@ -59,23 +68,31 @@ export class AppTastyLoad {
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     // console.log(filterValue);
     this.appService.isAppLoading = true;
-    this.httpService.getPostAll(30, this.orderBy, this.orderBySeq, filterValue)
-    .subscribe(
-      data => {
-        // console.log(JSON.stringify(data));
-        this.postMarkers = this.appService.simplePostFactory(data);
-        this.pageLength = this.postMarkers.length;
-        this.pageSize = this.postMarkers.length;
-        this.appService.isAppLoading = false;
-        this.filterValue = filterValue;
-      },
-      error => {
-        console.error("[error] - " + error.error.text);
-        alert("[error] - " + error.error.text);
-        this.postMarkers.push(this.httpService.errorPost);
-        this.appService.isAppLoading = false;
+    let parentClass = this;
+    this.cognitoUtil.getAccessToken({
+      callback(): void{},
+      callbackWithParam(token: any): void {
+        parentClass.httpService.checkAccessToken(token).then((accessToken) => {
+          parentClass.httpService.getPostAll(accessToken, 30, parentClass.orderBy, parentClass.orderBySeq, filterValue)
+          .subscribe(
+            data => {
+              // console.log(JSON.stringify(data));
+              parentClass.postMarkers = parentClass.appService.simplePostFactory(data);
+              parentClass.pageLength = parentClass.postMarkers.length;
+              parentClass.pageSize = parentClass.postMarkers.length;
+              parentClass.appService.isAppLoading = false;
+              parentClass.filterValue = filterValue;
+            },
+            error => {
+              console.error("[error] - " + error.error.text);
+              alert("[error] - " + error.error.text);
+              parentClass.postMarkers.push(parentClass.httpService.errorPost);
+              parentClass.appService.isAppLoading = false;
+            }
+          );
+        });
       }
-    );
+    });
   }
 
   pressOrderBy(orderByStr:string){
@@ -95,19 +112,27 @@ export class AppTastyLoad {
 
   pageEvent(pageEvent: PageEvent) {
     this.appService.isAppLoading = true;
-    this.httpService.getPostAll(30, this.orderBy, this.orderBySeq, this.filterValue)
-    .subscribe(
-      data => {
-        console.log(JSON.stringify(data));
-        this.postMarkers = this.appService.simplePostFactory(data);
-        this.appService.isAppLoading = false;
-      },
-      error => {
-        console.error("[error] - " + error.error.text);
-        alert("[error] - " + error.error.text);
-        this.postMarkers.push(this.httpService.errorPost);
-        this.appService.isAppLoading = false;
+    let parentClass = this;
+    this.cognitoUtil.getAccessToken({
+      callback(): void{},
+      callbackWithParam(token: any): void {
+        parentClass.httpService.checkAccessToken(token).then((accessToken) => {
+          parentClass.httpService.getPostAll(accessToken, 30, parentClass.orderBy, parentClass.orderBySeq, parentClass.filterValue)
+          .subscribe(
+            data => {
+              console.log(JSON.stringify(data));
+              parentClass.postMarkers = parentClass.appService.simplePostFactory(data);
+              parentClass.appService.isAppLoading = false;
+            },
+            error => {
+              console.error("[error] - " + error.error.text);
+              alert("[error] - " + error.error.text);
+              parentClass.postMarkers.push(parentClass.httpService.errorPost);
+              parentClass.appService.isAppLoading = false;
+            }
+          );
+        });
       }
-    );
+    });
   }
 }

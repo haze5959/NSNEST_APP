@@ -155,7 +155,14 @@
                     </mat-card-content>
                     <div  *ngIf="posts.images" class="posts-image-box">
                         <!-- 이미지 1개일 때 -->
-                        <img *ngIf="posts.images.length == 1" mat-card-image src="{{posts.images[0]}}" alt="image of posts">
+                        <mat-grid-list cols="2" *ngIf="posts.images.length == 1">
+                            <mat-grid-tile>
+                                <img mat-card-image src="{{posts.images[0]}}" alt="image of posts">
+                            </mat-grid-tile>
+                            <mat-grid-tile>
+                                <img mat-card-image src="{{posts.images[0]}}" alt="image of posts">
+                            </mat-grid-tile>
+                        </mat-grid-list>
                         <!-- 이미지 2개일 때 -->
                         <mat-grid-list cols="2" *ngIf="posts.images.length == 2">
                             <mat-grid-tile>

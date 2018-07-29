@@ -10,6 +10,7 @@ import { HttpService } from '../service/http.service';
 import { posts } from '../model/posts';
 import { AppEmoticonDialog } from '../emoticonViewer/app.emoticonViewer';
 import { promise } from 'selenium-webdriver';
+import { CognitoUtil } from '../service/awsService/cognito.service';
 
 @Component({
   selector: 'app-write',
@@ -22,7 +23,7 @@ export class AppWrite implements OnInit {
 
   classify:string;
 
-  constructor(private router: Router,private activeRoute: ActivatedRoute, private ElementRef:ElementRef, public dialog: MatDialog, private appService: AppService, public snackBar: MatSnackBar, private httpService: HttpService) { 
+  constructor(private router: Router,private activeRoute: ActivatedRoute, private ElementRef:ElementRef, public dialog: MatDialog, private appService: AppService, public snackBar: MatSnackBar, private httpService: HttpService, private cognitoUtil: CognitoUtil) { 
     
   }
 
@@ -101,29 +102,38 @@ export class AppWrite implements OnInit {
             post.postClassify = 10;
             post.title = this.titleFormControl.value; //제목입력
             post.body = this.editorContent.value; //본문입력
-            this.httpService.postPost(post)
-            .subscribe(
-              data => {
-                this.appService.isAppLoading = false;
-                console.log(JSON.stringify(data));
-                if(data.result){  //성공
-                  this.appService.newspeedPosts = []; //초기화
-                  this.snackBar.open("게시글 업로드 완료", "확인", {
-                    duration: 2000,
-                  });
-                  this.router.navigate(['/']);
-                } else {  //실패
-                  this.snackBar.open("게시글 업로드 실패 - " + data.message, "확인", {
-                    duration: 5000,
-                  });
-                }
-              },
-              error => {
-                this.appService.isAppLoading = false;
-                console.error("[error] - " + error.error.text);
-                alert("[error] - " + error.error.text);
+            
+            let parentClass = this;
+            this.cognitoUtil.getAccessToken({
+              callback(): void{},
+              callbackWithParam(token: any): void {
+                parentClass.httpService.checkAccessToken(token).then((accessToken) => {
+                  parentClass.httpService.postPost(accessToken, post)
+                  .subscribe(
+                    data => {
+                      parentClass.appService.isAppLoading = false;
+                      console.log(JSON.stringify(data));
+                      if(data.result){  //성공
+                        parentClass.appService.newspeedPosts = []; //초기화
+                        parentClass.snackBar.open("게시글 업로드 완료", "확인", {
+                          duration: 2000,
+                        });
+                        parentClass.router.navigate(['/']);
+                      } else {  //실패
+                        parentClass.snackBar.open("게시글 업로드 실패 - " + data.message, "확인", {
+                          duration: 5000,
+                        });
+                      }
+                    },
+                    error => {
+                      parentClass.appService.isAppLoading = false;
+                      console.error("[error] - " + error.error.text);
+                      alert("[error] - " + error.error.text);
+                    }
+                  );
+                });
               }
-            );
+            });
           } else {  //벨리데이션 실패
             this.appService.isAppLoading = false;
             this.snackBar.open("제목과 본문을 작성하시오.", "확인", {
@@ -138,29 +148,38 @@ export class AppWrite implements OnInit {
             post.postClassify = 20;
             post.body = this.editorContent.value; //본문입력
             post.images = this.imageArr;
-            this.httpService.postPost(post)
-            .subscribe(
-              data => {
-                this.appService.isAppLoading = false;
-                console.log(JSON.stringify(data));
-                if(data.result){  //성공
-                  this.appService.newspeedPosts = []; //초기화
-                  this.snackBar.open("게시글 업로드 완료", "확인", {
-                    duration: 2000,
-                  });
-                  this.router.navigate(['/']);
-                } else {  //실패
-                  this.snackBar.open("게시글 업로드 실패 - " + data.message, "확인", {
-                    duration: 5000,
-                  });
-                }
-              },
-              error => {
-                this.appService.isAppLoading = false;
-                console.error("[error] - " + error.error.text);
-                alert("[error] - " + error.error.text);
+            
+            let parentClass = this;
+            this.cognitoUtil.getAccessToken({
+              callback(): void{},
+              callbackWithParam(token: any): void {
+                parentClass.httpService.checkAccessToken(token).then((accessToken) => {
+                  parentClass.httpService.postPost(accessToken, post)
+                  .subscribe(
+                    data => {
+                      parentClass.appService.isAppLoading = false;
+                      console.log(JSON.stringify(data));
+                      if(data.result){  //성공
+                        parentClass.appService.newspeedPosts = []; //초기화
+                        parentClass.snackBar.open("게시글 업로드 완료", "확인", {
+                          duration: 2000,
+                        });
+                        parentClass.router.navigate(['/']);
+                      } else {  //실패
+                        parentClass.snackBar.open("게시글 업로드 실패 - " + data.message, "확인", {
+                          duration: 5000,
+                        });
+                      }
+                    },
+                    error => {
+                      parentClass.appService.isAppLoading = false;
+                      console.error("[error] - " + error.error.text);
+                      alert("[error] - " + error.error.text);
+                    }
+                  );
+                });
               }
-            );
+            });
           } else {  //벨리데이션 실패
             this.appService.isAppLoading = false;
             this.snackBar.open("본문을 작성하시오.", "확인", {
@@ -179,29 +198,37 @@ export class AppWrite implements OnInit {
             post.images = this.imageArr;
             post.marker = this.marker;
             post.tag = [this.selectType];
-            this.httpService.postPost(post)
-            .subscribe(
-              data => {
-                this.appService.isAppLoading = false;
-                console.log(JSON.stringify(data));
-                if(data.result){  //성공
-                  this.appService.newspeedPosts = []; //초기화
-                  this.snackBar.open("맛집 업로드 완료", "확인", {
-                    duration: 2000,
-                  });
-                  this.router.navigate(['/']);
-                } else {  //실패
-                  this.snackBar.open("맛집 업로드 실패 - " + data.message, "확인", {
-                    duration: 5000,
-                  });
-                }
-              },
-              error => {
-                this.appService.isAppLoading = false;
-                console.error("[error] - " + error.error.text);
-                alert("[error] - " + error.error.text);
+            let parentClass = this;
+            this.cognitoUtil.getAccessToken({
+              callback(): void{},
+              callbackWithParam(token: any): void {
+                parentClass.httpService.checkAccessToken(token).then((accessToken) => {
+                  parentClass.httpService.postPost(accessToken, post)
+                  .subscribe(
+                    data => {
+                      parentClass.appService.isAppLoading = false;
+                      console.log(JSON.stringify(data));
+                      if(data.result){  //성공
+                        parentClass.appService.newspeedPosts = []; //초기화
+                        parentClass.snackBar.open("맛집 업로드 완료", "확인", {
+                          duration: 2000,
+                        });
+                        parentClass.router.navigate(['/']);
+                      } else {  //실패
+                        parentClass.snackBar.open("맛집 업로드 실패 - " + data.message, "확인", {
+                          duration: 5000,
+                        });
+                      }
+                    },
+                    error => {
+                      parentClass.appService.isAppLoading = false;
+                      console.error("[error] - " + error.error.text);
+                      alert("[error] - " + error.error.text);
+                    }
+                  );
+                });
               }
-            );
+            });
           } else {  //벨리데이션 실패
             this.appService.isAppLoading = false;
             this.snackBar.open("본문을 작성하시오.", "확인", {
@@ -272,38 +299,46 @@ export class AppWrite implements OnInit {
       case 'post':{ //게시글
         //서버에 이미지 저장 후, url 리턴해서 이미지 뿌려주기=============================
         this.appService.isAppLoading = true;
-        this.httpService.uploadImage('board', $event.target.files[0])
-          .subscribe(
-            data => {
-              // console.log(JSON.stringify(data));
-              if(data.result){  //성공
-                const fileInfo = data.message.files.file;
-                if(fileInfo && fileInfo.path){
-                  let filePath:string = fileInfo.path;
-                  filePath = filePath.replace('/1TB_Drive/NSNEST_PUBLIC/', '');
-                  const fileUrl = environment.fileUrl + filePath;
-                  console.log('이미지 업로드 완료 - ' + fileUrl);
-                  var range = this.quillInstance.getSelection(!this.quillInstance.hasFocus()); 
-                  this.quillInstance.insertEmbed(range, 'image', fileUrl);
-                  this.snackBar.open("게시글 업로드 완료", "확인", {
-                    duration: 2000,
-                  });
-                } else {
-                  throw new Error('이미지 형식이 이상합니다.');
+        let parentClass = this;
+        this.cognitoUtil.getAccessToken({
+          callback(): void{},
+          callbackWithParam(token: any): void {
+            parentClass.httpService.checkAccessToken(token).then((accessToken) => {
+              parentClass.httpService.uploadImage(accessToken, 'board', $event.target.files[0])
+              .subscribe(
+                data => {
+                  // console.log(JSON.stringify(data));
+                  if(data.result){  //성공
+                    const fileInfo = data.message.files.file;
+                    if(fileInfo && fileInfo.path){
+                      let filePath:string = fileInfo.path;
+                      filePath = filePath.replace('/1TB_Drive/NSNEST_PUBLIC/', '');
+                      const fileUrl = environment.fileUrl + filePath;
+                      console.log('이미지 업로드 완료 - ' + fileUrl);
+                      var range = parentClass.quillInstance.getSelection(!parentClass.quillInstance.hasFocus()); 
+                      parentClass.quillInstance.insertEmbed(range, 'image', fileUrl);
+                      parentClass.snackBar.open("게시글 업로드 완료", "확인", {
+                        duration: 2000,
+                      });
+                    } else {
+                      throw new Error('이미지 형식이 이상합니다.');
+                    }
+                  } else {  //실패
+                    parentClass.snackBar.open("게시글 업로드 실패 - " + data.message, "확인", {
+                      duration: 5000,
+                    });
+                  }
+                  parentClass.appService.isAppLoading = false;
+                },
+                error => {
+                  parentClass.appService.isAppLoading = false;
+                  console.error("[error] - " + error.error.text);
+                  alert("[error] - " + error.error.text);
                 }
-            } else {  //실패
-              this.snackBar.open("게시글 업로드 실패 - " + data.message, "확인", {
-                duration: 5000,
-              });
-            }
-            this.appService.isAppLoading = false;
-          },
-          error => {
-            this.appService.isAppLoading = false;
-            console.error("[error] - " + error.error.text);
-            alert("[error] - " + error.error.text);
+            );
+            });
           }
-        );
+        });
         //======================================================================
         break;
       }
@@ -346,7 +381,12 @@ export class AppWrite implements OnInit {
       }
     };
 
-    this.httpService.uploadImage(classfiyUpload, imageArr[sequence])
+    let parentClass = this;
+    this.cognitoUtil.getAccessToken({
+      callback(): void{},
+      callbackWithParam(token: any): void {
+        parentClass.httpService.checkAccessToken(token).then((accessToken) => {
+          parentClass.httpService.uploadImage(accessToken, classfiyUpload, imageArr[sequence])
           .subscribe(
             data => {
               // console.log(JSON.stringify(data));
@@ -357,33 +397,36 @@ export class AppWrite implements OnInit {
                   filePath = filePath.replace('/1TB_Drive/NSNEST_PUBLIC/', '');
                   const fileUrl = environment.fileUrl + filePath;
                   console.log('이미지 업로드 완료 - ' + fileUrl);
-                  this.imageArr.push(fileUrl);
+                  parentClass.imageArr.push(fileUrl);
                 } else {
                   throw new Error('이미지 형식이 이상합니다.');
                 }
                 
                 if(imageArr.length > sequence + 1){
-                  this.snackBar.open(`이미지 업로드 중... [${sequence + 1}/${imageArr.length}]`, "확인");
+                  parentClass.snackBar.open(`이미지 업로드 중... [${sequence + 1}/${imageArr.length}]`, "확인");
                   // setTimeout(() => this.uploadImages(imageArr, sequence + 1), 2000);
-                  this.uploadImages(imageArr, sequence + 1);
+                  parentClass.uploadImages(imageArr, sequence + 1);
                   
                 }else{
-                  this.snackBar.open(`이미지 업로드 완료[${imageArr.length}]`, "확인");
-                  this.appService.isAppLoading = false;
+                  parentClass.snackBar.open(`이미지 업로드 완료[${imageArr.length}]`, "확인");
+                  parentClass.appService.isAppLoading = false;
                 }
           
               } else {  //실패
                 console.error("이미지 업로드 실패 - " + data.message);
                 alert("이미지 업로드 실패 - " + data.message);
-                this.appService.isAppLoading = false;
+                parentClass.appService.isAppLoading = false;
               }
             },
             error => {
               console.error("이미지 업로드 실패 - " + error.message);
               alert(`이미지 업로드 실패[${sequence + 1}/${imageArr.length}] - ` + error.message);
-              this.appService.isAppLoading = false;
+              parentClass.appService.isAppLoading = false;
             }
           );
+        });
+      }
+    });
   }
 
   mapClicked($event){
