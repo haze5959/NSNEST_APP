@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, AUTOCOMPLETE_OPTION_HEIGHT } from '@angular/material';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -20,6 +20,7 @@ import { AppEmoticonDialog } from '../emoticonViewer/app.emoticonViewer';
 import { promise } from 'protractor';
 
 declare var cookieMaster;
+declare var cordova;
 
 @Component({
   selector: 'app-detail',
@@ -38,7 +39,7 @@ export class AppDetail implements OnInit {
   commentInput:string;
 
   constructor(private router: Router, public appService: AppService, private httpService: HttpService, private route: ActivatedRoute, public dialog: MatDialog, private sanitizer: DomSanitizer, public snackBar: MatSnackBar, private cognitoUtil: CognitoUtil) { }
-  
+
   ngOnInit() {
     document.addEventListener("backbutton", () => {
       let element: HTMLElement = document.getElementById('backBtn') as HTMLElement;
@@ -95,6 +96,16 @@ export class AppDetail implements OnInit {
       case 10:  //게시글
         this.classify = "post";
         this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(this.post.body);
+
+        setTimeout(() => {
+          let elems:NodeListOf<Element> = document.querySelectorAll('.ql-editor > p > p > img');
+          Array.from(elems).forEach((elem:Element) => { 
+            elem.addEventListener('click', () => {
+              this.openImageVeiwer(elem.getAttribute('src'));
+            });
+          });
+        }, 1000);
+        
         break;
       case 20:  //앨범
         this.classify = "elbum";
@@ -116,6 +127,14 @@ export class AppDetail implements OnInit {
         data => {
           // console.log(JSON.stringify(data));
           this.comments = this.appService.commentFactory(data);
+          setTimeout(() => {
+            let elems:NodeListOf<Element> = document.querySelectorAll('.comment-content > img');
+            Array.from(elems).forEach((elem:Element) => { 
+              elem.addEventListener('click', () => {
+                this.openImageVeiwer(elem.getAttribute('src'));
+              });
+            });
+          }, 1000);
         },
         error => {
           console.log(error);
@@ -227,18 +246,19 @@ export class AppDetail implements OnInit {
   }
 
   openImageVeiwer(imageStr:string){
-    var image = new Image();
-    image.src = imageStr;
-    image.onload = () => {
-      let dialogRef = this.dialog.open(ShowDetailImageDialog, {
-        maxHeight: '100vmin',
-        height: image.height.toString(),
-        width: image.width.toString(),
-        data: { imageUrl: imageStr }
-      });
+    cordova.InAppBrowser.open(imageStr, '_system', 'location=no,EnableViewPortScale=yes');  //_blank
+    // var image = new Image();
+    // image.src = imageStr;
+    // image.onload = () => {
+    //   let dialogRef = this.dialog.open(ShowDetailImageDialog, {
+    //     maxHeight: '100vmin',
+    //     height: image.height.toString(),
+    //     width: image.width.toString(),
+    //     data: { imageUrl: imageStr }
+    //   });
 
-      dialogRef.afterClosed().subscribe(result => {});
-    }
+    //   dialogRef.afterClosed().subscribe(result => {});
+    // }
   }
 
   pressCommentRegist(comment:string){

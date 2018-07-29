@@ -43,6 +43,7 @@ export class AppNewspeed implements OnInit, OnDestroy, CognitoCallback {
     this.fairyText = "어서와.";
     this.loginFailCount = 0;
     this.appService.engagingMainPage = 'newspeed';
+    
     if(this.appService.isAppLogin){
       if (this.appService.newspeedPosts.length == 0) {
         this.initPosts(); 
@@ -51,6 +52,7 @@ export class AppNewspeed implements OnInit, OnDestroy, CognitoCallback {
           this.newspeedScroll.scrollTop = this.appService.newspeedScrollY;
         }, 100);
       }
+
     } else {
       new Observable(observer => {
         this.appService.refreshSubscriberArr.push(observer);
@@ -67,12 +69,6 @@ export class AppNewspeed implements OnInit, OnDestroy, CognitoCallback {
   }
 
   public initPosts(){
-    //리쥼 이벤트
-    document.addEventListener("resume", () => { 
-      alert("리쥼");
-      this.initPosts();
-    });
-
     if(this.cognitoUtil.getCurrentUser()){
       this.appService.newspeedPageIndex = 1;
       this.appService.isAppLoading = true;
@@ -108,7 +104,7 @@ export class AppNewspeed implements OnInit, OnDestroy, CognitoCallback {
       this.appService.isAppLoading = false;
       this.appService.isAppLogin = false;
       this.isInProgress = false;
-      console.log("로그인 된 유저 없습니다.");
+      alert("로그인 된 유저 없습니다.");
     }
   }
 

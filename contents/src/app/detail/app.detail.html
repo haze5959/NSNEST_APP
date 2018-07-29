@@ -28,7 +28,7 @@
         <mat-card-subtitle>{{post.publisherIntro}}</mat-card-subtitle>
       </mat-card-header>
       <div *ngFor="let image of post.images">
-        <img class="detail-elbum-image" src="{{image}}">
+        <img class="detail-elbum-image" (click)="openImageVeiwer(image)" src="{{image}}">
       </div>
       <mat-card-content>
         <p class="detail-elbum-body">{{post.body}}</p>
