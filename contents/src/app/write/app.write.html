@@ -7,6 +7,7 @@
             <input matInput placeholder="게시글 제목" [formControl]="titleFormControl">
             <mat-error *ngIf="titleFormControl.invalid">제목 입력해라</mat-error>
         </mat-form-field>
+        <mat-checkbox class="backCaution" [(ngModel)]="backCautionChecked">후방주의!</mat-checkbox>
 
         <quill-editor [modules]="editorModule" [formControl]="editorContent" (onEditorCreated)="onEditorCreated($event)" [style]="{height: '100%'}">
         </quill-editor>

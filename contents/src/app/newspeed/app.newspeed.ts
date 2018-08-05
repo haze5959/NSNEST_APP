@@ -13,6 +13,7 @@ import { PullToRefreshComponent } from './pullToRefresh';
 import { Observable } from 'rxjs/Observable';
 
 declare var cordova;
+declare var navigator;
 
 @Component({
   selector: 'app-newspeed',
@@ -43,6 +44,19 @@ export class AppNewspeed implements OnInit, OnDestroy, CognitoCallback {
     this.fairyText = "어서와.";
     this.loginFailCount = 0;
     this.appService.engagingMainPage = 'newspeed';
+
+    document.addEventListener("backbutton", () => {
+      if(this.router.url == "/newspeed"){
+        let isExist = confirm("앱을 종료하시겠습니까?");
+        if(isExist){
+          if (navigator.app) {
+            navigator.app.exitApp();
+          } else if (navigator.device) {
+              navigator.device.exitApp();
+          }
+        }
+      }
+    }, false);
     
     if(this.appService.isAppLogin){
       if (this.appService.newspeedPosts.length == 0) {

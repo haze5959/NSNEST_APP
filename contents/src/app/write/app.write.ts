@@ -22,6 +22,7 @@ export class AppWrite implements OnInit {
   @ViewChild('fileInput') fileInputEl:ElementRef;
 
   classify:string;
+  backCautionChecked = false; //후방주의 체크
 
   constructor(private router: Router,private activeRoute: ActivatedRoute, private ElementRef:ElementRef, public dialog: MatDialog, private appService: AppService, public snackBar: MatSnackBar, private httpService: HttpService, private cognitoUtil: CognitoUtil) { 
     
@@ -99,7 +100,13 @@ export class AppWrite implements OnInit {
       switch(this.classify){
         case 'post':{ //게시글
           if(this.editorContent.valid && this.titleFormControl.valid){
-            post.postClassify = 10;
+            
+            if (this.backCautionChecked) {  //후방주의 게시글이라면
+              post.postClassify = 40;
+            } else {
+              post.postClassify = 10;
+            }
+            
             post.title = this.titleFormControl.value; //제목입력
             post.body = this.editorContent.value; //본문입력
             

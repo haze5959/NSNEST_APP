@@ -40,6 +40,7 @@ import { AppComponent } from './app.component';
 import { AppNewspeed } from './newspeed/app.newspeed';
 import { PullToRefreshComponent } from './newspeed/pullToRefresh';
 import { AppBoard } from './board/app.board';
+import { AppBackCautionBoard } from './backCautionBoard/app.backCaution.board';
 import { AppElbum } from './elbum/app.elbum';
 import { AppTastyLoad } from './tastyLoad/app.tastyLoad';
 import { AppWrite } from './write/app.write';
@@ -63,6 +64,7 @@ import { TAB_COMPONENTS  } from './emoticonViewer/Tabset';
     AppNewspeed,
     PullToRefreshComponent,
     AppBoard,
+    AppBackCautionBoard,
     AppElbum,
     AppTastyLoad,
     AppWrite,

@@ -114,6 +114,19 @@ export class AppDetail implements OnInit {
         this.classify = "map";
         this.marker = this.post['marker'];
         break;
+      case 40:  //후방주의
+        this.classify = "post";
+        this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(this.post.body);
+
+        setTimeout(() => {
+          let elems:NodeListOf<Element> = document.querySelectorAll('.ql-editor > p > p > img');
+          Array.from(elems).forEach((elem:Element) => { 
+            elem.addEventListener('click', () => {
+              this.openImageVeiwer(elem.getAttribute('src'));
+            });
+          });
+        }, 1000);
+        break;
       default:
         this.classify = "error";
     }

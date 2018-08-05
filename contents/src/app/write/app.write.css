@@ -1,3 +1,7 @@
+.backCaution {
+    margin-left: 50px;
+}
+
 .app-write {
     height: calc(100% - 70px);
     width: 95%;

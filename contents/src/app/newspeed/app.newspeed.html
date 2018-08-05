@@ -186,6 +186,35 @@
                         </mat-grid-list>
                     </div>
                 </mat-card>
+
+                <!--========================================후방주의 글========================================-->
+                <mat-card *ngIf="posts.postClassify == 40" class="posts-card" (click)="pressPosts(posts.postsID)">
+                    <mat-card-header class="posts-card-header">
+                        <div mat-card-avatar [ngStyle]="{ 'background-image': 'url(' + posts.publisherImg + ')'}"></div>
+                        <mat-card-title>{{posts.publisher}}</mat-card-title>
+                        <mat-card-subtitle>{{posts.publisherIntro}}</mat-card-subtitle>
+                        <div class="posts-card-classify-logo">
+                            <mat-icon mat-list-icon>subtitles</mat-icon>
+                        </div>
+                        <div class="comment-count">
+                            <mat-icon mat-list-icon>comment</mat-icon>
+                            {{posts.commentCount}}
+                        </div>
+                        <div class="like-btn">
+                            <mat-icon mat-list-icon style="color: red;">favorite</mat-icon>
+                            {{posts.good}}
+                        </div>
+                        <div class="dislike-btn">
+                            <mat-icon mat-list-icon>thumb_down</mat-icon>
+                            {{posts.bad}}
+                        </div>
+                    </mat-card-header>
+                    <!-- 후방주의 이미지 -->
+                    <img mat-card-image class="post-backCautionImage" src="./assets/BACK_CAUTION.png" alt="Photo" onError="this.src='./assets/NO_PROFILE_IMG.png';">
+                    <mat-card-content>
+                        <p class="posts-image-title"> {{posts.title}} </p>
+                    </mat-card-content>
+                </mat-card>
             </mat-nav-list>
         </mat-list>
     </ptr-container>

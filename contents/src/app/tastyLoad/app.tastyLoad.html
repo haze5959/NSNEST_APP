@@ -7,7 +7,7 @@
             [longitude]="marker.marker.lng"
             [label]="marker.marker.label">
             
-            <agm-info-window>
+            <agm-info-window maxWidth="200">
             <strong>{{marker.title}}</strong>
             <p>{{marker.body}}</p>
             <button (click)="showDetailView(marker.postsID)">상세보기</button>

@@ -193,6 +193,11 @@
     padding: 0;
 }
 
+.post-backCautionImage {
+    height: 300px;
+    object-fit: contain;
+}
+
 @media screen and (max-width: 1000px) {
     .userInfoCard-login-btn {
         position: absolute;
@@ -288,6 +293,11 @@
     }
 
     .elbum-image {
+        margin: 0px -16px;
+    }
+
+    .post-backCautionImage {
+        height: 200px;
         margin: 0px -16px;
     }
 
